@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>app-bootstrapper</artifactId>
-    <version>2024.11.2</version>
+    <version>2024.11.3</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>com.zyneonstudios.nexus</groupId>
             <artifactId>application</artifactId>
-            <version>2024.10.4</version>
+            <version>2024.11.2</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

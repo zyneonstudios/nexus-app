@@ -3,6 +3,8 @@ package com.zyneonstudios.application.frame.web;
 import com.zyneonstudios.application.frame.FrameConnector;
 import com.zyneonstudios.application.main.ApplicationStorage;
 import com.zyneonstudios.application.main.NexusApplication;
+import com.zyneonstudios.nexus.desktop.events.AsyncWebFrameConnectorEvent;
+import com.zyneonstudios.nexus.desktop.events.WebFrameConnectorEvent;
 import com.zyneonstudios.nexus.desktop.frame.web.NexusWebFrame;
 import org.cef.CefClient;
 import org.cef.CefSettings;
@@ -34,27 +36,17 @@ public class ApplicationFrame extends NexusWebFrame implements ComponentListener
         } catch (Exception ignore) {}
         addComponentListener(this);
         this.connector = new FrameConnector(this,application);
-        client.addDisplayHandler(new CefDisplayHandlerAdapter() {
+        setAsyncWebFrameConnectorEvent(new AsyncWebFrameConnectorEvent(this) {
             @Override
-            public boolean onConsoleMessage(CefBrowser browser, CefSettings.LogSeverity level, String message, String source, int line) {
-                if (message.startsWith("[CONNECTOR] async.")) {
-                    CompletableFuture.runAsync(() -> {
-                        String request = message.replace("[CONNECTOR] async.", "");
-                        connector.resolveRequest(request);
-                    });
-                } else if (message.startsWith("[CONNECTOR] ")) {
-                    String request = message.replace("[CONNECTOR] ", "");
-                    connector.resolveRequest(request);
-                } else if (message.startsWith("[LOG] ")) {
-                    NexusApplication.getLogger().log(message.replace("[LOG] ",""));
-                } else if (message.startsWith("[ERR] ")) {
-                    NexusApplication.getLogger().err(message.replace("[ERR] ",""));
-                } else if (message.startsWith("[DEB] ")) {
-                    NexusApplication.getLogger().dbg(message.replace("[DEB] ",""));
-                } else {
-                    NexusApplication.getLogger().dbg("[FRAME] (Console) "+message);
-                }
-                return super.onConsoleMessage(browser, level, message, source, line);
+            public void resolveMessage(String message) {
+                connector.resolveRequest(message);
+            }
+        });
+        setWebFrameConnectorEvent(new WebFrameConnectorEvent(this) {
+            @Override
+            public boolean resolveMessage(String message) {
+                connector.resolveRequest(message);
+                return true;
             }
         });
         addWindowListener(new WindowAdapter() {

@@ -16,6 +16,5 @@
     <modules>
         <module>app-bootstrapper</module>
         <module>app-main</module>
-        <module>app-old</module>
     </modules>
 </project>

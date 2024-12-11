@@ -6,7 +6,7 @@
 
     <groupId>com.zyneonstudios.nexus</groupId>
     <artifactId>nexus-app</artifactId>
-    <version>2024.11.2</version>
+    <version>2024.12</version>
     <packaging>pom</packaging>
 
     <distributionManagement>
@@ -16,8 +16,18 @@
         </repository>
     </distributionManagement>
 
+    <repositories>
+        <repository>
+            <id>zyneonstudios-repo-releases</id>
+            <name>Zyneon Studios Maven repository</name>
+            <url>https://maven.zyneonstudios.com/releases</url>
+        </repository>
+    </repositories>
+
     <modules>
         <module>application</module>
+        <module>app-api</module>
         <module>app-bootstrapper</module>
+        <module>app-old</module>
     </modules>
 </project>

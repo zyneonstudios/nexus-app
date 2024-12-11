@@ -7,12 +7,12 @@
     <parent>
         <groupId>com.zyneonstudios.nexus</groupId>
         <artifactId>nexus-app</artifactId>
-        <version>2024.11.2</version>
+        <version>2024.12</version>
     </parent>
 
     <artifactId>application</artifactId>
-    <version>2024.12</version>
-    <name>Luminous (2.2.0)</name>
+    <version>3.0.0-alpha.1</version>
+    <name>Luminous</name>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -30,7 +30,7 @@
         <dependency>
             <groupId>com.zyneonstudios.nexus</groupId>
             <artifactId>base-desktop</artifactId>
-            <version>2024.12.2</version>
+            <version>2024.12.5</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

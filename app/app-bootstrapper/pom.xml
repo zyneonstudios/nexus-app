@@ -6,11 +6,10 @@
     <parent>
         <groupId>com.zyneonstudios.nexus</groupId>
         <artifactId>app</artifactId>
-        <version>2024.12</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>app-bootstrapper</artifactId>
-    <version>2024.12</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

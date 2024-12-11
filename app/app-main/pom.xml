@@ -7,11 +7,10 @@
     <parent>
         <groupId>com.zyneonstudios.nexus</groupId>
         <artifactId>app</artifactId>
-        <version>2024.12</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>app-main</artifactId>
-    <version>3.0.0-alpha.2</version>
     <name>Luminous</name>
 
     <properties>

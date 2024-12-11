@@ -10,13 +10,12 @@
         <version>2024.12</version>
     </parent>
 
-    <artifactId>app-api</artifactId>
-    <version>3.0.0-alpha.1</version>
+    <artifactId>app</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>app-library-api</module>
-        <module>app-modules-api</module>
-        <module>app-shared-api</module>
+        <module>app-bootstrapper</module>
+        <module>app-main</module>
+        <module>app-old</module>
     </modules>
 </project>

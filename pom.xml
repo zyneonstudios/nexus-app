@@ -25,9 +25,7 @@
     </repositories>
 
     <modules>
-        <module>application</module>
+        <module>app</module>
         <module>app-api</module>
-        <module>app-bootstrapper</module>
-        <module>app-old</module>
     </modules>
 </project>

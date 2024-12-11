@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.zyneonstudios.nexus</groupId>
-        <artifactId>nexus-app</artifactId>
+        <artifactId>app</artifactId>
         <version>2024.12</version>
     </parent>
 
@@ -16,14 +16,6 @@
         <maven.compiler.source>21</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>zyneonstudios-repo-releases</id>
-            <name>Zyneon Studios Maven repository</name>
-            <url>https://maven.zyneonstudios.com/releases</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>

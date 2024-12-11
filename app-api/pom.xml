@@ -10,8 +10,12 @@
         <version>2024.12</version>
     </parent>
 
+    <properties>
+        <revision>3.0.0-alpha.1</revision>
+    </properties>
+
     <artifactId>app-api</artifactId>
-    <version>3.0.0-alpha.1</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <modules>

@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.zyneonstudios.nexus</groupId>
         <artifactId>app-api</artifactId>
-        <version>3.0.0-alpha.1</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>app-library-api</artifactId>
@@ -38,6 +38,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>com.zyneonstudios.nexus.api.LibraryAPI</mainClass>

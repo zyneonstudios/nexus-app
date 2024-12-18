@@ -7,10 +7,8 @@ import com.zyneonstudios.nexus.desktop.events.AsyncWebFrameConnectorEvent;
 import com.zyneonstudios.nexus.desktop.events.WebFrameConnectorEvent;
 import com.zyneonstudios.nexus.desktop.frame.web.NexusWebFrame;
 import org.cef.CefClient;
-import org.cef.CefSettings;
 import org.cef.browser.CefBrowser;
 import org.cef.browser.CefFrame;
-import org.cef.handler.CefDisplayHandlerAdapter;
 import org.cef.handler.CefLoadHandler;
 import org.cef.network.CefRequest;
 
@@ -21,7 +19,6 @@ import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("unused")
 public class ApplicationFrame extends NexusWebFrame implements ComponentListener {
@@ -32,7 +29,7 @@ public class ApplicationFrame extends NexusWebFrame implements ComponentListener
     public ApplicationFrame(NexusApplication application, String url, CefClient client) {
         super(client, url, true);
         try {
-            setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/logo.png"))).getScaledInstance(32, 32, Image.SCALE_SMOOTH));
+            setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/icon.png"))).getScaledInstance(32, 32, Image.SCALE_SMOOTH));
         } catch (Exception ignore) {}
         addComponentListener(this);
         this.connector = new FrameConnector(this,application);

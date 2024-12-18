@@ -44,10 +44,34 @@ function setColors(newColors,fromApp) {
             return;
         }
         document.getElementById("css-colors").href = "../assets/cronos/css/app-colors-light.css";
+        addEventListener("DOMContentLoaded", () => {
+            const logo = document.querySelector(".menu-title").querySelector("img");
+            if(logo) {
+                logo.src = logo.src.replace("light.png","dark.png")
+            }
+        });
         connector("sync.title.automatic-light-.-" + document.title);
+        const logo = document.querySelector(".menu-title").querySelector("img");
+        if(logo) {
+            logo.src = logo.src.replace("light.png","dark.png")
+        }
     } else {
         document.getElementById("css-colors").href = newColors;
         connector("sync.title." + colors + "-.-" + document.title);
+        addEventListener("DOMContentLoaded", () => {
+            if(newColors.includes("light")) {
+                const logo = document.querySelector(".menu-title").querySelector("img");
+                if (logo) {
+                    logo.src = logo.src.replace("light.png", "dark.png")
+                }
+            }
+        });
+        if(newColors.includes("light")) {
+            const logo = document.querySelector(".menu-title").querySelector("img");
+            if(logo) {
+                logo.src = logo.src.replace("light.png","dark.png")
+            }
+        }
     }
 }
 

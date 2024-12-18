@@ -76,7 +76,6 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>com.zyneonstudios.Main</mainClass>
@@ -87,49 +86,6 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <artifactId>jdeb</artifactId>
-                <groupId>org.vafer</groupId>
-                <version>1.10</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jdeb</goal>
-                        </goals>
-                        <configuration>
-                            <dataSet>
-                                <data>
-                                    <src>src/deb/updater.jar</src>
-                                    <type>file</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <filemode>755</filemode>
-                                        <prefix>/usr/bin/zyneon/application/</prefix>
-                                    </mapper>
-                                </data>
-                                <data>
-                                    <src>src/deb/icon.png</src>
-                                    <type>file</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <prefix>/usr/bin/zyneon/application/</prefix>
-                                    </mapper>
-                                </data>
-                                <data>
-                                    <src>src/deb/zyneon-application.desktop</src>
-                                    <type>file</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <filemode>755</filemode>
-                                        <prefix>/usr/share/applications/</prefix>
-                                    </mapper>
-                                </data>
-                            </dataSet>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>

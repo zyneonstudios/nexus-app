@@ -431,7 +431,9 @@
             justify-content: center;
 
             img {
-                scale: 0.50;
+                position: relative;
+                width: 100%;
+                object-fit: contain;
             }
         }
 

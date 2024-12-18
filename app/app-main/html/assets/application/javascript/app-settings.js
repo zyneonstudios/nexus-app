@@ -47,13 +47,18 @@ function syncLanguage() {
     location.href = "../"+language+"/settings.html";
 }
 
-function syncVersion(version) {
+function syncVersion(version,nexus) {
     if(version) {
         log("Got version: "+version);
         const allTextNodes = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
         let node;
         while (node = allTextNodes.nextNode()) {
             node.nodeValue = node.nodeValue.replaceAll("${application.version}", version);
+            if(nexus) {
+                node.nodeValue = node.nodeValue.replaceAll("${nexus.version}", nexus);
+            } else {
+                node.nodeValue = node.nodeValue.replaceAll("${nexus.version}", "");
+            }
         }
     } else {
         error("No version specified");

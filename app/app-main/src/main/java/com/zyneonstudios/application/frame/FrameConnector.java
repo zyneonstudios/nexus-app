@@ -91,7 +91,7 @@ public class FrameConnector {
     private void init(String request) {
         frame.executeJavaScript("syncDesktop();");
         if(request.equals("discover")) {
-            frame.executeJavaScript("setMenuPanel('','"+ ApplicationStorage.getApplicationVersion()+"','"+ ApplicationStorage.getApplicationName()+"',true);");
+            frame.executeJavaScript("setMenuPanel('','"+ ApplicationStorage.getApplicationVersion()+" ("+ApplicationStorage.getNexusVersion()+")','"+ ApplicationStorage.getApplicationName()+"',true);");
             if(frame.getBrowser().getURL().contains("&l=search")||frame.getBrowser().getURL().contains("?l=search")) {
                 frame.executeJavaScript("deactivateMenu('menu',true);");
             } else {
@@ -102,7 +102,7 @@ public class FrameConnector {
             frame.executeJavaScript("deactivateMenu('menu',true);");
         }
         if(request.equals("settings")) {
-            frame.executeJavaScript("syncVersion(\""+ ApplicationStorage.getApplicationVersion().replace("\"","''")+"\");");
+            frame.executeJavaScript("syncVersion(\""+ ApplicationStorage.getApplicationVersion().replace("\"","''")+"\",\" ("+ApplicationStorage.getNexusVersion()+")\");");
         } else if(request.equals("downloads")) {
             for(Download download:NexusApplication.getDownloadManager().getDownloads().values()) {
                 frame.executeJavaScript("setDownload(\""+download.getName().replace("\"","''")+"\",'"+download.getState().toString()+"','"+download.getElapsedTime().getSeconds()+"','"+download.getSpeedMbps()+"','"+download.getEstimatedRemainingTime().getSeconds()+"','"+download.getFileSize()+"','"+download.getLastBytesRead()+"',\""+download.getPath().toString().replace("\\","/")+"\",\""+download.getUrl().toString().replace("\\","/")+"\",\""+download.getUuid()+"\",'"+download.getPercentString()+"','"+download.getPercent()+"');");

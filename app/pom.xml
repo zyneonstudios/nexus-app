@@ -11,7 +11,8 @@
     </parent>
 
     <properties>
-        <revision>3.0.0-alpha.2</revision>
+        <nexus.version>${parent.parent.version}</nexus.version>
+        <revision>2.3.0</revision>
     </properties>
     <version>${revision}</version>
 

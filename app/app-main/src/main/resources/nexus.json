@@ -1,6 +1,7 @@
 {
   "name": "${project.name}",
   "version": "${project.version}",
+  "nexus": "${nexus.version}",
   "modules": [
     "https://zyneonstudios.github.io/nexus-nex/zyndex/modules/official/nexus-minecraft-module.json",
     "https://zyneonstudios.github.io/nexus-nex/zyndex/modules/official/zyneon-star-module.json"

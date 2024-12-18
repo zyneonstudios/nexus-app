@@ -36,7 +36,8 @@
 }
 
 .side-menu .menu-title img {
-    height: 2.8rem; width: 2.8rem;
+    position: relative;
+    height: 100%; width: 100%;
     padding: 0; margin: 0;
     border: none;
 }

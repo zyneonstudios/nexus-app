@@ -17,6 +17,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.zyneonstudios.nexus</groupId>
+            <artifactId>app-shared-api</artifactId>
+            <version>${revision}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

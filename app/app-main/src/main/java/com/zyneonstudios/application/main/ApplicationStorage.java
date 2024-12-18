@@ -37,6 +37,7 @@ public record ApplicationStorage(String[] args, NexusApplication app) {
     private static NexusApplication application = null;
     private static double zoomLevel = 0;
     private static ArrayList<String> bundledModules;
+    private static String nexusVersion;
 
     public ApplicationStorage(String[] args, NexusApplication app) {
         this.app = app;
@@ -64,6 +65,9 @@ public record ApplicationStorage(String[] args, NexusApplication app) {
 
             if (properties.getString("version") != null) {
                 applicationVersion = properties.getString("version");
+            }
+            if (properties.getString("nexus") != null) {
+                nexusVersion = properties.getString("nexus");
             }
             if (properties.getString("name") != null) {
                 applicationName = properties.getString("name");
@@ -220,6 +224,10 @@ public record ApplicationStorage(String[] args, NexusApplication app) {
 
     public static String getApplicationVersion() {
         return applicationVersion;
+    }
+
+    public static String getNexusVersion() {
+        return nexusVersion;
     }
 
     public static String getApplicationName() {

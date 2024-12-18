@@ -1,4 +1,21 @@
 package com.zyneonstudios.nexus.api;
 
-public class SharedAPI {
+import com.zyneonstudios.nexus.api.shared.api.ApplicationAPI;
+
+public class SharedAPI implements ApplicationAPI {
+
+    @Override
+    public void load() {
+
+    }
+
+    @Override
+    public void enable() {
+
+    }
+
+    @Override
+    public void shutdown() {
+
+    }
 }

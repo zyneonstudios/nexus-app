@@ -1,6 +1,7 @@
 package com.zyneonstudios.nexus.application.events;
 
 import com.zyneonstudios.nexus.application.download.Download;
+import com.zyneonstudios.nexus.utilities.events.Event;
 
 import java.util.UUID;
 
@@ -23,7 +24,7 @@ public abstract class DownloadFinishEvent implements Event {
     }
 
     @Override
-    public boolean execute() {
+    public final boolean execute() {
         return onFinish();
     }
 

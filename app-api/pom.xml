@@ -7,16 +7,20 @@
     <parent>
         <groupId>com.zyneonstudios.nexus</groupId>
         <artifactId>nexus-app</artifactId>
-        <version>2024.12</version>
+        <version>2025.1</version>
     </parent>
 
-    <properties>
-        <revision>3.0.0-alpha.2</revision>
-    </properties>
-
     <artifactId>app-api</artifactId>
-    <version>${revision}</version>
     <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.zyneonstudios.nexus</groupId>
+            <artifactId>app-main</artifactId>
+            <version>2.4.0-alpha.2</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <modules>
         <module>app-library-api</module>

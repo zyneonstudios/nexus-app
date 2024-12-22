@@ -1,6 +1,9 @@
 package com.zyneonstudios.nexus.application.main;
 
 import com.zyneonstudios.nexus.Main;
+import com.zyneonstudios.nexus.application.api.LibraryAPI;
+import com.zyneonstudios.nexus.application.api.ModulesAPI;
+import com.zyneonstudios.nexus.application.api.SharedAPI;
 import com.zyneonstudios.nexus.application.download.DownloadManager;
 import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
 import com.zyneonstudios.nexus.application.frame.web.CustomApplicationFrame;
@@ -12,7 +15,6 @@ import com.zyneonstudios.nexus.utilities.logger.NexusLogger;
 import me.friwi.jcefmaven.MavenCefAppHandlerAdapter;
 import org.cef.CefApp;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.net.URL;
@@ -20,14 +22,26 @@ import java.security.CodeSource;
 
 public class NexusApplication {
 
-    private final JFrame frame;
+    private final ApplicationFrame frame;
     private static final NexusLogger logger = NexusUtilities.getLogger();
 
     private final ApplicationRunner runner;
     private static DownloadManager downloadManager;
 
+    private static SharedAPI sharedAPI;
+    private static LibraryAPI libraryAPI;
+    private static ModulesAPI modulesAPI;
+
     public NexusApplication(String[] args) {
         new ApplicationStorage(args,this);
+
+        sharedAPI = new SharedAPI();
+        sharedAPI.load(this);
+        libraryAPI = new LibraryAPI();
+        libraryAPI.load(this);
+        modulesAPI = new ModulesAPI();
+        modulesAPI.load(this);
+
         logger.log("[APP] Updated application ui: "+update());
         boolean disableCustomFrame = false;
         if(ApplicationStorage.getSettings().get("settings.linux.customFrame")!=null) {
@@ -55,11 +69,11 @@ public class NexusApplication {
             @Override @Deprecated
             public void stateHasChanged(CefApp.CefAppState state) {
                 if (state == CefApp.CefAppState.TERMINATED) {
-                    NexusApplication.stop();
+                    NexusApplication.stop(true);
                 }
                 if(!ApplicationStorage.getOS().startsWith("Windows")) {
                     if(state == CefApp.CefAppState.SHUTTING_DOWN) {
-                        NexusApplication.stop();
+                        NexusApplication.stop(true);
                     }
                 }
             }
@@ -70,7 +84,7 @@ public class NexusApplication {
             frame = new ApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient());
             frame.pack(); frame.setSize(new Dimension(1200,720));
         } else {
-            JFrame frame_ = null;
+            ApplicationFrame frame_ = null;
             try {
                 frame_ = new CustomApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient());
                 frame_.pack(); frame_.setSize(new Dimension(1080,660));
@@ -90,6 +104,10 @@ public class NexusApplication {
         this.runner = new ApplicationRunner(this);
         this.runner.start();
         downloadManager = new DownloadManager(this);
+
+        sharedAPI.enable();
+        libraryAPI.enable();
+        modulesAPI.enable();
     }
 
     public static DownloadManager getDownloadManager() {
@@ -104,8 +122,20 @@ public class NexusApplication {
         return logger;
     }
 
-    public JFrame getFrame() {
+    public ApplicationFrame getFrame() {
         return frame;
+    }
+
+    public SharedAPI getSharedAPI() {
+        return sharedAPI;
+    }
+
+    public LibraryAPI getLibraryAPI() {
+        return libraryAPI;
+    }
+
+    public ModulesAPI getModulesAPI() {
+        return modulesAPI;
     }
 
     private boolean update() {
@@ -176,6 +206,7 @@ public class NexusApplication {
                 } catch (Exception e) {
                     logger.err("[APP] Couldn't restart application: "+e.getMessage());
                 }
+                stop(false);
                 System.exit(0);
             }
         } else {
@@ -208,14 +239,20 @@ public class NexusApplication {
                 } catch (Exception e) {
                     logger.err("[APP] Couldn't restart application: " + e.getMessage());
                 }
-                stop();
+                stop(true);
             }
         }
         System.exit(-1);
     }
 
-    public static void stop() {
-        FileActions.deleteFolder(new File(ApplicationStorage.getApplicationPath() + "temp/"));
-        System.exit(0);
+    public static void stop(boolean app) {
+        modulesAPI.shutdown();
+        libraryAPI.shutdown();
+        sharedAPI.shutdown();
+
+        if(app) {
+            FileActions.deleteFolder(new File(ApplicationStorage.getApplicationPath() + "temp/"));
+            System.exit(0);
+        }
     }
 }

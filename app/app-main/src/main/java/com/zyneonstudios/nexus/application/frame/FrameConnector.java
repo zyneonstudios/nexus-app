@@ -158,7 +158,7 @@ public class FrameConnector {
                 ApplicationStorage.getSettings().set("settings.setupFinished",true);
             }
         } else if(request.equals("exit")) {
-            NexusApplication.stop();
+            NexusApplication.stop(true);
         } else if(request.equals("refresh")) {
             frame.getBrowser().loadURL(ApplicationStorage.urlBase+ ApplicationStorage.language+"/"+ ApplicationStorage.startPage);
         } else if(request.equals("restart")) {

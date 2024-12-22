@@ -1,19 +1,19 @@
 package com.zyneonstudios.nexus.application.api;
 
-import com.zyneonstudios.nexus.application.api.library.events.LibraryEvent;
-import com.zyneonstudios.nexus.application.api.library.events.LibraryEventType;
 import com.zyneonstudios.nexus.application.api.shared.api.ApplicationAPI;
+import com.zyneonstudios.nexus.application.api.shared.events.ApplicationEvent;
+import com.zyneonstudios.nexus.application.api.shared.events.EventType;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class LibraryAPI implements ApplicationAPI {
+public class SharedAPI implements ApplicationAPI {
 
     private NexusApplication application;
-    private static final HashMap<LibraryEventType, ArrayList<LibraryEvent>> events = new HashMap<>();
+    private static final HashMap<EventType, ArrayList<ApplicationEvent>> events = new HashMap<>();
 
-    public LibraryAPI() {
+    public SharedAPI() {
 
     }
 
@@ -32,14 +32,14 @@ public class LibraryAPI implements ApplicationAPI {
 
     }
 
-    public static void registerEvent(LibraryEventType eventType, LibraryEvent event) {
+    public static void registerEvent(EventType eventType, ApplicationEvent event) {
         if(!events.containsKey(eventType)) {
             events.put(eventType, new ArrayList<>());
         }
         events.get(eventType).add(event);
     }
 
-    public static ArrayList<LibraryEvent> getEvents(LibraryEventType eventType) {
+    public static ArrayList<ApplicationEvent> getEvents(EventType eventType) {
         if(!events.containsKey(eventType)) {
             events.put(eventType, new ArrayList<>());
         }

@@ -33,13 +33,13 @@ public class ApplicationFrame extends NexusWebFrame implements ComponentListener
         } catch (Exception ignore) {}
         addComponentListener(this);
         this.connector = new FrameConnector(this,application);
-        setAsyncWebFrameConnectorEvent(new AsyncWebFrameConnectorEvent(this) {
+        setAsyncWebFrameConnectorEvent(new AsyncWebFrameConnectorEvent(this,"initialize") {
             @Override
             public void resolveMessage(String message) {
                 connector.resolveRequest(message);
             }
         });
-        setWebFrameConnectorEvent(new WebFrameConnectorEvent(this) {
+        setWebFrameConnectorEvent(new WebFrameConnectorEvent(this,"initialize") {
             @Override
             public boolean resolveMessage(String message) {
                 connector.resolveRequest(message);
@@ -49,7 +49,7 @@ public class ApplicationFrame extends NexusWebFrame implements ComponentListener
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                NexusApplication.stop();
+                NexusApplication.stop(true);
             }
         });
         client.addLoadHandler(new CefLoadHandler() {

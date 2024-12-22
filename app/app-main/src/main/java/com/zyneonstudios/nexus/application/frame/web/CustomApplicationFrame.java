@@ -90,7 +90,7 @@ public class CustomApplicationFrame extends ApplicationFrame {
                 closeButton.setBackground(null);
             }
         });
-        closeButton.addActionListener(e -> NexusApplication.stop());
+        closeButton.addActionListener(e -> NexusApplication.stop(true));
         buttonPanel.add(closeButton);
 
         JLabel titleLabel = new JLabel(title);

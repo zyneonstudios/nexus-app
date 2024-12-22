@@ -12,7 +12,7 @@
 
     <properties>
         <nexus.version>${parent.parent.version}</nexus.version>
-        <revision>2.3.0</revision>
+        <revision>2.3.1</revision>
     </properties>
     <version>${revision}</version>
 

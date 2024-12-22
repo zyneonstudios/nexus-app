@@ -32,6 +32,10 @@
 }
 
 .side-menu.active .menu-title {
+    position: absolute;
+    padding-top: 1.5rem;
+    width: 15rem !important;
+    max-width: 16rem !important;
     display: flex;
 }
 

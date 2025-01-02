@@ -12,7 +12,7 @@
 
     <artifactId>app-main</artifactId>
     <version>${revision}</version>
-    <name>Luminous</name>
+    <name>Phoenix</name>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

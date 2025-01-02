@@ -1,25 +1,18 @@
 ### Zyneon Studios presents:
 ![NEXUS App logo](https://i.ibb.co/McFGPDL/Logo-normal.png)
 
----
-
 > **Warning:** For your security, please download the NEXUS app directly from our official websites https://nexus.zyneonstudios.com and https://github.com/zyneonstudios/nexus-app. Downloading from other sources may expose you to risks such as malware. We cannot guarantee the safety of downloads from third-party links.
-
----
 
 ## Description
 The NEXUS app is a modular and easily extensible desktop application designed to cater to the diverse needs of end-users. Originating as an instance-based Minecraft launcher, it has evolved into a standalone platform. Our primary focus remains on the Minecraft module, serving as a showcase for the capabilities of our modular system and providing a reliable method for managing, sharing, discovering, and playing Minecraft instances in a modern, flexible, and instance-based manner. The Minecraft module supports the installation of mods, maps, resource packs, shaders, and more from platforms such as Zyndex, CurseForge, and Modrinth.
-
----
 
 ## Supported platforms
 ![](https://i.ibb.co/FK4LNHm/platforms.png)
 [<img src="https://i.ibb.co/nBLzRMT/download.png">](https://github.com/zyneonstudios/nexus-app/releases/latest)
 
----
-
 ## Old README.md
 <details>
+    <summary>See the old description of the NEXUS/Zyneon App/lication</summary>
     Download the Zyneon Application from https://github.com/zyneonstudios/nexus-app/releases and https://nexus.zyneonstudios.com/application only! All other sources are not verified and we assume no liability!
 
 ---

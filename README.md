@@ -1,6 +1,8 @@
 ### Zyneon Studios presents:
 ![NEXUS App logo](https://i.ibb.co/McFGPDL/Logo-normal.png)
 
+- - -
+
 > **Warning:** For your security, please download the NEXUS app directly from our official websites https://nexus.zyneonstudios.com and https://github.com/zyneonstudios/nexus-app. Downloading from other sources may expose you to risks such as malware. We cannot guarantee the safety of downloads from third-party links.
 
 ## Description

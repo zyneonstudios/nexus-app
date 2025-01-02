@@ -16,7 +16,7 @@ The NEXUS app is a modular and easily extensible desktop application designed to
 [<img src="https://i.ibb.co/nBLzRMT/download.png">](https://github.com/zyneonstudios/nexus-app/releases/latest)
 
 <details>
-    <summary>See the old description of the NEXUS/Zyneon App/lication</summary>
+    <summary>Old description</summary>
     Download the Zyneon Application from https://github.com/zyneonstudios/nexus-app/releases and https://nexus.zyneonstudios.com/application only! All other sources are not verified and we assume no liability!
 
 ---

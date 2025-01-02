@@ -14,28 +14,26 @@ import java.util.HashMap;
 public class ZyndexLibrary extends Zyndex implements Library {
 
     private final HashMap<String, ZyndexInstance> instances = new HashMap<>();
+    private final String id;
 
     public ZyndexLibrary(File json) {
         super(json);
+        this.id = getLibraryId();
     }
 
     public ZyndexLibrary(JsonStorage config) {
         super(config);
+        this.id = getLibraryId();
     }
 
-    @Override
-    public void load() {
-        Library.super.load();
+    public ZyndexLibrary(File json, String id) {
+        super(json);
+        this.id = id;
     }
 
-    @Override
-    public void postLoad() {
-        Library.super.postLoad();
-    }
-
-    @Override
-    public void reload() {
-        Library.super.reload();
+    public ZyndexLibrary(JsonStorage config, String id) {
+        super(config);
+        this.id = id;
     }
 
     @Override
@@ -110,5 +108,10 @@ public class ZyndexLibrary extends Zyndex implements Library {
     @Override
     public void addInstance(ReadableModule module) {
         super.addInstance(module);
+    }
+
+    @Override
+    public String getLibraryId() {
+        return id;
     }
 }

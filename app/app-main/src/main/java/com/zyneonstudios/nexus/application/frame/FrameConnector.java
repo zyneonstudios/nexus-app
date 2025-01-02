@@ -1,5 +1,12 @@
 package com.zyneonstudios.nexus.application.frame;
 
+import com.zyneonstudios.nexus.application.api.LibraryAPI;
+import com.zyneonstudios.nexus.application.api.SharedAPI;
+import com.zyneonstudios.nexus.application.api.library.events.LibraryEvent;
+import com.zyneonstudios.nexus.application.api.library.events.LibraryEventType;
+import com.zyneonstudios.nexus.application.api.library.events.LibraryPreLoadEvent;
+import com.zyneonstudios.nexus.application.api.shared.events.ApplicationEvent;
+import com.zyneonstudios.nexus.application.api.shared.events.EventType;
 import com.zyneonstudios.nexus.application.download.Download;
 import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
 import com.zyneonstudios.nexus.application.main.ApplicationStorage;
@@ -28,8 +35,24 @@ public class FrameConnector {
         } else {
             NexusApplication.getLogger().dbg("[CONNECTOR] (Request-Reader) resolving "+request+"...");
         }
-
-        if(request.startsWith("sync.")) {
+        if(request.startsWith("event.")) {
+            if(request.equals("event.page.loaded")) {
+                for(ApplicationEvent events : SharedAPI.getEvents(EventType.PAGE_LOADED_EVENT)) {
+                    events.execute();
+                }
+            } else if(request.equals("event.library.load")) {
+                for(LibraryEvent events : LibraryAPI.getEvents(LibraryEventType.LIBRARY_PRELOAD_EVENT)) {
+                    if(LibraryAPI.getActiveLibrary()!=null) {
+                        LibraryPreLoadEvent event = (LibraryPreLoadEvent)events;
+                        if(event.getLibrary().equals(LibraryAPI.getActiveLibrary())) {
+                            if(event.execute()) {
+                                event.getLibrary().load();
+                            }
+                        }
+                    }
+                }
+            }
+        } else if(request.startsWith("sync.")) {
             sync(request.replace("sync.", ""));
         } else if(request.startsWith("open.")) {
             open(request.replaceFirst("open.",""));
@@ -63,7 +86,6 @@ public class FrameConnector {
         switch (request) {
             case "drive" ->
                     open("url.https://drive.zyneonstudios.com");
-                    //frame.getBrowser().loadURL("https://drive.zyneonstudios.com/app/?theme=" + ApplicationStorage.theme + "&language=" + ApplicationStorage.language);
             case "discover" ->
                     frame.getBrowser().loadURL(ApplicationStorage.urlBase + ApplicationStorage.language + "/discover.html");
             case "downloads" ->

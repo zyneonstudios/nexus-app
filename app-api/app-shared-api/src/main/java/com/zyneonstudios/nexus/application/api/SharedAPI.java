@@ -3,6 +3,7 @@ package com.zyneonstudios.nexus.application.api;
 import com.zyneonstudios.nexus.application.api.shared.api.ApplicationAPI;
 import com.zyneonstudios.nexus.application.api.shared.events.ApplicationEvent;
 import com.zyneonstudios.nexus.application.api.shared.events.EventType;
+import com.zyneonstudios.nexus.application.main.ApplicationStorage;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
 
 import java.util.ArrayList;
@@ -44,5 +45,9 @@ public class SharedAPI implements ApplicationAPI {
             events.put(eventType, new ArrayList<>());
         }
         return events.get(eventType);
+    }
+
+    public static String getWorkingDirectory() {
+        return ApplicationStorage.getApplicationPath();
     }
 }

@@ -7,8 +7,11 @@ import com.zyneonstudios.nexus.application.api.library.events.LibraryLoadEvent;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryLoadedEvent;
 
 import java.util.Collection;
+import java.util.UUID;
 
 public interface Library {
+
+    String id = UUID.randomUUID().toString();
 
     default void load() {
         boolean loaded = true;
@@ -58,4 +61,8 @@ public interface Library {
     void removeLibraryInstance(LibraryInstance instance);
 
     void removeLibraryInstance(String instanceID);
+
+    default String getLibraryId() {
+        return id;
+    }
 }

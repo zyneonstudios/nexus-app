@@ -6,9 +6,7 @@ import com.zyneonstudios.nexus.utilities.storage.JsonStorage;
 
 import java.io.File;
 
-public class ZyndexInstance extends Zynstance implements LibraryInstance {
-
-    private boolean launchEnabled = false;
+public abstract class ZyndexInstance extends Zynstance implements LibraryInstance {
 
     public ZyndexInstance(File file) {
         super(file);
@@ -16,20 +14,5 @@ public class ZyndexInstance extends Zynstance implements LibraryInstance {
 
     public ZyndexInstance(JsonStorage config) {
         super(config);
-    }
-
-    @Override
-    public void enableLaunch(boolean enable) {
-        this.launchEnabled = enable;
-    }
-
-    @Override
-    public boolean isLaunchEnabled() {
-        return launchEnabled;
-    }
-
-    @Override
-    public void launch() {
-
     }
 }

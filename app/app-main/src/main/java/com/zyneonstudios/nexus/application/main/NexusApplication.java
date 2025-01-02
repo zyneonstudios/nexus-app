@@ -1,6 +1,7 @@
 package com.zyneonstudios.nexus.application.main;
 
 import com.zyneonstudios.nexus.Main;
+import com.zyneonstudios.nexus.application.api.DiscoverAPI;
 import com.zyneonstudios.nexus.application.api.LibraryAPI;
 import com.zyneonstudios.nexus.application.api.ModulesAPI;
 import com.zyneonstudios.nexus.application.api.SharedAPI;
@@ -29,6 +30,7 @@ public class NexusApplication {
     private static DownloadManager downloadManager;
 
     private static SharedAPI sharedAPI;
+    private static DiscoverAPI discoverAPI;
     private static LibraryAPI libraryAPI;
     private static ModulesAPI modulesAPI;
 
@@ -37,6 +39,8 @@ public class NexusApplication {
 
         sharedAPI = new SharedAPI();
         sharedAPI.load(this);
+        discoverAPI = new DiscoverAPI();
+        discoverAPI.load(this);
         libraryAPI = new LibraryAPI();
         libraryAPI.load(this);
         modulesAPI = new ModulesAPI();
@@ -106,6 +110,7 @@ public class NexusApplication {
         downloadManager = new DownloadManager(this);
 
         sharedAPI.enable();
+        discoverAPI.enable();
         libraryAPI.enable();
         modulesAPI.enable();
     }
@@ -248,6 +253,7 @@ public class NexusApplication {
     public static void stop(boolean app) {
         modulesAPI.shutdown();
         libraryAPI.shutdown();
+        discoverAPI.shutdown();
         sharedAPI.shutdown();
 
         if(app) {

@@ -32,11 +32,11 @@ public class ModulesAPI implements ApplicationAPI {
         ApplicationAPI.super.shutdown();
     }
 
-    public static void registerEvent(ModuleEventType eventType, ModuleEvent event) {
-        if(!events.containsKey(eventType)) {
-            events.put(eventType, new ArrayList<>());
+    public static void registerEvent(ModuleEvent event) {
+        if(!events.containsKey(event.getType())) {
+            events.put(event.getType(), new ArrayList<>());
         }
-        events.get(eventType).add(event);
+        events.get(event.getType()).add(event);
     }
 
     public static ArrayList<ModuleEvent> getEvents(ModuleEventType eventType) {

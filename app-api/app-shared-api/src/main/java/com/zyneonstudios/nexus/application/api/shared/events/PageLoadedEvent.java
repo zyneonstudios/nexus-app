@@ -1,17 +1,12 @@
 package com.zyneonstudios.nexus.application.api.shared.events;
 
-import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
+import com.zyneonstudios.nexus.application.api.SharedAPI;
 
 import java.util.UUID;
 
 public abstract class PageLoadedEvent implements ApplicationEvent {
 
     private final UUID uuid = UUID.randomUUID();
-    private final ApplicationFrame frame;
-
-    public PageLoadedEvent(ApplicationFrame frame) {
-        this.frame = frame;
-    }
 
     @Override
     public EventType getType() {
@@ -29,7 +24,7 @@ public abstract class PageLoadedEvent implements ApplicationEvent {
     }
 
     public String getUrl() {
-        return frame.getBrowser().getURL();
+        return SharedAPI.getFrameUrl();
     }
 
     protected abstract boolean onLoad();

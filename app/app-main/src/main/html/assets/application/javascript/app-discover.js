@@ -46,9 +46,9 @@ function openSearch() {
     if(!search.classList.contains('active')) {
         search.classList.add('active');
         if(query) {
-            connector("sync.discover.search."+moduleId.replaceAll("-1","modules")+"."+offset+"."+query);
+            connector("event.discover.search."+moduleId.replaceAll("-1","modules")+"."+offset+"."+query);
         } else {
-            connector("sync.discover.search." + moduleId.replaceAll("-1", "modules")+"."+offset);
+            connector("event.discover.search."+moduleId.replaceAll("-1", "modules")+"."+offset);
         }
     }
 
@@ -69,6 +69,7 @@ function openSearch() {
 
     deactivateMenu("menu",true);
     document.getElementById("search-bar").placeholder = "Goggles";
+    connector("event.discover.search");
 }
 
 function closeSearch() {
@@ -236,23 +237,14 @@ function showTab(tabId) {
 }
 
 addEventListener("DOMContentLoaded", () => {
+    connector("event.discover.load");
+
     document.getElementById("load-more").onclick = function () {
         offset = offset+20;
-        connector("sync.discover.search." + moduleId.replaceAll("-1", "modules")+"."+offset);
+        connector("event.discover.search."+moduleId.replaceAll("-1", "modules")+"."+offset);
     }
-    showTab("home");
     initDiscover();
     setMenuPanel("", "web app", "undefined version", true);
-
-    let theme = document.getElementById("css-colors").href;
-    if(theme.includes("app-colors-light.css")) {
-        theme="default.light";
-    } else if(theme.includes("app-colors-zyneon.css")) {
-        theme="default.zyneon";
-    } else {
-        theme="default.dark";
-    }
-    document.getElementById("news-frame").src="https://danieldieeins.github.io/Zyneon-Application/news/news.html?type=new&theme="+theme;
 
     document.getElementById("search-bar").addEventListener('keydown', function(event) {
         if (event.keyCode === 13) {
@@ -260,4 +252,6 @@ addEventListener("DOMContentLoaded", () => {
             location.href = "discover.html?moduleId="+moduleId+"&l=search&s="+encodeURIComponent(value);
         }
     });
+
+    connector("event.discover.post");
 });

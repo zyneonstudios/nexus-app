@@ -127,5 +127,5 @@ function disableOverlay() {
 }
 
 addEventListener("DOMContentLoaded", () => {
-    connector("event.page.loaded");
+    connector("event.shared.page.loaded");
 });

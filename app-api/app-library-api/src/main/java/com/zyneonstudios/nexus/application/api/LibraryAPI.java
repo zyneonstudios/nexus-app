@@ -58,11 +58,11 @@ public class LibraryAPI implements ApplicationAPI {
         return libraries;
     }
 
-    public static void registerEvent(LibraryEventType eventType, LibraryEvent event) {
-        if(!events.containsKey(eventType)) {
-            events.put(eventType, new ArrayList<>());
+    public static void registerEvent(LibraryEvent event) {
+        if(!events.containsKey(event.getType())) {
+            events.put(event.getType(), new ArrayList<>());
         }
-        events.get(eventType).add(event);
+        events.get(event.getType()).add(event);
     }
 
     public static ArrayList<LibraryEvent> getEvents(LibraryEventType eventType) {

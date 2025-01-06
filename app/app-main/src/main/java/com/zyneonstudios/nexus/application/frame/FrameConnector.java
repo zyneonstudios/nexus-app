@@ -1,7 +1,12 @@
 package com.zyneonstudios.nexus.application.frame;
 
+import com.zyneonstudios.nexus.application.api.DiscoverAPI;
 import com.zyneonstudios.nexus.application.api.LibraryAPI;
 import com.zyneonstudios.nexus.application.api.SharedAPI;
+import com.zyneonstudios.nexus.application.api.discover.events.DiscoverActionEvent;
+import com.zyneonstudios.nexus.application.api.discover.events.DiscoverEvent;
+import com.zyneonstudios.nexus.application.api.discover.events.DiscoverEventType;
+import com.zyneonstudios.nexus.application.api.discover.events.DiscoverSearchEvent;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryEvent;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryEventType;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryPreLoadEvent;
@@ -13,6 +18,7 @@ import com.zyneonstudios.nexus.application.main.ApplicationStorage;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
 import com.zyneonstudios.nexus.modules.ReadableModule;
 
+import javax.swing.*;
 import java.awt.*;
 import java.net.URI;
 import java.net.URLDecoder;
@@ -36,21 +42,71 @@ public class FrameConnector {
             NexusApplication.getLogger().dbg("[CONNECTOR] (Request-Reader) resolving "+request+"...");
         }
         if(request.startsWith("event.")) {
-            if(request.equals("event.page.loaded")) {
-                for(ApplicationEvent events : SharedAPI.getEvents(EventType.PAGE_LOADED_EVENT)) {
-                    events.execute();
+            request = request.replace("event.","");
+            if(request.startsWith("shared.")) {
+                String event = request.replace("shared.","");
+                if(event.equals("page.loaded")) {
+                    for(ApplicationEvent events : SharedAPI.getEvents(EventType.PAGE_LOADED_EVENT)) {
+                        events.execute();
+                    }
                 }
-            } else if(request.equals("event.library.load")) {
-                for(LibraryEvent events : LibraryAPI.getEvents(LibraryEventType.LIBRARY_PRELOAD_EVENT)) {
-                    if(LibraryAPI.getActiveLibrary()!=null) {
-                        LibraryPreLoadEvent event = (LibraryPreLoadEvent)events;
-                        if(event.getLibrary().equals(LibraryAPI.getActiveLibrary())) {
-                            if(event.execute()) {
-                                event.getLibrary().load();
+            } else if(request.startsWith("library.")) {
+                String event = request.replace("library.","");
+                if(event.equals("load")) {
+                    for(LibraryEvent events : LibraryAPI.getEvents(LibraryEventType.LIBRARY_PRELOAD_EVENT)) {
+                        if(LibraryAPI.getActiveLibrary()!=null) {
+                            LibraryPreLoadEvent event_ = (LibraryPreLoadEvent)events;
+                            if(event_.getLibrary().equals(LibraryAPI.getActiveLibrary())) {
+                                if(event_.execute()) {
+                                    event_.getLibrary().load();
+                                }
                             }
                         }
                     }
                 }
+            } else if(request.startsWith("discover.")) {
+                String event = request.replace("discover.","");
+                if(request.startsWith("action.")) {
+                    String id = request.replace("action.", "");
+                    for(DiscoverEvent event_ : DiscoverAPI.getEvents(DiscoverEventType.DISCOVER_ACTION_EVENT)) {
+                        DiscoverActionEvent event__ = (DiscoverActionEvent) event_;
+                        if(event__.getUUID().toString().equals(id)) {
+                            event__.execute();
+                        }
+                    }
+                } else if(event.equals("pre")) {
+                    for(DiscoverEvent e : DiscoverAPI.getEvents(DiscoverEventType.DISCOVER_PRE_LOAD_EVENT)) {
+                        e.execute();
+                    }
+                } else if(event.equals("load")) {
+                    for(DiscoverEvent e : DiscoverAPI.getEvents(DiscoverEventType.DISCOVER_LOAD_EVENT)) {
+                        e.execute();
+                    }
+                } else if(event.equals("post")) {
+                    for(DiscoverEvent e : DiscoverAPI.getEvents(DiscoverEventType.DISCOVER_LOADED_EVENT)) {
+                        e.execute();
+                    }
+                } else if(event.equals("search")) {
+                    for(DiscoverEvent e : DiscoverAPI.getEvents(DiscoverEventType.DISCOVER_OPEN_SEARCH_EVENT)) {
+                        e.execute();
+                    }
+                } else if(event.startsWith("search.")) {
+                    for(DiscoverEvent e : DiscoverAPI.getEvents(DiscoverEventType.DISCOVER_SEARCH_EVENT)) {
+                        DiscoverSearchEvent searchEvent = (DiscoverSearchEvent)e;
+                        String[] search = request.replaceFirst("discover.search.","").split("\\.",3);
+
+                        searchEvent.setSourceId(search[0]);
+                        searchEvent.setOffset(Integer.parseInt(search[1]));
+                        try {
+                            searchEvent.setQuery(search[2]);
+                        } catch (Exception ex) {
+                            searchEvent.setQuery("");
+                        }
+                        searchEvent.execute();
+                    }
+                }
+            } else if(request.startsWith("modules.")) {
+                String event = request.replace("modules.","");
             }
         } else if(request.startsWith("sync.")) {
             sync(request.replace("sync.", ""));
@@ -180,11 +236,11 @@ public class FrameConnector {
                 ApplicationStorage.getSettings().set("settings.setupFinished",true);
             }
         } else if(request.equals("exit")) {
-            NexusApplication.stop(true);
+            SwingUtilities.invokeLater(()->NexusApplication.stop(true));
         } else if(request.equals("refresh")) {
             frame.getBrowser().loadURL(ApplicationStorage.urlBase+ ApplicationStorage.language+"/"+ ApplicationStorage.startPage);
         } else if(request.equals("restart")) {
-            application.restart(false);
+            SwingUtilities.invokeLater(()->application.restart(false));
         } else if(request.startsWith("settings.")) {
             syncSettings(request.replaceFirst("settings.",""));
         } else if(request.startsWith("autoUpdates.")) {

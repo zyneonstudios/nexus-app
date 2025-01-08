@@ -1,13 +1,15 @@
 package com.zyneonstudios.nexus.application.api;
 
 import com.zyneonstudios.nexus.application.api.discover.Discover;
-import com.zyneonstudios.nexus.application.api.discover.body.elements.*;
 import com.zyneonstudios.nexus.application.api.discover.events.*;
 import com.zyneonstudios.nexus.application.api.discover.search.DiscoverSearch;
 import com.zyneonstudios.nexus.application.api.discover.search.Search;
 import com.zyneonstudios.nexus.application.api.discover.search.SearchHandler;
 import com.zyneonstudios.nexus.application.api.discover.search.zyndex.ModuleSearch;
 import com.zyneonstudios.nexus.application.api.shared.api.ApplicationAPI;
+import com.zyneonstudios.nexus.application.api.shared.body.elements.*;
+import com.zyneonstudios.nexus.application.api.shared.events.ElementActionEvent;
+import com.zyneonstudios.nexus.application.main.ApplicationStorage;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
 import com.zyneonstudios.nexus.desktop.NexusDesktop;
 import com.zyneonstudios.nexus.index.ReadableZyndex;
@@ -61,38 +63,46 @@ public class DiscoverAPI implements ApplicationAPI {
                     search.setActiveSearchSource(search.getSearchSources()[0]);
                 }
                 application.getFrame().executeJavaScript("document.getElementById('search-type-select').value = \""+search.getActiveSourceId()+"\";");
+                application.getFrame().executeJavaScript("moduleId = \""+search.getActiveSourceId()+"\";");
                 return true;
             }
         });
 
         registerEvent(new SearchHandler());
 
-        DiscoverImage descriptionImage = new DiscoverImage();
+        BodyImage descriptionImage = new BodyImage();
         descriptionImage.setAlt("NEXUS App logo");
         descriptionImage.setSrc("../assets/application/images/logos/app/normal.png");
 
-        DiscoverButton descriptionDiscord = new DiscoverButton();
+        BodyButton descriptionDiscord = new BodyButton();
         descriptionDiscord.setText("Discord");
 
-        DiscoverButton descriptionWebsite = new DiscoverButton();
+        BodyButton descriptionWebsite = new BodyButton();
         descriptionWebsite.setText("Website");
 
-        DiscoverTextCard descriptionCard = new DiscoverTextCard();
+        BodyTextCard descriptionCard = new BodyTextCard();
         descriptionCard.setTitle("About NEXUS App");
         descriptionCard.setText("The NEXUS App ist a modular and easy extensible cross platform desktop app which allows everyone to use it for literally anything.");
         descriptionCard.addButton(descriptionDiscord);
         descriptionCard.addButton(descriptionWebsite);
 
-        DiscoverRow descriptionRow = new DiscoverRow();
+        BodyRow descriptionRow = new BodyRow();
         descriptionRow.addElement(descriptionImage);
         descriptionRow.addElement(descriptionCard);
 
-        DiscoverButton actionsReload = new DiscoverButton();
+        BodyButton actionsReload = new BodyButton();
         actionsReload.setText("Reload app");
+        actionsReload.addActionEvent(new ElementActionEvent() {
+            @Override
+            public boolean onAction() {
+                SharedAPI.openAppPage(ApplicationStorage.startPage);
+                return true;
+            }
+        });
 
-        DiscoverButton actionsRestartSoft = new DiscoverButton();
+        BodyButton actionsRestartSoft = new BodyButton();
         actionsRestartSoft.setText("Restart app (soft)");
-        actionsRestartSoft.addActionEvent(new DiscoverActionEvent(actionsRestartSoft.getUUID()) {
+        actionsRestartSoft.addActionEvent(new ElementActionEvent(actionsRestartSoft.getUUID()) {
             @Override
             public boolean onAction() {
                 SwingUtilities.invokeLater(()->{
@@ -102,9 +112,9 @@ public class DiscoverAPI implements ApplicationAPI {
             }
         });
 
-        DiscoverButton actionsRestart = new DiscoverButton();
+        BodyButton actionsRestart = new BodyButton();
         actionsRestart.setText("Restart app (hard)");
-        actionsRestart.addActionEvent(new DiscoverActionEvent(actionsRestart.getUUID()) {
+        actionsRestart.addActionEvent(new ElementActionEvent(actionsRestart.getUUID()) {
             @Override
             public boolean onAction() {
                 SwingUtilities.invokeLater(()->{
@@ -114,21 +124,21 @@ public class DiscoverAPI implements ApplicationAPI {
             }
         });
 
-        DiscoverActionCard actionsCard = new DiscoverActionCard();
+        BodyActionCard actionsCard = new BodyActionCard();
         actionsCard.setTitle("Quick actions");
         actionsCard.addButton(actionsReload);
         actionsCard.addButton(actionsRestartSoft);
         actionsCard.addButton(actionsRestart);
 
-        DiscoverImage nexusImage = new DiscoverImage();
+        BodyImage nexusImage = new BodyImage();
         nexusImage.setAlt("Zyneon NEXUS logo");
         nexusImage.setSrc("../assets/application/images/logos/nexus.png");
 
-        DiscoverRow actionsRow = new DiscoverRow();
+        BodyRow actionsRow = new BodyRow();
         actionsRow.addElement(actionsCard);
         actionsRow.addElement(nexusImage);
 
-        DiscoverPage discoverPage = new DiscoverPage();
+        BodyPage discoverPage = new BodyPage();
         discoverPage.setActive(true);
         discoverPage.setId("home");
         discoverPage.setTitle("Home");

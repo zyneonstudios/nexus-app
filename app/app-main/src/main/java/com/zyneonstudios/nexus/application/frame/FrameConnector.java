@@ -3,11 +3,15 @@ package com.zyneonstudios.nexus.application.frame;
 import com.zyneonstudios.nexus.application.api.DiscoverAPI;
 import com.zyneonstudios.nexus.application.api.LibraryAPI;
 import com.zyneonstudios.nexus.application.api.SharedAPI;
-import com.zyneonstudios.nexus.application.api.discover.events.*;
+import com.zyneonstudios.nexus.application.api.discover.events.DiscoverEvent;
+import com.zyneonstudios.nexus.application.api.discover.events.DiscoverEventType;
+import com.zyneonstudios.nexus.application.api.discover.events.DiscoverInstallEvent;
+import com.zyneonstudios.nexus.application.api.discover.events.DiscoverSearchEvent;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryEvent;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryEventType;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryPreLoadEvent;
 import com.zyneonstudios.nexus.application.api.shared.events.ApplicationEvent;
+import com.zyneonstudios.nexus.application.api.shared.events.ElementActionEvent;
 import com.zyneonstudios.nexus.application.api.shared.events.EventType;
 import com.zyneonstudios.nexus.application.download.Download;
 import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
@@ -41,7 +45,15 @@ public class FrameConnector {
             request = request.replace("event.","");
             if(request.startsWith("shared.")) {
                 String event = request.replace("shared.","");
-                if(event.equals("page.loaded")) {
+                if(event.startsWith("action.")) {
+                    String id = event.replace("action.", "");
+                    for (ApplicationEvent event_ : SharedAPI.getEvents(EventType.ELEMENT_ACTION_EVENT)) {
+                        ElementActionEvent event__ = (ElementActionEvent) event_;
+                        if (event__.getUUID().toString().equals(id)) {
+                            event__.execute();
+                        }
+                    }
+                } else if(event.equals("page.loaded")) {
                     for(ApplicationEvent events : SharedAPI.getEvents(EventType.PAGE_LOADED_EVENT)) {
                         events.execute();
                     }
@@ -62,15 +74,7 @@ public class FrameConnector {
                 }
             } else if(request.startsWith("discover.")) {
                 String event = request.replace("discover.","");
-                if(event.startsWith("action.")) {
-                    String id = event.replace("action.", "");
-                    for(DiscoverEvent event_ : DiscoverAPI.getEvents(DiscoverEventType.DISCOVER_ACTION_EVENT)) {
-                        DiscoverActionEvent event__ = (DiscoverActionEvent) event_;
-                        if(event__.getUUID().toString().equals(id)) {
-                            event__.execute();
-                        }
-                    }
-                } else if(event.equals("pre")) {
+                if(event.equals("pre")) {
                     for(DiscoverEvent e : DiscoverAPI.getEvents(DiscoverEventType.DISCOVER_PRE_LOAD_EVENT)) {
                         e.execute();
                     }

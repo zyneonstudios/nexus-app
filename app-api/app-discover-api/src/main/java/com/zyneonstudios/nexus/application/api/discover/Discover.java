@@ -1,7 +1,7 @@
 package com.zyneonstudios.nexus.application.api.discover;
 
 import com.zyneonstudios.nexus.application.api.SharedAPI;
-import com.zyneonstudios.nexus.application.api.discover.body.elements.DiscoverPage;
+import com.zyneonstudios.nexus.application.api.shared.body.elements.BodyPage;
 import com.zyneonstudios.nexus.application.api.discover.exceptions.PageAlreadyExistsException;
 import com.zyneonstudios.nexus.application.api.discover.search.DiscoverSearch;
 import com.zyneonstudios.nexus.application.main.ApplicationStorage;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class Discover {
 
-    private final HashMap<String, DiscoverPage> pages = new HashMap<>();
+    private final HashMap<String, BodyPage> pages = new HashMap<>();
     private final NexusApplication application;
     private final DiscoverSearch search;
 
@@ -20,18 +20,18 @@ public class Discover {
         this.search =new DiscoverSearch(application.getFrame());
     }
 
-    public DiscoverPage[] getPages() {
-        return pages.values().toArray(new DiscoverPage[0]);
+    public BodyPage[] getPages() {
+        return pages.values().toArray(new BodyPage[0]);
     }
 
-    public void addPage(DiscoverPage page) throws PageAlreadyExistsException {
+    public void addPage(BodyPage page) throws PageAlreadyExistsException {
         if(pages.containsKey(page.getID())) {
             throw new PageAlreadyExistsException(page.getID(),"");
         }
         pages.put(page.getID(),page);
     }
 
-    public void removePage(DiscoverPage page) {
+    public void removePage(BodyPage page) {
         removePage(page.getID());
     }
 
@@ -40,13 +40,13 @@ public class Discover {
     }
 
     public boolean load() {
-        for(DiscoverPage page : pages.values()) {
+        for(BodyPage page : pages.values()) {
             initPage(page);
         }
         return true;
     }
 
-    private void initPage(DiscoverPage page) {
+    private void initPage(BodyPage page) {
         application.getFrame().executeJavaScript("document.getElementById(\"discover-start\").innerHTML += \""+page.getHTML()+"\"","document.getElementById(\"discover-buttons\").innerHTML += \"<h3 id='"+page.getID()+"-button' class='discover-button' onclick='showTab(`"+page.getID()+"`);'>"+page.getTitle()+"</h3>\";");
         if(page.isActive()) {
             application.getFrame().executeJavaScript("showTab('"+page.getID()+"');");

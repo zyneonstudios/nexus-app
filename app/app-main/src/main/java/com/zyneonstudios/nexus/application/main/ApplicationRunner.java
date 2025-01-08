@@ -54,7 +54,7 @@ public class ApplicationRunner {
         CompletableFuture.runAsync(()-> {
 
             if(!NexusApplication.getDownloadManager().getDownloads().isEmpty()) {
-                ((ApplicationFrame)app.getFrame()).executeJavaScript("document.getElementById('downloads-button').style.display = 'block';");
+                app.getFrame().executeJavaScript("document.getElementById('downloads-button').style.display = 'flex';");
             }
 
             if (downloading != null) {

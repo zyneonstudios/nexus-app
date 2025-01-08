@@ -1,22 +1,22 @@
-package com.zyneonstudios.nexus.application.api.discover.body.elements;
+package com.zyneonstudios.nexus.application.api.shared.body.elements;
 
 import com.google.gson.JsonObject;
 
 import java.util.UUID;
 
-public class DiscoverImage implements DiscoverElement {
+public class BodyImage implements BodyElement {
 
     private final JsonObject json;
     private final UUID uuid = UUID.randomUUID();
     private String alt;
     private String src;
 
-    public DiscoverImage() {
+    public BodyImage() {
         this.json = new JsonObject();
         validateStructure();
     }
 
-    public DiscoverImage(JsonObject json) {
+    public BodyImage(JsonObject json) {
         this.json = json;
         validateStructure();
     }
@@ -48,8 +48,8 @@ public class DiscoverImage implements DiscoverElement {
     }
 
     @Override
-    public DiscoverElementType getType() {
-        return DiscoverElementType.IMAGE;
+    public BodyElementType getType() {
+        return BodyElementType.IMAGE;
     }
 
     @Override

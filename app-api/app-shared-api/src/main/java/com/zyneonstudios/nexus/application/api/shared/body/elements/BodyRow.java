@@ -1,27 +1,27 @@
-package com.zyneonstudios.nexus.application.api.discover.body.elements;
+package com.zyneonstudios.nexus.application.api.shared.body.elements;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.zyneonstudios.nexus.application.api.discover.body.DiscoverBody;
+import com.zyneonstudios.nexus.application.api.shared.body.ApplicationBody;
 import com.zyneonstudios.nexus.desktop.NexusDesktop;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 
-public class DiscoverRow implements DiscoverElement {
+public class BodyRow implements BodyElement {
 
     private final JsonObject json;
     private final UUID uuid = UUID.randomUUID();
-    private ArrayList<DiscoverElement> elements = new ArrayList<>();
+    private ArrayList<BodyElement> elements = new ArrayList<>();
 
-    public DiscoverRow() {
+    public BodyRow() {
         this.json = new JsonObject();
         validateStructure();
     }
 
-    public DiscoverRow(JsonObject json) {
+    public BodyRow(JsonObject json) {
         this.json = json;
         validateStructure();
     }
@@ -41,11 +41,11 @@ public class DiscoverRow implements DiscoverElement {
             json.add("elements",new JsonArray());
             elements = new ArrayList<>();
         } else {
-            ArrayList<DiscoverElement> elementArray = new ArrayList<>();
+            ArrayList<BodyElement> elementArray = new ArrayList<>();
             if(!json.getAsJsonArray("elements").isEmpty()) {
                 for (JsonElement element : json.getAsJsonArray("elements")) {
                     try {
-                        elementArray.add(DiscoverBody.getElementFromJson(element.getAsJsonObject()));
+                        elementArray.add(ApplicationBody.getElementFromJson(element.getAsJsonObject()));
                     } catch (Exception e) {
                         NexusDesktop.getLogger().err("[DISCOVER|API] Couldn't resolve Element for Row: " + e.getMessage());
                     }
@@ -56,8 +56,8 @@ public class DiscoverRow implements DiscoverElement {
     }
 
     @Override
-    public DiscoverElementType getType() {
-        return DiscoverElementType.ROW;
+    public BodyElementType getType() {
+        return BodyElementType.ROW;
     }
 
     @Override
@@ -66,7 +66,7 @@ public class DiscoverRow implements DiscoverElement {
         if(!this.elements.isEmpty()) {
             elements = "%";
             StringBuilder e = new StringBuilder();
-            for(DiscoverElement element:this.elements) {
+            for(BodyElement element:this.elements) {
                 e.append(element.getHTML());
             }
             elements = elements.replace("%",e.toString());
@@ -89,23 +89,23 @@ public class DiscoverRow implements DiscoverElement {
         return uuid;
     }
 
-    public DiscoverElement[] getElements() {
-        return elements.toArray(new DiscoverElement[0]);
+    public BodyElement[] getElements() {
+        return elements.toArray(new BodyElement[0]);
     }
 
-    public void addElement(DiscoverElement element) {
+    public void addElement(BodyElement element) {
         elements.add(element);
         updateElements(elements);
     }
 
-    public void removeElement(DiscoverElement element) {
+    public void removeElement(BodyElement element) {
         elements.remove(element);
         updateElements(elements);
     }
 
-    private void updateElements(Collection<DiscoverElement> elements) {
+    private void updateElements(Collection<BodyElement> elements) {
         JsonArray elementArray = new JsonArray();
-        for(DiscoverElement element:elements) {
+        for(BodyElement element:elements) {
             elementArray.add(element.getJsonObject());
         }
         this.json.remove("elements");

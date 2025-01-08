@@ -60,7 +60,11 @@ function openSearch() {
     }
 
     deactivateMenu("menu",true);
-    document.getElementById("search-bar").placeholder = "Goggles";
+    if(query) {
+        document.getElementById("search-bar").placeholder = query;
+    } else {
+        document.getElementById("search-bar").placeholder = "Goggles";
+    }
     connector("event.discover.search");
 }
 
@@ -94,15 +98,11 @@ function addResult(id,img,title,authors,description,meta,actions,location,connec
             result.querySelector("img").onclick = function () {
                 if(connectorRequest) {
                     connector(connectorRequest);
-                } else {
-                    connector("sync.discover.details.module." + location);
                 }
             };
             result.querySelector("a").onclick = function () {
                 if(connectorRequest) {
                     connector(connectorRequest);
-                } else {
-                    connector("sync.discover.details.module." + location);
                 }
             };
         } else {

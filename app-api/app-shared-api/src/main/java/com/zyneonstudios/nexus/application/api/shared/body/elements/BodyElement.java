@@ -1,12 +1,12 @@
-package com.zyneonstudios.nexus.application.api.discover.body.elements;
+package com.zyneonstudios.nexus.application.api.shared.body.elements;
 
 import com.google.gson.JsonObject;
 
 import java.util.UUID;
 
-public interface DiscoverElement {
+public interface BodyElement {
 
-    DiscoverElementType getType();
+    BodyElementType getType();
     String getHTML();
     String getJson();
     JsonObject getJsonObject();

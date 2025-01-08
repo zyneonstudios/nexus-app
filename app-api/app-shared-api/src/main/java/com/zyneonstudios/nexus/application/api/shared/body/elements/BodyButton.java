@@ -1,26 +1,26 @@
-package com.zyneonstudios.nexus.application.api.discover.body.elements;
+package com.zyneonstudios.nexus.application.api.shared.body.elements;
 
 import com.google.gson.JsonObject;
-import com.zyneonstudios.nexus.application.api.DiscoverAPI;
-import com.zyneonstudios.nexus.application.api.discover.events.DiscoverActionEvent;
+import com.zyneonstudios.nexus.application.api.SharedAPI;
+import com.zyneonstudios.nexus.application.api.shared.events.ElementActionEvent;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class DiscoverButton implements DiscoverElement {
+public class BodyButton implements BodyElement {
 
     private final JsonObject json;
     private final UUID uuid = UUID.randomUUID();
-    private final ArrayList<DiscoverActionEvent> actionEvents = new ArrayList<>();
+    private final ArrayList<ElementActionEvent> actionEvents = new ArrayList<>();
     private String text;
     private String icon;
 
-    public DiscoverButton() {
+    public BodyButton() {
         this.json = new JsonObject();
         validateStructure();
     }
 
-    public DiscoverButton(JsonObject json) {
+    public BodyButton(JsonObject json) {
         this.json = json;
         validateStructure();
     }
@@ -52,8 +52,8 @@ public class DiscoverButton implements DiscoverElement {
     }
 
     @Override
-    public DiscoverElementType getType() {
-        return DiscoverElementType.BUTTON;
+    public BodyElementType getType() {
+        return BodyElementType.BUTTON;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class DiscoverButton implements DiscoverElement {
         if(icon!=null&&!icon.isEmpty()) {
             text += "<i class='"+icon.replace("<","").replace(">","")+"'></i>";
         }
-        return "<h3 onclick='connector(`event.discover.action."+uuid+"`);'><i class='"+icon+"'></i> "+text+"</h3>";
+        return "<h3 onclick='connector(`event.shared.action."+uuid+"`);'><i class='"+icon+"'></i> "+text+"</h3>";
     }
 
     @Override
@@ -100,17 +100,17 @@ public class DiscoverButton implements DiscoverElement {
         this.icon = icon;
     }
 
-    public DiscoverActionEvent[] getActionEvents() {
-        return actionEvents.toArray(new DiscoverActionEvent[0]);
+    public ElementActionEvent[] getActionEvents() {
+        return actionEvents.toArray(new ElementActionEvent[0]);
     }
 
-    public void addActionEvent(DiscoverActionEvent event) {
+    public void addActionEvent(ElementActionEvent event) {
         event.bindToElementId(uuid);
         actionEvents.add(event);
-        DiscoverAPI.registerEvent(event);
+        SharedAPI.registerEvent(event);
     }
 
     public void click() {
-        actionEvents.forEach(DiscoverActionEvent::execute);
+        actionEvents.forEach(ElementActionEvent::execute);
     }
 }

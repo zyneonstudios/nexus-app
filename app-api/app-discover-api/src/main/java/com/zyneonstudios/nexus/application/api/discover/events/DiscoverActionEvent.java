@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public abstract class DiscoverActionEvent implements DiscoverEvent {
 
-    private final UUID uuid;
+    private UUID uuid;
 
     public DiscoverActionEvent(UUID elementUUID) {
         this.uuid = elementUUID;
@@ -16,6 +16,10 @@ public abstract class DiscoverActionEvent implements DiscoverEvent {
 
     public DiscoverActionEvent(DiscoverElement element) {
         this.uuid = element.getUUID();
+    }
+
+    public DiscoverActionEvent() {
+        uuid = UUID.randomUUID();
     }
 
     @Override
@@ -26,6 +30,14 @@ public abstract class DiscoverActionEvent implements DiscoverEvent {
     @Override
     public UUID getUUID() {
         return uuid;
+    }
+
+    public void bindToElement(DiscoverElement element) {
+        bindToElementId(element.getUUID());
+    }
+
+    public void bindToElementId(UUID elementId) {
+        this.uuid = elementId;
     }
 
     @Override

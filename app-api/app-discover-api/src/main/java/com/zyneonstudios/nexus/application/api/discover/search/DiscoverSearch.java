@@ -6,6 +6,7 @@ import com.zyneonstudios.nexus.application.main.ApplicationStorage;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class DiscoverSearch {
 
@@ -81,15 +82,18 @@ public class DiscoverSearch {
     }
 
     public void addResult(SearchResult result) {
-        addResult(result.getId(),result.getName(),result.getSummary(),result.getMetaSummary(),result.getAuthors(),result.getImageUrl());
+        addResult(result.getUUID(),result.getId(),result.getName(),result.getSummary(),result.getMetaSummary(),result.getAuthors(),result.getImageUrl(), result.getActions());
     }
 
-    public void addResult(String id, String name, String description, String meta, String[] authors, String imageUrl) {
-        addResult(id,name,description,meta,Arrays.toString(authors).replace("[","").replace("]",""),imageUrl);
+    public void addResult(UUID uuid, String id, String name, String description, String meta, String[] authors, String imageUrl, String actions) {
+        addResult(uuid,id,name,description,meta,Arrays.toString(authors).replace("[","").replace("]",""),imageUrl,actions);
     }
 
-    public void addResult(String id, String name, String description, String meta, String author, String imageUrl) {
-        String script = "addResult('"+id+"','"+imageUrl+"',\""+name.replace("\"","''")+"\",\""+author.replace("\"","''")+"\",\""+description.replace("\n","<br>").replace("\"","''")+"\",\""+meta.replace("\n","<br>").replace("\"","''")+"\");";
+    public void addResult(UUID uuid, String id, String name, String description, String meta, String author, String imageUrl, String actions) {
+        if(actions==null) {
+            actions = "<a onclick='connector(`event.discover.install."+uuid+"`);'><i class='bx bxs-download'></i> Install</a>";
+        }
+        String script = "addResult('"+id+"','"+imageUrl+"',\""+name.replace("\"","''")+"\",\""+author.replace("\"","''")+"\",\""+description.replace("\n","<br>").replace("\"","''")+"\",\""+meta.replace("\n","<br>").replace("\"","''")+"\",\""+actions+"\");";
         frame.executeJavaScript(script);
     }
 

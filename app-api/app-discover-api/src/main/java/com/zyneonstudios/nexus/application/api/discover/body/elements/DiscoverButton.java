@@ -105,6 +105,7 @@ public class DiscoverButton implements DiscoverElement {
     }
 
     public void addActionEvent(DiscoverActionEvent event) {
+        event.bindToElementId(uuid);
         actionEvents.add(event);
         DiscoverAPI.registerEvent(event);
     }

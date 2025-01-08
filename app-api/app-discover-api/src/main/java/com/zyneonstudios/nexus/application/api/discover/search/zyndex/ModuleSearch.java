@@ -34,7 +34,8 @@ public class ModuleSearch extends ZyndexSearch {
                     }
                 }
                 if(instance.getName().toLowerCase().contains(query)||instance.getId().toLowerCase().contains(query)) {
-                    SearchResult result = new SearchResult(instance.getId(), instance.getName(), instance.getAuthors().toArray(new String[0]), instance.getSummary(), instance.getThumbnailUrl(), instance.getDownloadUrl(), null);
+                    SearchResult result = new SearchResult(this,instance.getId(), instance.getName(), instance.getAuthors().toArray(new String[0]), instance.getSummary(), instance.getThumbnailUrl(), instance.getDownloadUrl(), null);
+                    result.setInstallHandler(new ModuleInstallHandler());
                     results.add(result);
                     i++;
                 }

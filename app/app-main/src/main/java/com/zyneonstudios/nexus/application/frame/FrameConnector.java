@@ -3,10 +3,7 @@ package com.zyneonstudios.nexus.application.frame;
 import com.zyneonstudios.nexus.application.api.DiscoverAPI;
 import com.zyneonstudios.nexus.application.api.LibraryAPI;
 import com.zyneonstudios.nexus.application.api.SharedAPI;
-import com.zyneonstudios.nexus.application.api.discover.events.DiscoverActionEvent;
-import com.zyneonstudios.nexus.application.api.discover.events.DiscoverEvent;
-import com.zyneonstudios.nexus.application.api.discover.events.DiscoverEventType;
-import com.zyneonstudios.nexus.application.api.discover.events.DiscoverSearchEvent;
+import com.zyneonstudios.nexus.application.api.discover.events.*;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryEvent;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryEventType;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryPreLoadEvent;
@@ -65,8 +62,8 @@ public class FrameConnector {
                 }
             } else if(request.startsWith("discover.")) {
                 String event = request.replace("discover.","");
-                if(request.startsWith("action.")) {
-                    String id = request.replace("action.", "");
+                if(event.startsWith("action.")) {
+                    String id = event.replace("action.", "");
                     for(DiscoverEvent event_ : DiscoverAPI.getEvents(DiscoverEventType.DISCOVER_ACTION_EVENT)) {
                         DiscoverActionEvent event__ = (DiscoverActionEvent) event_;
                         if(event__.getUUID().toString().equals(id)) {
@@ -84,6 +81,14 @@ public class FrameConnector {
                 } else if(event.equals("post")) {
                     for(DiscoverEvent e : DiscoverAPI.getEvents(DiscoverEventType.DISCOVER_LOADED_EVENT)) {
                         e.execute();
+                    }
+                } else if(event.startsWith("install.")) {
+                    String id = event.replace("install.", "");
+                    for(DiscoverEvent event_ : DiscoverAPI.getEvents(DiscoverEventType.DISCOVER_INSTALL_EVENT)) {
+                        DiscoverInstallEvent event__ = (DiscoverInstallEvent) event_;
+                        if(event__.getUUID().toString().equals(id)) {
+                            event__.execute();
+                        }
                     }
                 } else if(event.equals("search")) {
                     for(DiscoverEvent e : DiscoverAPI.getEvents(DiscoverEventType.DISCOVER_OPEN_SEARCH_EVENT)) {

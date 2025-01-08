@@ -24,6 +24,7 @@ public class SearchHandler extends DiscoverSearchEvent {
             }
         } catch (Exception e) {
             NexusDesktop.getLogger().err("Couldn't resolve search: " + e.getMessage());
+            throw new RuntimeException(e);
         }
         return false;
     }

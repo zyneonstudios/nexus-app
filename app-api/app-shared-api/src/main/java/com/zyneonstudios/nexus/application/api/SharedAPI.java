@@ -62,6 +62,7 @@ public class SharedAPI implements ApplicationAPI {
         if(!url.startsWith("file://")) {
             url = "file://"+url;
         }
+        System.out.println(url);
         frame.getBrowser().loadURL(url);
     }
 
@@ -74,7 +75,7 @@ public class SharedAPI implements ApplicationAPI {
             pageString = pageString+".html";
         }
         if(!pageString.startsWith(ApplicationStorage.urlBase)) {
-            pageString = ApplicationStorage.urlBase+ApplicationStorage.language+"/+"+pageString;
+            pageString = ApplicationStorage.urlBase+ApplicationStorage.language+"/"+pageString;
         }
         openFrameUrl(pageString);
     }

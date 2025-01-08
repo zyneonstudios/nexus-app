@@ -5,6 +5,7 @@ import com.zyneonstudios.nexus.application.api.DiscoverAPI;
 import com.zyneonstudios.nexus.application.api.LibraryAPI;
 import com.zyneonstudios.nexus.application.api.ModulesAPI;
 import com.zyneonstudios.nexus.application.api.SharedAPI;
+import com.zyneonstudios.nexus.application.api.shared.tray.ApplicationTray;
 import com.zyneonstudios.nexus.application.download.DownloadManager;
 import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
 import com.zyneonstudios.nexus.application.frame.web.CustomApplicationFrame;
@@ -33,6 +34,7 @@ public class NexusApplication {
     private static DiscoverAPI discoverAPI;
     private static LibraryAPI libraryAPI;
     private static ModulesAPI modulesAPI;
+    private static ApplicationTray trayMenu;
 
     public NexusApplication(String[] args) {
         new ApplicationStorage(args,this);
@@ -143,6 +145,10 @@ public class NexusApplication {
         return modulesAPI;
     }
 
+    public DiscoverAPI getDiscoverAPI() {
+        return discoverAPI;
+    }
+
     private boolean update() {
 
         // TRYING TO DELETE OLD TEMP FOLDER
@@ -181,6 +187,7 @@ public class NexusApplication {
 
     public void launch() {
         frame.setVisible(true);
+        trayMenu = new ApplicationTray(this);
         if(Main.splash!=null) {
             Main.splash.setVisible(false);
             Main.splash = null;
@@ -260,5 +267,9 @@ public class NexusApplication {
             FileActions.deleteFolder(new File(ApplicationStorage.getApplicationPath() + "temp/"));
             System.exit(0);
         }
+    }
+
+    public static ApplicationTray getTrayMenu() {
+        return trayMenu;
     }
 }

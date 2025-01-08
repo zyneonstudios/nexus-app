@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         splash = new ZyneonSplash();
         splash.setVisible(true);
-        NexusDesktop.getLogger().setName("APP",true);
+        NexusDesktop.getLogger().setName("APP", true);
         NexusDesktop.init();
         new NexusApplication(args).launch();
     }

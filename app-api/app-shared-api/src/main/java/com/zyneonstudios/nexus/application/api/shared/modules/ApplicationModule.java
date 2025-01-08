@@ -1,4 +1,4 @@
-package com.zyneonstudios.nexus.application.api.modules;
+package com.zyneonstudios.nexus.application.api.shared.modules;
 
 public class ApplicationModule {
 

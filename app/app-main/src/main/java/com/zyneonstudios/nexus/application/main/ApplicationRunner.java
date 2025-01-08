@@ -124,7 +124,7 @@ public class ApplicationRunner {
         }
 
         try {
-            JsonObject json = new Gson().fromJson(GsonUtility.getFromURL("https://raw.githubusercontent.com/zyneonstudios/nexus-nex/main/application/index.json"), JsonObject.class).getAsJsonArray("versions").get(0).getAsJsonObject();
+            JsonObject json = new Gson().fromJson(GsonUtility.getFromURL("https://raw.githubusercontent.com/zyneonstudios/nexus-nex/main/application/index.json"), JsonObject.class).getAsJsonArray("versions").get(1).getAsJsonObject();
             checkVersion(json);
         } catch (Exception ignore) {
         }

@@ -16,7 +16,6 @@ import com.zyneonstudios.nexus.application.download.Download;
 import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
 import com.zyneonstudios.nexus.application.main.ApplicationStorage;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
-import com.zyneonstudios.nexus.modules.ReadableModule;
 
 import javax.swing.*;
 import java.awt.*;
@@ -303,13 +302,7 @@ public class FrameConnector {
     }
 
     private void syncDiscover(String request) {
-        if (request.startsWith("details.")) {
-            request = request.replaceFirst("details.", "");
-            if (request.startsWith("module.")) {
-                ReadableModule module = new ReadableModule(URLDecoder.decode(request.replaceFirst("module.", ""), StandardCharsets.UTF_8));
-                frame.executeJavaScript("enableOverlay(\"" + initDetails(module.getName(), module.getId(), "Application module", module.getVersion(), module.getSummary(), module.getAuthor(), module.isHidden(), module.getTagString(), module.getDescription(), module.getChangelogs().toString(), module.getVersions().toString(), module.getInfoText(), module.getInfoCard(), module.getBackgroundUrl(), module.getIconUrl(), module.getLogoUrl(), module.getThumbnailUrl()) + "\");");
-            }
-        }
+
     }
 
     @SuppressWarnings("all")

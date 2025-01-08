@@ -1,12 +1,17 @@
 package com.zyneonstudios.nexus.application.api;
 
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.zyneonstudios.nexus.application.api.discover.Discover;
 import com.zyneonstudios.nexus.application.api.discover.body.elements.*;
 import com.zyneonstudios.nexus.application.api.discover.events.*;
+import com.zyneonstudios.nexus.application.api.discover.search.DiscoverSearch;
+import com.zyneonstudios.nexus.application.api.discover.search.Search;
+import com.zyneonstudios.nexus.application.api.discover.search.SearchHandler;
+import com.zyneonstudios.nexus.application.api.discover.search.zyndex.ModuleSearch;
+import com.zyneonstudios.nexus.application.api.discover.search.zyndex.ZyndexSearch;
 import com.zyneonstudios.nexus.application.api.shared.api.ApplicationAPI;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
+import com.zyneonstudios.nexus.desktop.NexusDesktop;
+import com.zyneonstudios.nexus.index.ReadableZyndex;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -17,6 +22,7 @@ public class DiscoverAPI implements ApplicationAPI {
     private NexusApplication application;
     private static final HashMap<DiscoverEventType, ArrayList<DiscoverEvent>> events = new HashMap<>();
     private static Discover discover = null;
+    private static ReadableZyndex nex;
 
     @Override
     public void load(NexusApplication application) {
@@ -26,6 +32,23 @@ public class DiscoverAPI implements ApplicationAPI {
     @Override
     public void enable() {
         discover = new Discover(application);
+
+        try {
+            nex = new ReadableZyndex("https://zyneonstudios.github.io/nexus-nex/zyndex/index.json");
+            ModuleSearch moduleSearch = new ModuleSearch(nex);
+            moduleSearch.setId("modules",true);
+            moduleSearch.setName("Official modules",true);
+            discover.getSearch().addSearchSource(moduleSearch);
+
+            ZyndexSearch nexSearch = new ZyndexSearch(nex);
+            nexSearch.setId("nex",true);
+            nexSearch.setName("Minecraft: Java Edition",true);
+            discover.getSearch().addSearchSource(nexSearch);
+        } catch (Exception e) {
+            NexusDesktop.getLogger().err("Couldn't load official Zyndex \"NEX\": "+e.getMessage());
+            NexusDesktop.getLogger().err("Disabled module search...");
+        }
+
         registerEvent(new DiscoverLoadEvent() {
             @Override
             public boolean onLoad() {
@@ -33,13 +56,22 @@ public class DiscoverAPI implements ApplicationAPI {
             }
         });
 
-        registerEvent(new DiscoverSearchEvent() {
+        registerEvent(new DiscoverOpenSearchEvent() {
             @Override
-            public boolean onSearch() {
-                System.out.println(getSourceId() + " " + getOffset() + " " + getQuery());
+            public boolean onOpen() {
+                DiscoverSearch search = getDiscover().getSearch();
+                for(Search source:discover.getSearch().getSearchSources()) {
+                    application.getFrame().executeJavaScript("document.getElementById('search-type-select').innerHTML += \"<option value='"+source.getId()+"'>"+source.getName()+"</option>\"");
+                }
+                if(search.getActiveSearchSource()==null) {
+                    search.setActiveSearchSource(search.getSearchSources()[0]);
+                }
+                application.getFrame().executeJavaScript("document.getElementById('search-type-select').value = \""+search.getActiveSourceId()+"\";");
                 return true;
             }
         });
+
+        registerEvent(new SearchHandler());
 
         DiscoverImage descriptionImage = new DiscoverImage();
         descriptionImage.setAlt("NEXUS App logo");
@@ -108,9 +140,6 @@ public class DiscoverAPI implements ApplicationAPI {
         discoverPage.setTitle("Home");
         discoverPage.addElement(descriptionRow);
         discoverPage.addElement(actionsRow);
-
-        System.out.println(new GsonBuilder().setPrettyPrinting().create().fromJson(discoverPage.getJson(), JsonObject.class));
-        System.out.println(discoverPage.getHTML());
 
         try {
             discover.addPage(discoverPage);

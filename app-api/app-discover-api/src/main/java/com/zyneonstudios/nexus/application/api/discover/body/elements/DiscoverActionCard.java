@@ -96,8 +96,8 @@ public class DiscoverActionCard implements DiscoverElement {
         return uuid;
     }
 
-    public Collection<DiscoverButton> getButtons() {
-        return buttons;
+    public DiscoverButton[] getButtons() {
+        return buttons.toArray(new DiscoverButton[0]);
     }
 
     public String getTitle() {

@@ -89,8 +89,8 @@ public class DiscoverRow implements DiscoverElement {
         return uuid;
     }
 
-    public Collection<DiscoverElement> getElements() {
-        return elements;
+    public DiscoverElement[] getElements() {
+        return elements.toArray(new DiscoverElement[0]);
     }
 
     public void addElement(DiscoverElement element) {

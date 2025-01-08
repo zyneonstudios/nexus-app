@@ -6,9 +6,9 @@ import com.zyneonstudios.nexus.index.Zyndex;
 import com.zyneonstudios.nexus.instance.ReadableZynstance;
 import com.zyneonstudios.nexus.modules.ReadableModule;
 import com.zyneonstudios.nexus.utilities.storage.JsonStorage;
+
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
 public class ZyndexLibrary extends Zyndex implements Library {
@@ -42,8 +42,8 @@ public class ZyndexLibrary extends Zyndex implements Library {
     }
 
     @Override
-    public Collection<LibraryInstance> getLibraryInstances() {
-        return new ArrayList<>(instances.values());
+    public LibraryInstance[] getLibraryInstances() {
+        return instances.values().toArray(new LibraryInstance[instances.size()]);
     }
 
     @Override

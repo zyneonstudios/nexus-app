@@ -5,7 +5,6 @@ import com.zyneonstudios.nexus.application.api.DiscoverAPI;
 import com.zyneonstudios.nexus.application.api.discover.events.DiscoverActionEvent;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.UUID;
 
 public class DiscoverButton implements DiscoverElement {
@@ -101,8 +100,8 @@ public class DiscoverButton implements DiscoverElement {
         this.icon = icon;
     }
 
-    public Collection<DiscoverActionEvent> getActionEvents() {
-        return actionEvents;
+    public DiscoverActionEvent[] getActionEvents() {
+        return actionEvents.toArray(new DiscoverActionEvent[0]);
     }
 
     public void addActionEvent(DiscoverActionEvent event) {

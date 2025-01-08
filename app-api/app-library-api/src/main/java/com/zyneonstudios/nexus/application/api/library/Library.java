@@ -6,7 +6,6 @@ import com.zyneonstudios.nexus.application.api.library.events.LibraryEventType;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryLoadEvent;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryLoadedEvent;
 
-import java.util.Collection;
 import java.util.UUID;
 
 public interface Library {
@@ -52,7 +51,7 @@ public interface Library {
         }
     }
 
-    Collection<LibraryInstance> getLibraryInstances();
+    LibraryInstance[] getLibraryInstances();
 
     LibraryInstance getLibraryInstance(String id);
 

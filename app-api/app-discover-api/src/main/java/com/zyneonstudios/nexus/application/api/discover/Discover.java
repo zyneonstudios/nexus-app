@@ -3,24 +3,25 @@ package com.zyneonstudios.nexus.application.api.discover;
 import com.zyneonstudios.nexus.application.api.SharedAPI;
 import com.zyneonstudios.nexus.application.api.discover.body.elements.DiscoverPage;
 import com.zyneonstudios.nexus.application.api.discover.exceptions.PageAlreadyExistsException;
+import com.zyneonstudios.nexus.application.api.discover.search.DiscoverSearch;
 import com.zyneonstudios.nexus.application.main.ApplicationStorage;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
 
-import java.util.Collection;
 import java.util.HashMap;
 
 public class Discover {
 
     private final HashMap<String, DiscoverPage> pages = new HashMap<>();
     private final NexusApplication application;
-    private String query = "";
+    private final DiscoverSearch search;
 
     public Discover(NexusApplication application) {
         this.application = application;
+        this.search =new DiscoverSearch(application.getFrame());
     }
 
-    public Collection<DiscoverPage> getPages() {
-        return pages.values();
+    public DiscoverPage[] getPages() {
+        return pages.values().toArray(new DiscoverPage[0]);
     }
 
     public void addPage(DiscoverPage page) throws PageAlreadyExistsException {
@@ -77,21 +78,7 @@ public class Discover {
         SharedAPI.openFrameUrl(url.toString());
     }
 
-    public void openSearch() {
-        SharedAPI.openFrameUrl(ApplicationStorage.urlBase + ApplicationStorage.language + "/discover.html?l=search");
-    }
-
-    public void openSearch(String query) {
-        SharedAPI.openFrameUrl(ApplicationStorage.urlBase + ApplicationStorage.language + "/discover.html?l=search&s="+query);
-        this.query = query;
-    }
-
-    public void openSearch(String query, String searchTypeId) {
-        String url = ApplicationStorage.urlBase + ApplicationStorage.language + "/discover.html?l=search&moduleId="+searchTypeId;
-        if(query!=null&&!query.isEmpty()) {
-            url = url+"&s="+query;
-            this.query = query;
-        }
-        SharedAPI.openFrameUrl(url);
+    public DiscoverSearch getSearch() {
+        return search;
     }
 }

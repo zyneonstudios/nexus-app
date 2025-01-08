@@ -1,5 +1,5 @@
 let searchTerm = "Click to search";
-let moduleId = "-1";
+let moduleId = "modules";
 let query = "";
 let offset = 0;
 
@@ -9,20 +9,12 @@ function initDiscover() {
     if(urlParams.get("moduleId")!==null||localStorage.getItem("settings.lastSearchModule")!==null) {
         if(urlParams.get("moduleId")!==null) {
             moduleId = urlParams.get('moduleId');
-            if(moduleId==="modules") {
-                moduleId = "-1";
-            }
             localStorage.setItem("settings.lastSearchModule",moduleId);
         } else {
             moduleId = localStorage.getItem("settings.lastSearchModule");
         }
 
-
-        if(moduleId!=="-1"&&moduleId!==-1) {
-            document.getElementById("search-type-select").value = moduleId;
-        } else {
-            document.getElementById("search-type-select").value = moduleId;
-        }
+        document.getElementById("search-type-select").value = moduleId;
     }
 
     if(urlParams.get("s")) {

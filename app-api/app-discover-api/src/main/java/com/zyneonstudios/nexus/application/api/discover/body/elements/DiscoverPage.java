@@ -129,8 +129,8 @@ public class DiscoverPage implements DiscoverElement {
         return active;
     }
 
-    public Collection<DiscoverElement> getElements() {
-        return elements;
+    public DiscoverElement[] getElements() {
+        return elements.toArray(new DiscoverElement[0]);
     }
 
     public void setId(String id) {

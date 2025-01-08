@@ -15,6 +15,8 @@ import com.zyneonstudios.nexus.desktop.NexusDesktop;
 import com.zyneonstudios.nexus.index.ReadableZyndex;
 
 import javax.swing.*;
+import java.awt.*;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -76,13 +78,39 @@ public class DiscoverAPI implements ApplicationAPI {
 
         BodyButton descriptionDiscord = new BodyButton();
         descriptionDiscord.setText("Discord");
+        descriptionDiscord.addActionEvent(new ElementActionEvent() {
+            @Override
+            public boolean onAction() {
+                if(Desktop.isDesktopSupported()) {
+                    try {
+                        Desktop.getDesktop().browse(new URI("https://discord.gg/Q2AEWfesZW"));
+                    } catch (Exception e) {
+                        NexusDesktop.getLogger().err(e.getMessage());
+                    }
+                }
+                return false;
+            }
+        });
 
         BodyButton descriptionWebsite = new BodyButton();
         descriptionWebsite.setText("Website");
+        descriptionWebsite.addActionEvent(new ElementActionEvent() {
+            @Override
+            public boolean onAction() {
+                if(Desktop.isDesktopSupported()) {
+                    try {
+                        Desktop.getDesktop().browse(new URI("https://nexus.zyneonstudios.com"));
+                    } catch (Exception e) {
+                        NexusDesktop.getLogger().err(e.getMessage());
+                    }
+                }
+                return false;
+            }
+        });
 
         BodyTextCard descriptionCard = new BodyTextCard();
         descriptionCard.setTitle("About NEXUS App");
-        descriptionCard.setText("The NEXUS App ist a modular and easy extensible cross platform desktop app which allows everyone to use it for literally anything.");
+        descriptionCard.setText("The NEXUS App ist a modular and easy extensible cross os desktop app which allows everyone to use it for literally anything. (If they can code or find a module)");
         descriptionCard.addButton(descriptionDiscord);
         descriptionCard.addButton(descriptionWebsite);
 

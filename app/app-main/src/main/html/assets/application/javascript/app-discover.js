@@ -100,11 +100,6 @@ function addResult(id,img,title,authors,description,meta,actions,location,connec
                     connector(connectorRequest);
                 }
             };
-            result.querySelector("a").onclick = function () {
-                if(connectorRequest) {
-                    connector(connectorRequest);
-                }
-            };
         } else {
             result.id = "";
         }

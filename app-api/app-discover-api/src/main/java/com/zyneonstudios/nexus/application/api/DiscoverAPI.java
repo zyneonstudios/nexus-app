@@ -7,7 +7,6 @@ import com.zyneonstudios.nexus.application.api.discover.search.DiscoverSearch;
 import com.zyneonstudios.nexus.application.api.discover.search.Search;
 import com.zyneonstudios.nexus.application.api.discover.search.SearchHandler;
 import com.zyneonstudios.nexus.application.api.discover.search.zyndex.ModuleSearch;
-import com.zyneonstudios.nexus.application.api.discover.search.zyndex.ZyndexSearch;
 import com.zyneonstudios.nexus.application.api.shared.api.ApplicationAPI;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
 import com.zyneonstudios.nexus.desktop.NexusDesktop;
@@ -39,11 +38,6 @@ public class DiscoverAPI implements ApplicationAPI {
             moduleSearch.setId("modules",true);
             moduleSearch.setName("Official modules",true);
             discover.getSearch().addSearchSource(moduleSearch);
-
-            ZyndexSearch nexSearch = new ZyndexSearch(nex);
-            nexSearch.setId("nex",true);
-            nexSearch.setName("Minecraft: Java Edition",true);
-            discover.getSearch().addSearchSource(nexSearch);
         } catch (Exception e) {
             NexusDesktop.getLogger().err("Couldn't load official Zyndex \"NEX\": "+e.getMessage());
             NexusDesktop.getLogger().err("Disabled module search...");
@@ -146,11 +140,6 @@ public class DiscoverAPI implements ApplicationAPI {
         } catch (Exception ignore) {}
     }
 
-    @Override
-    public void shutdown() {
-
-    }
-
     public static void registerEvent(DiscoverEvent event) {
         if(!events.containsKey(event.getType())) {
             events.put(event.getType(), new ArrayList<>());
@@ -167,5 +156,9 @@ public class DiscoverAPI implements ApplicationAPI {
 
     public static Discover getDiscover() {
         return discover;
+    }
+
+    public static ReadableZyndex getNEX() {
+        return nex;
     }
 }

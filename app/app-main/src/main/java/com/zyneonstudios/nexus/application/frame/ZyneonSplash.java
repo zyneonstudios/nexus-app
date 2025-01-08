@@ -12,7 +12,7 @@ public class ZyneonSplash extends JWindow {
         super();
         try {
             setBackground(new Color(0, 0, 0, 0));
-            setSize(1200, 285);
+            setSize(750, 180);
             setLocationRelativeTo(null);
             JLabel image;
             image = new JLabel(new ImageIcon(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/logo.png"))).getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH)));

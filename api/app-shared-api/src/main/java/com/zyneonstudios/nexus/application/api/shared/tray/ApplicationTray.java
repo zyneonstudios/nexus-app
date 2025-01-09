@@ -20,6 +20,7 @@ public class ApplicationTray {
     private final HashMap<String, ApplicationModuleMenu> moduleMenus = new HashMap<>();
 
     private JMenu modules;
+    private ApplicationMenuItem toggleVisibility;
     private NexusApplication application;
     private ApplicationPopupMenu popup;
 
@@ -61,15 +62,7 @@ public class ApplicationTray {
     }
 
     private void initializeMenu() {
-        ApplicationMenuItem title = new ApplicationMenuItem();
-        title.setText("NEXUS App "+ApplicationStorage.getApplicationVersion().split("-")[0]);
-        title.setIcon(getIcon());
-        title.addActionListener(e -> {
-            application.getFrame().setLocationRelativeTo(null);
-            application.getFrame().setVisible(true);
-            application.getFrame().requestFocus();
-        });
-        popup.add(title);
+        initializeTitle();
         popup.addSeparator();
         initializeVisiblityToggle();
         initializeReloadApp();
@@ -80,15 +73,31 @@ public class ApplicationTray {
         popup.addSeparator();
         initializeModules();
         initializeCloseMenu();
-        popup.addSeparator();
+    }
+
+    private void initializeTitle() {
+        ApplicationMenuItem title = new ApplicationMenuItem();
+        title.setText("NEXUS App "+ApplicationStorage.getApplicationVersion().split("-")[0]);
+        title.setIcon(getIcon());
+        title.addActionListener(e -> {
+            application.getFrame().setLocationRelativeTo(null);
+            application.getFrame().setVisible(true);
+            application.getFrame().setState(Frame.NORMAL);
+            application.getFrame().requestFocus();
+            toggleVisibility.setText(getVisibilityLabel());
+        });
+        popup.add(title);
     }
 
     private void initializeVisiblityToggle() {
-        ApplicationMenuItem toggleVisibility = new ApplicationMenuItem();
+        toggleVisibility = new ApplicationMenuItem();
         toggleVisibility.setText(getVisibilityLabel());
         toggleVisibility.addActionListener(e -> {
             application.getFrame().setVisible(!application.getFrame().isVisible());
             toggleVisibility.setText(getVisibilityLabel());
+            if(application.getFrame().isVisible()) {
+                application.getFrame().setState(Frame.NORMAL);
+            }
         });
         popup.add(toggleVisibility);
     }

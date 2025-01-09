@@ -217,7 +217,7 @@ public record ApplicationStorage(String[] args, NexusApplication app) {
 
     public static JsonStorage getUpdateSettings() {
         if(updateConfig==null) {
-            updateConfig = new JsonStorage(ApplicationStorage.getApplicationPath().replace("\\\\","\\").replace("\\","/").replace("/experimental/","/")+"config/updater.json");
+            updateConfig = new JsonStorage(ApplicationStorage.getApplicationPath().replace("\\\\","\\").replace("\\","/").replace("/experimental/","/")+"config/bootstrapper.json");
         }
         return updateConfig;
     }

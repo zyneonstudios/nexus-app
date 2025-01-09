@@ -10,7 +10,7 @@
         <version>2025.1</version>
     </parent>
 
-    <artifactId>app-api</artifactId>
+    <artifactId>api</artifactId>
     <packaging>pom</packaging>
 
     <dependencies>

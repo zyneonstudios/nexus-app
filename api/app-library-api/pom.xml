@@ -9,8 +9,8 @@
         <version>2025.1</version>
     </parent>
 
-    <artifactId>app-modules-api</artifactId>
-    <version>2.4.0-alpha.15</version>
+    <artifactId>app-library-api</artifactId>
+    <version>2.4.0-alpha.16</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.zyneonstudios.nexus</groupId>
             <artifactId>app-shared-api</artifactId>
-            <version>2.4.0-alpha.15</version>
+            <version>2.4.0-alpha.16</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -48,7 +48,7 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.zyneonstudios.nexus.application.api.ModulesAPI</mainClass>
+                                    <mainClass>com.zyneonstudios.nexus.application.api.LibraryAPI</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

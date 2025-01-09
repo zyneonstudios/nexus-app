@@ -17,7 +17,6 @@ import com.zyneonstudios.nexus.application.download.Download;
 import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
 import com.zyneonstudios.nexus.application.main.ApplicationStorage;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
-
 import javax.swing.*;
 import java.awt.*;
 import java.net.URI;
@@ -254,7 +253,7 @@ public class FrameConnector {
         } else if(request.startsWith("autoUpdates.")) {
             request = request.replace("autoUpdates.","");
             boolean update = request.equals("on");
-            ApplicationStorage.getUpdateSettings().set("updater.settings.updateApp",update);
+            ApplicationStorage.getUpdateSettings().set("bootstrapper.config.checkForUpdates",update);
         } else if(request.startsWith("linuxFrame.")) {
             request = request.replace("linuxFrame.","");
             boolean frame = request.equals("on");
@@ -265,7 +264,7 @@ public class FrameConnector {
             syncDiscover(request.replaceFirst("discover.",""));
         } else if(request.startsWith("updateChannel.")) {
             request = request.replace("updateChannel.","");
-            ApplicationStorage.getUpdateSettings().set("updater.versions.app.type",request);
+            ApplicationStorage.getUpdateSettings().set("bootstrapper.data.channel",request);
         } else if(request.startsWith("startPage.")) {
             request = request.replaceFirst("startPage.","");
             ApplicationStorage.startPage = request;
@@ -285,11 +284,11 @@ public class FrameConnector {
             case "general" -> {
                 String channel = "stable";
                 boolean autoUpdate = false;
-                if (ApplicationStorage.getUpdateSettings().getBoolean("updater.settings.updateApp") != null) {
-                    autoUpdate = ApplicationStorage.getUpdateSettings().getBool("updater.settings.updateApp");
+                if (ApplicationStorage.getUpdateSettings().getBoolean("bootstrapper.config.checkForUpdates") != null) {
+                    autoUpdate = ApplicationStorage.getUpdateSettings().getBool("bootstrapper.config.checkForUpdates");
                 }
-                if (ApplicationStorage.getUpdateSettings().getString("updater.versions.app.type") != null) {
-                    channel = ApplicationStorage.getUpdateSettings().getString("updater.versions.app.type");
+                if (ApplicationStorage.getUpdateSettings().getString("bootstrapper.data.channel") != null) {
+                    channel = ApplicationStorage.getUpdateSettings().getString("bootstrapper.data.channel");
                 }
                 if (ApplicationStorage.getOS().startsWith("Linux")) {
                     boolean linuxCustomFrame = true;
@@ -378,7 +377,7 @@ public class FrameConnector {
 
     public static String formatForDetails(String input) {
         if(input!=null) {
-            if(!input.isBlank()&&!input.isEmpty()) {
+            if(!input.isBlank()) {
                 input = input.replace("\"","''");
                 input = input.replace("\n","<br>").replace("\\n","<br>").replace("+","%plus%");
                 return URLEncoder.encode(input, StandardCharsets.UTF_8).replace("+", "%20").replace("%plus%", "+");

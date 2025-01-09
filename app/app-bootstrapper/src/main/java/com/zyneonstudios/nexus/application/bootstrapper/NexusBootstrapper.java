@@ -3,7 +3,7 @@ package com.zyneonstudios.nexus.application.bootstrapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.zyneonstudios.nexus.Main;
-import com.zyneonstudios.nexus.application.bootstrapper.forms.ProgressFrame;
+import com.zyneonstudios.nexus.application.bootstrapper.frames.ProgressFrame;
 import com.zyneonstudios.nexus.utilities.NexusUtilities;
 import com.zyneonstudios.nexus.utilities.json.GsonUtility;
 import com.zyneonstudios.nexus.utilities.storage.JsonStorage;
@@ -28,10 +28,14 @@ public class NexusBootstrapper {
         }
         this.path = path;
         this.config = new JsonStorage(path+"config/bootstrapper.json");
+        config.delete("bootstrapper.data.validated");
+        config.delete("bootstrapper.data.imported");
         initConfig();
         version = config.getString("bootstrapper.data.version");
 
-        File app = new File(path+"app.jar");
+        convertOld();
+
+        File app = new File(path+"libraries/nexus/app.jar");
         if(config.getBool("bootstrapper.config.checkForUpdates")||!app.exists()) {
             checkForUpdates(!app.exists());
         }
@@ -41,12 +45,31 @@ public class NexusBootstrapper {
         System.gc();
 
         updateDownloaded = true;
-        if(!launch()) {
+        if(!launch(Main.isOutputDisabled())) {
             updateDownloaded = false;
             checkForUpdates(true);
             updateDownloaded = true;
-            if(!launch()) {
+            if(!launch(Main.isOutputDisabled())) {
                 System.err.println("Failed to launch application version "+version+"!");
+            }
+        }
+    }
+
+    private void convertOld() {
+        if(new File(path+"config/updater.json").exists()) {
+            JsonStorage updater = new JsonStorage(path + "config/updater.json");
+            try {
+                boolean experimental = updater.getString("updater.versions.app.type").equals("experimental") || config.getString("bootstrapper.data.channel").equals("experimental");
+                if (experimental) {
+                    config.set("bootstrapper.data.imported", true);
+                    config.set("bootstrapper.data.channel", updater.getString("updater.versions.app.type"));
+                    config.set("bootstrapper.config.checkForUpdates", updater.getBool("updater.settings.updateApp"));
+                }
+            } catch (Exception e) {
+                System.err.println("Failed to convert old updater settings...");
+            }
+            if (!updater.getJsonFile().delete()) {
+                updater.getJsonFile().deleteOnExit();
             }
         }
     }
@@ -54,10 +77,10 @@ public class NexusBootstrapper {
     private void initConfig() {
         try {
             config = new JsonStorage(new File(path+"config/bootstrapper.json"));
-            config.set("bootstrapper.data.validated",true);
             config.ensure("bootstrapper.data.channel","stable");
             config.ensure("bootstrapper.data.version","0");
             config.ensure("bootstrapper.config.checkForUpdates",true);
+            config.set("bootstrapper.data.validated",true);
         } catch (Exception e) {
             config = null;
             System.gc();
@@ -134,8 +157,10 @@ public class NexusBootstrapper {
             connection.setRequestMethod("GET");
             connection.connect();
 
+            System.out.println("Library path created: " + new File(path+"libraries/nexus/").mkdirs());
+
             int fileLength = connection.getContentLength();
-            File downloadFile = new File(path+"app.jar");
+            File downloadFile = new File(path+"libraries/nexus/app.jar");
             InputStream inputStream = connection.getInputStream();
             OutputStream outputStream = new FileOutputStream(downloadFile);
 
@@ -159,20 +184,24 @@ public class NexusBootstrapper {
     }
 
     @SuppressWarnings("all")
-    private boolean launch() {
+    private boolean launch(boolean disableOutput) {
         try {
-            File appFolder = Main.getDefaultFolder(false);
-            ProcessBuilder processBuilder = new ProcessBuilder("java", "-jar", "--add-opens", "java.desktop/sun.awt=ALL-UNNAMED", "--add-opens", "java.desktop/sun.lwawt=ALL-UNNAMED", "--add-opens", "java.desktop/sun.lwawt.macosx=ALL-UNNAMED", path+"app.jar", "application", "--add-opens java.desktop/sun.awt=ALL-UNNAMED --add-opens java.desktop/sun.lwawt=ALL-UNNAMED --add-opens java.desktop/sun.lwawt.macosx=ALL-UNNAMED","--path:"+appFolder.getAbsolutePath().replace("\\","/")+"/");
+            File appFolder = Main.getDefaultFolder();
+            ProcessBuilder processBuilder = new ProcessBuilder("java", "-jar", "--add-opens", "java.desktop/sun.awt=ALL-UNNAMED", "--add-opens", "java.desktop/sun.lwawt=ALL-UNNAMED", "--add-opens", "java.desktop/sun.lwawt.macosx=ALL-UNNAMED", path+"libraries/nexus/app.jar", "--add-opens java.desktop/sun.awt=ALL-UNNAMED --add-opens java.desktop/sun.lwawt=ALL-UNNAMED --add-opens java.desktop/sun.lwawt.macosx=ALL-UNNAMED","--path:"+appFolder.getAbsolutePath().replace("\\","/")+"/");
             processBuilder.redirectErrorStream(true);
             Process process = processBuilder.start();
             frame.dispose();
-            InputStream inputStream = process.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+            if(disableOutput) {
+                System.exit(0);
+            } else {
+                InputStream inputStream = process.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
+                System.exit(process.waitFor());
             }
-            System.exit(process.waitFor());
             return true;
         } catch (Exception e) {
             NexusUtilities.getLogger().printErr("NEXUS App","Failed to launch","Oops! The bootstrapper ran into an error...",e.getMessage(),e.getStackTrace(),"Try to manually update the app.","Try to reinstall the app.");

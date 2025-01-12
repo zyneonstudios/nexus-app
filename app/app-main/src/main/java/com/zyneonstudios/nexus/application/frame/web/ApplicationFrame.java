@@ -26,8 +26,8 @@ public class ApplicationFrame extends NexusWebFrame implements ComponentListener
     private final FrameConnector connector;
     private final Dimension minSize = new Dimension(640,360);
 
-    public ApplicationFrame(NexusApplication application, String url, CefClient client) {
-        super(client, url, true);
+    public ApplicationFrame(NexusApplication application, String url, CefClient client, boolean decorated) {
+        super(client, url, decorated);
         try {
             setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/icon.png"))).getScaledInstance(32, 32, Image.SCALE_SMOOTH));
         } catch (Exception ignore) {}

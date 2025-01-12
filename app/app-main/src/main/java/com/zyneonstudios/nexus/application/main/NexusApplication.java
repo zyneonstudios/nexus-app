@@ -87,7 +87,7 @@ public class NexusApplication {
         setup.enableCache(true); setup.enableCookies(true); setup.setup();
 
         if(ApplicationStorage.getOS().startsWith("macOS")|| ApplicationStorage.getOS().startsWith("Windows")||disableCustomFrame) {
-            frame = new ApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient());
+            frame = new ApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient(),true);
             frame.pack(); frame.setSize(new Dimension(1200,720));
         } else {
             ApplicationFrame frame_ = null;

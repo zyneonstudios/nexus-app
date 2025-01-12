@@ -17,8 +17,7 @@ public class CustomApplicationFrame extends ApplicationFrame {
     private boolean border;
 
     public CustomApplicationFrame(NexusApplication application, String url, CefClient client) {
-        super(application,url,client);
-        setUndecorated(true);
+        super(application,url,client,false);
         title = "  Zyneon Application (v"+ ApplicationStorage.getApplicationVersion()+", "+ ApplicationStorage.getOS()+")";
         JPanel customTitleBar = createCustomTitleBar();
         getContentPane().add(customTitleBar, BorderLayout.NORTH);

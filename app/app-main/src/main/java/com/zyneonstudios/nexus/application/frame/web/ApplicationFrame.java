@@ -5,7 +5,8 @@ import com.zyneonstudios.nexus.application.main.ApplicationStorage;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
 import com.zyneonstudios.nexus.desktop.events.AsyncWebFrameConnectorEvent;
 import com.zyneonstudios.nexus.desktop.events.WebFrameConnectorEvent;
-import com.zyneonstudios.nexus.desktop.frame.web.NexusWebFrame;
+import com.zyneonstudios.nexus.desktop.frame.nexus.NexusWebFrame;
+import com.zyneonstudios.nexus.desktop.frame.web.WebFrame;
 import org.cef.CefClient;
 import org.cef.browser.CefBrowser;
 import org.cef.browser.CefFrame;
@@ -13,6 +14,7 @@ import org.cef.handler.CefLoadHandler;
 import org.cef.network.CefRequest;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -21,7 +23,7 @@ import java.awt.event.WindowEvent;
 import java.util.Objects;
 
 @SuppressWarnings("unused")
-public class ApplicationFrame extends NexusWebFrame implements ComponentListener {
+public class ApplicationFrame extends NexusWebFrame implements ComponentListener, WebFrame {
 
     private final FrameConnector connector;
     private final Dimension minSize = new Dimension(640,360);
@@ -79,7 +81,6 @@ public class ApplicationFrame extends NexusWebFrame implements ComponentListener
 
             }
         });
-        setMinimumSize(minSize);
     }
 
     public Dimension getMinSize() {
@@ -92,10 +93,10 @@ public class ApplicationFrame extends NexusWebFrame implements ComponentListener
         setTitleForeground(foreground);
     }
 
-    @Override
+    //@Override
     public void setTitleColors(Color background, Color foreground) {
         setBackground(background);
-        super.setTitleColors(background, foreground);
+        //super.setTitleColors(background, foreground);
     }
 
     public void setTitleBackground(Color color) {
@@ -139,5 +140,10 @@ public class ApplicationFrame extends NexusWebFrame implements ComponentListener
     @Override
     public void componentHidden(ComponentEvent e) {
 
+    }
+
+    @Override
+    public JFrame getAsJFrame() {
+        return this;
     }
 }

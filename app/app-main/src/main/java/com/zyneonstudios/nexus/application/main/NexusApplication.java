@@ -56,9 +56,7 @@ public class NexusApplication {
             } catch (Exception ignore) {}
         }
         String startPage = ApplicationStorage.startPage;
-        if(ApplicationStorage.getSettings().get("settings.setupFinished")==null) {
-            ApplicationStorage.getSettings().set("settings.setupFinished",false);
-        }
+        ApplicationStorage.getSettings().ensure("settings.setupFinished",false);
         try {
             if(!ApplicationStorage.getSettings().getBool("settings.setupFinished")) {
                 startPage = "firstrun.html";

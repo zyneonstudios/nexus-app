@@ -5,7 +5,7 @@
 
 <details>
     <summary>Warning</summary>
-    For your security, please download the NEXUS app directly from our official websites https://nexus.zyneonstudios.com and https://github.com/zyneonstudios/nexus-app. Downloading from other sources may expose you to risks such as malware. We cannot guarantee the safety of downloads from third-party links.
+    For your security, please download the NEXUS app directly from our official websites https://nexus.zyneonstudios.net and https://github.com/zyneonstudios/nexus-app. Downloading from other sources may expose you to risks such as malware. We cannot guarantee the safety of downloads from third-party links.
 </details>
 
 ## Description
@@ -13,16 +13,16 @@ The NEXUS app is a modular and easily extensible desktop application designed to
 
 ## Supported platforms
 ![](https://i.ibb.co/FK4LNHm/platforms.png)
-[<img src="https://i.ibb.co/nBLzRMT/download.png">](https://nexus.zyneonstudios.com/application)
+[<img src="https://i.ibb.co/nBLzRMT/download.png">](https://nexus.zyneonstudios.net/application)
 [Alternative/Direct Downloads](https://github.com/zyneonstudios/nexus-app/releases/)
 
 <details>
     <summary>Old description</summary>
-    Download the Zyneon Application from https://github.com/zyneonstudios/nexus-app/releases and https://nexus.zyneonstudios.com/application only! All other sources are not verified and we assume no liability!
+    Download the Zyneon Application from https://github.com/zyneonstudios/nexus-app/releases and https://nexus.zyneonstudios.net/application only! All other sources are not verified and we assume no liability!
 
 ---
 ![Zyneon Application logo and text](https://i.ibb.co/tsKhXtB/23.png)
-by [Zyneon Studios](https://www.zyneonstudios.com). Metadata and update repository: [here](https://github.com/zyneonstudios/nexus-nex)
+by [Zyneon Studios](https://www.zyneonstudios.net). Metadata and update repository: [here](https://github.com/zyneonstudios/nexus-nex)
 ---
 Supported platforms:
 ![Zyneon Application logo and text](https://i.ibb.co/FK4LNHm/platforms.png)
@@ -34,10 +34,10 @@ The Zyneon Application allows you to create, launch, manage, download and share 
 # Web version (alpha)
 The application also has a version that can be easily accessed from an Internet browser. This is currently still in a very early alpha phase and is missing a lot of features.
 
-[Click here to open web version](https://www.zyneonstudios.com/nexus/app)
+[Click here to open web version](https://www.zyneonstudios.net/nexus/app)
 
 ---
-[<img src="https://i.ibb.co/nBLzRMT/download.png">](https://nexus.zyneonstudios.com/application)
+[<img src="https://i.ibb.co/nBLzRMT/download.png">](https://nexus.zyneonstudios.net/application)
 [Alternative/Direct Downloads](https://github.com/zyneonstudios/nexus-app/releases/)
 
 ---

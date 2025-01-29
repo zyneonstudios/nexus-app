@@ -148,7 +148,7 @@ public class FrameConnector {
     private void load(String request) {
         switch (request) {
             case "drive" ->
-                    open("url.https://drive.zyneonstudios.com");
+                    open("url.https://drive.zyneonstudios.net");
             case "discover" ->
                     frame.getBrowser().loadURL(ApplicationStorage.urlBase + ApplicationStorage.language + "/discover.html");
             case "downloads" ->
@@ -303,7 +303,7 @@ public class FrameConnector {
                 frame.executeJavaScript("updates = " + autoUpdate + "; document.getElementById('updater-settings-update-channel').value = \"" + channel + "\"; document.getElementById('updater-settings').style.display = 'inherit'; document.getElementById('general-settings-start-page').value = '" + ApplicationStorage.startPage + "'; document.getElementById('updater-settings').style.display = 'inherit';");
             }
             case "indexes" ->
-                    frame.executeJavaScript("if(!document.getElementById('indexes-group-default').innerHTML.includes('Zyneon NEX')) { document.getElementById('indexes-group-default').innerHTML += \"<h3>Zyneon NEX <span class='buttons'><span>Official</span><a onclick='openUrl(`https://github.com/zyneonstudios/nexus-nex`);'>GitHub</a><a onclick='openUrl(`https://nexus.zyneonstudios.com/nex/`);'>Open</a></span></h3>\"}");
+                    frame.executeJavaScript("if(!document.getElementById('indexes-group-default').innerHTML.includes('Zyneon NEX')) { document.getElementById('indexes-group-default').innerHTML += \"<h3>Zyneon NEX <span class='buttons'><span>Official</span><a onclick='openUrl(`https://github.com/zyneonstudios/nexus-nex`);'>GitHub</a><a onclick='openUrl(`https://nexus.zyneonstudios.net/nex/`);'>Open</a></span></h3>\"}");
             case "about" ->
                     frame.executeJavaScript("document.getElementById('settings-global-application-version').innerText = \"" + ApplicationStorage.getApplicationVersion() + "\"");
         }

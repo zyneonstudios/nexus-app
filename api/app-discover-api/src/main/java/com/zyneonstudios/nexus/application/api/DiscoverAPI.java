@@ -99,7 +99,7 @@ public class DiscoverAPI implements ApplicationAPI {
             public boolean onAction() {
                 if(Desktop.isDesktopSupported()) {
                     try {
-                        Desktop.getDesktop().browse(new URI("https://nexus.zyneonstudios.com"));
+                        Desktop.getDesktop().browse(new URI("https://nexus.zyneonstudios.net"));
                     } catch (Exception e) {
                         NexusDesktop.getLogger().err(e.getMessage());
                     }

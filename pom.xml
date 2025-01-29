@@ -12,7 +12,7 @@
     <distributionManagement>
         <repository>
             <id>zyneonstudios-repo-releases</id>
-            <url>https://maven.zyneonstudios.com/releases</url>
+            <url>https://maven.zyneonstudios.net/releases</url>
         </repository>
     </distributionManagement>
 
@@ -20,7 +20,7 @@
         <repository>
             <id>zyneonstudios-repo-releases</id>
             <name>Zyneon Studios Maven repository</name>
-            <url>https://maven.zyneonstudios.com/releases</url>
+            <url>https://maven.zyneonstudios.net/releases</url>
         </repository>
     </repositories>
 

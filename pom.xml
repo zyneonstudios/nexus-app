@@ -11,16 +11,22 @@
 
     <distributionManagement>
         <repository>
-            <id>zyneonstudios-repo-releases</id>
-            <url>https://maven.zyneonstudios.net/releases</url>
+            <id>nerofy-releases</id>
+            <name>Nerofy Network Maven repository</name>
+            <url>https://maven.nrfy.net/releases</url>
         </repository>
     </distributionManagement>
 
     <repositories>
         <repository>
-            <id>zyneonstudios-repo-releases</id>
-            <name>Zyneon Studios Maven repository</name>
-            <url>https://maven.zyneonstudios.net/releases</url>
+            <id>nerofy-releases</id>
+            <name>Nerofy Network Maven repository</name>
+            <url>https://maven.nrfy.net/releases</url>
+        </repository>
+        <repository>
+            <id>nerofy-snapshots</id>
+            <name>Nerofy Network Maven repository</name>
+            <url>https://maven.nrfy.net/snapshots</url>
         </repository>
     </repositories>
 

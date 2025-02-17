@@ -1,0 +1,87 @@
+#html {
+    background: var(--background-accent);
+}
+
+body {
+    background: var(--background-accent);
+}
+
+* {
+    border-radius: 1rem;
+}
+
+#main {
+    color: var(--foreground);
+
+    .flex {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        #menu {
+            transition: all 0.25s ease !important;
+            border-radius: 0;
+            background: var(--background-accent);
+            width: 4rem;
+            color: var(--foreground-accent);
+
+            ul {
+                padding: 0.5rem;
+                li {
+                    display: flex;
+                    color: var(--foreground-accent);
+                    padding: 0.5rem;
+                    margin-bottom: 0.4rem;
+
+                    i, img {
+                        height: 2rem;
+                        font-size: 2rem;
+                        border-radius: 0 !important;
+                    }
+
+                    span {
+                        display: none;
+                        white-space: nowrap;
+                        font-size: 1.75rem;
+                        margin-left: 0.5rem;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        border-radius: 0 !important;
+                    }
+                }
+
+                li:hover {
+                    cursor: pointer;
+                    background: var(--background-inv);
+                    box-shadow: 0 0 0.4rem var(--background-inv);
+                    color: var(--foreground-inv)
+                }
+            }
+        }
+
+        #menu.active {
+            width: 22rem;
+            ul {
+                li {
+                    span {
+                        display: unset;
+                    }
+                }
+            }
+        }
+
+        #content {
+            border-radius: 1.5rem 0 0 0;
+            background: var(--background);
+            width: 100%;
+        }
+    }
+}
+
+#preloader {
+    display: none;
+}
+
+#main {
+    display: unset;
+}

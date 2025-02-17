@@ -1,0 +1,15 @@
+:root {
+    --background: #d5d5d5;
+    --background-alt: #e8e8e8;
+    --background-accent: #fff;
+    --background-inv: #000;
+
+    --foreground: #272727;
+    --foreground-alt: #191919;
+    --foreground-accent: #000;
+    --foreground-inv: #fff;
+
+    --accent: #8f53f3;
+    --accent-alt: #ad7fff;
+    --accent-accent: #5398f3;
+}

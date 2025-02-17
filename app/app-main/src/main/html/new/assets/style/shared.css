@@ -1,0 +1,105 @@
+:root {
+    --background: #070709;
+    --background-alt: #070709;
+    --background-accent: #000;
+    --background-inv: #fff;
+
+    --foreground: #b1b1b1;
+    --foreground-alt: #f1f1f1;
+    --foreground-accent: #fff;
+    --foreground-inv: #000;
+
+    --accent: #8f53f3;
+    --accent-alt: #ad7fff;
+    --accent-accent: #5398f3;
+}
+
+@font-face {
+    font-family: OpenSans-Bold;
+    src: url("opensans/OpenSans-Bold.ttf");
+}
+
+@font-face {
+    font-family: OpenSans-BoldItalic;
+    src: url("opensans/OpenSans-BoldItalic.ttf");
+}
+
+@font-face {
+    font-family: OpenSans-ExtraBold;
+    src: url("opensans/OpenSans-ExtraBold.ttf");
+}
+
+@font-face {
+    font-family: OpenSans-ExtraBoldItalic;
+    src: url("opensans/OpenSans-ExtraBoldItalic.ttf");
+}
+
+@font-face {
+    font-family: OpenSans-Italic;
+    src: url("opensans/OpenSans-Italic.ttf");
+}
+
+@font-face {
+    font-family: OpenSans-Light;
+    src: url("opensans/OpenSans-Light.ttf");
+}
+
+@font-face {
+    font-family: OpenSans-LightItalic;
+    src: url("opensans/OpenSans-LightItalic.ttf");
+}
+
+@font-face {
+    font-family: OpenSans-Regular;
+    src: url("opensans/OpenSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: OpenSans-Semibold;
+    src: url("opensans/OpenSans-Semibold.ttf");
+}
+
+@font-face {
+    font-family: OpenSans-SemiboldItalic;
+    src: url("opensans/OpenSans-SemiboldItalic.ttf");
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    user-select: none;
+    font-family: "Open Sans", sans-serif;
+}
+
+*:hover {
+    transition: all 0.25s ease;
+}
+
+body {
+    transition: all 0ms !important;
+    background: var(--background);
+}
+
+#preloader {
+    background: var(--background);
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+
+    i {
+        color: var(--foreground);
+        font-size: 3rem;
+    }
+}
+
+#main {
+    display: none;
+}
+
+.flex {
+    display: flex !important;
+}

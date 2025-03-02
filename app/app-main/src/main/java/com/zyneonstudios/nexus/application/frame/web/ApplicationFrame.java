@@ -6,6 +6,7 @@ import com.zyneonstudios.nexus.application.main.NexusApplication;
 import com.zyneonstudios.nexus.desktop.events.AsyncWebFrameConnectorEvent;
 import com.zyneonstudios.nexus.desktop.events.WebFrameConnectorEvent;
 import com.zyneonstudios.nexus.desktop.frame.nexus.NexusWebFrame;
+import com.zyneonstudios.nexus.desktop.frame.web.NWebFrame;
 import com.zyneonstudios.nexus.desktop.frame.web.WebFrame;
 import org.cef.CefClient;
 import org.cef.browser.CefBrowser;
@@ -88,7 +89,7 @@ public class ApplicationFrame extends NexusWebFrame implements ComponentListener
     }
 
     public void setTitlebar(String title, Color background, Color foreground) {
-        setTitle("NEXUS App ("+title+")");
+        setTitle("NEXUS App (BETA, "+title+")");
         setTitleBackground(background);
         setTitleForeground(foreground);
     }

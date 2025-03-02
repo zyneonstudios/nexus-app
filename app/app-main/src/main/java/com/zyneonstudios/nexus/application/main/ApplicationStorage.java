@@ -58,7 +58,8 @@ public record ApplicationStorage(String[] args, NexusApplication app) {
             }
         }
 
-        urlBase = "file://" + getApplicationPath() + "temp/ui/";
+        urlBase = "file://" + new File(getApplicationPath()).getAbsolutePath() + "/temp/ui/";
+        //urlBase = "file:///home/nerotvlive/IdeaProjects/nexus-app/app/app-main/src/main/html/";
 
         FileExtractor.extractResourceFile("nexus.json",getApplicationPath()+"temp/nexus.json", Main.class);
         JsonStorage properties = new JsonStorage(new File(getApplicationPath() + "temp/nexus.json"));

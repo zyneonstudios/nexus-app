@@ -84,22 +84,9 @@ public class NexusApplication {
         });
         setup.enableCache(true); setup.enableCookies(true); setup.setup();
 
-        if(ApplicationStorage.getOS().startsWith("macOS")|| ApplicationStorage.getOS().startsWith("Windows")||disableCustomFrame) {
-            frame = new ApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient(),true);
-            frame.pack(); frame.setSize(new Dimension(1200,720));
-        } else {
-            ApplicationFrame frame_ = null;
-            try {
-                frame_ = new CustomApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient());
-                frame_.pack(); frame_.setSize(new Dimension(1080,660));
-            } catch (Exception e) {
-                logger.err("[APP] Couldn't load custom Linux frame: "+e.getMessage());
-                logger.err("[APP] Disabling custom Linux frame and restarting...");
-                ApplicationStorage.getSettings().set("settings.linux.customFrame",false);
-                restart(false);
-            }
-            frame = frame_;
-        }
+        frame = new ApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient(),true);
+        frame.pack(); frame.setSize(new Dimension(1200,720));
+
         if(frame==null) {
             System.exit(-1);;
         }

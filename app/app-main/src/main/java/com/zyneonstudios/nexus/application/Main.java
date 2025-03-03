@@ -1,4 +1,4 @@
-package com.zyneonstudios.nexus;
+package com.zyneonstudios.nexus.application;
 
 import com.zyneonstudios.nexus.application.frame.ZyneonSplash;
 import com.zyneonstudios.nexus.application.main.NexusApplication;

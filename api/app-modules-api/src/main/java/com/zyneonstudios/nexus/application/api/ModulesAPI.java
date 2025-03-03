@@ -13,7 +13,7 @@ public class ModulesAPI implements ApplicationAPI {
 
     private NexusApplication application;
     private static final HashMap<ModuleEventType, ArrayList<ModuleEvent>> events = new HashMap<>();
-    private static final HashMap<String, ApplicationModule> modules = new HashMap<>();
+    private final HashMap<String, ApplicationModule> modules = new HashMap<>();
 
     public ModulesAPI() {
 
@@ -34,13 +34,13 @@ public class ModulesAPI implements ApplicationAPI {
         ApplicationAPI.super.shutdown();
     }
 
-    public static void registerModule(ApplicationModule module) {
+    public void registerModule(ApplicationModule module) {
         if(!modules.containsKey(module.getId())) {
             modules.put(module.getId(), module);
         }
     }
 
-    public static ApplicationModule getModule(String id) {
+    public ApplicationModule getModule(String id) {
         return modules.get(id);
     }
 

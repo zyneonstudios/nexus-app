@@ -1,6 +1,6 @@
 package com.zyneonstudios.nexus.application.main;
 
-import com.zyneonstudios.nexus.Main;
+import com.zyneonstudios.nexus.application.Main;
 import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
 import com.zyneonstudios.nexus.utilities.file.FileActions;
 import com.zyneonstudios.nexus.utilities.file.FileExtractor;

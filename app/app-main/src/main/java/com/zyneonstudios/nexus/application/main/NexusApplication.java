@@ -13,7 +13,6 @@ import com.zyneonstudios.nexus.utilities.NexusUtilities;
 import com.zyneonstudios.nexus.utilities.file.FileActions;
 import com.zyneonstudios.nexus.utilities.file.FileExtractor;
 import com.zyneonstudios.nexus.utilities.logger.NexusLogger;
-import live.nerotv.napp.minecraft.MinecraftModule;
 import me.friwi.jcefmaven.MavenCefAppHandlerAdapter;
 import org.cef.CefApp;
 
@@ -47,7 +46,6 @@ public class NexusApplication {
         libraryAPI.load(this);
         modulesAPI = new ModulesAPI();
         modulesAPI.load(this);
-        ModulesAPI.registerModule(new MinecraftModule());
         modulesAPI.loadModules();
 
         logger.log("[APP] Updated application ui: "+update());

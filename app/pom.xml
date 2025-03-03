@@ -12,7 +12,7 @@
 
     <properties>
         <nexus.type>unstable</nexus.type>
-        <revision>2.4.0-alpha.9</revision>
+        <revision>2.4.0-alpha.10</revision>
     </properties>
 
     <artifactId>app</artifactId>

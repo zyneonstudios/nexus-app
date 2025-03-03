@@ -56,14 +56,6 @@
             <version>2.4.0-alpha.17</version>
             <scope>compile</scope>
         </dependency>
-
-
-        <dependency>
-            <groupId>live.nerotv.nexus</groupId>
-            <artifactId>app-minecraft-module</artifactId>
-            <version>3.0.0-alpha.1</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
     <build>

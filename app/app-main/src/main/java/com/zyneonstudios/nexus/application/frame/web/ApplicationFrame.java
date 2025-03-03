@@ -5,7 +5,6 @@ import com.zyneonstudios.nexus.application.main.ApplicationStorage;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
 import com.zyneonstudios.nexus.desktop.events.AsyncWebFrameConnectorEvent;
 import com.zyneonstudios.nexus.desktop.events.WebFrameConnectorEvent;
-import com.zyneonstudios.nexus.desktop.frame.nexus.NexusWebFrame;
 import com.zyneonstudios.nexus.desktop.frame.web.NWebFrame;
 import com.zyneonstudios.nexus.desktop.frame.web.WebFrame;
 import org.cef.CefClient;
@@ -24,7 +23,7 @@ import java.awt.event.WindowEvent;
 import java.util.Objects;
 
 @SuppressWarnings("unused")
-public class ApplicationFrame extends NexusWebFrame implements ComponentListener, WebFrame {
+public class ApplicationFrame extends NWebFrame implements ComponentListener, WebFrame {
 
     private final FrameConnector connector;
     private final Dimension minSize = new Dimension(640,360);

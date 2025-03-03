@@ -8,11 +8,13 @@ import com.zyneonstudios.nexus.application.api.SharedAPI;
 import com.zyneonstudios.nexus.application.api.shared.tray.ApplicationTray;
 import com.zyneonstudios.nexus.application.download.DownloadManager;
 import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
+import com.zyneonstudios.nexus.application.frame.web.CustomApplicationFrame;
 import com.zyneonstudios.nexus.desktop.frame.web.NexusWebSetup;
 import com.zyneonstudios.nexus.utilities.NexusUtilities;
 import com.zyneonstudios.nexus.utilities.file.FileActions;
 import com.zyneonstudios.nexus.utilities.file.FileExtractor;
 import com.zyneonstudios.nexus.utilities.logger.NexusLogger;
+import live.nerotv.napp.minecraft.MinecraftModule;
 import me.friwi.jcefmaven.MavenCefAppHandlerAdapter;
 import org.cef.CefApp;
 
@@ -46,6 +48,7 @@ public class NexusApplication {
         libraryAPI.load(this);
         modulesAPI = new ModulesAPI();
         modulesAPI.load(this);
+        ModulesAPI.registerModule(new MinecraftModule());
         modulesAPI.loadModules();
 
         logger.log("[APP] Updated application ui: "+update());
@@ -84,8 +87,13 @@ public class NexusApplication {
         });
         setup.enableCache(true); setup.enableCookies(true); setup.setup();
 
-        frame = new ApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient(),true);
+        if(ApplicationStorage.getOS().startsWith("win")||ApplicationStorage.getOS().startsWith("mac")||disableCustomFrame) {
+            frame = new ApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient(),true);
+        } else {
+            frame = new CustomApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient());
+        }
         frame.pack(); frame.setSize(new Dimension(1200,720));
+
 
         if(frame==null) {
             System.exit(-1);;

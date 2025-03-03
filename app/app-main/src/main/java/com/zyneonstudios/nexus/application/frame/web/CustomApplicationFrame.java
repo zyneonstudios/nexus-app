@@ -18,7 +18,7 @@ public class CustomApplicationFrame extends ApplicationFrame {
 
     public CustomApplicationFrame(NexusApplication application, String url, CefClient client) {
         super(application,url,client,false);
-        title = "  Zyneon Application (v"+ ApplicationStorage.getApplicationVersion()+", "+ ApplicationStorage.getOS()+")";
+        title = "  NEXUS App (v"+ ApplicationStorage.getApplicationVersion()+", "+ ApplicationStorage.getOS()+")";
         JPanel customTitleBar = createCustomTitleBar();
         getContentPane().add(customTitleBar, BorderLayout.NORTH);
         addDragAndDropFunctionality();

@@ -48,6 +48,10 @@
     overflow-y: auto !important;
 }
 
+#background {
+    background: var(--background5);
+}
+
 /*
     Settings menu window
 */

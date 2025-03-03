@@ -7,12 +7,12 @@
     <parent>
         <groupId>com.zyneonstudios.nexus</groupId>
         <artifactId>nexus-app</artifactId>
-        <version>2025.1</version>
+        <version>2025.3</version>
     </parent>
 
     <properties>
         <nexus.type>unstable</nexus.type>
-        <revision>2.4.0-alpha.6</revision>
+        <revision>2.4.0-alpha.8</revision>
     </properties>
 
     <artifactId>app</artifactId>

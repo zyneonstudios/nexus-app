@@ -1,5 +1,6 @@
 package com.zyneonstudios.nexus.application.api;
 
+import com.zyneonstudios.nexus.application.api.modules.ApplicationModule;
 import com.zyneonstudios.nexus.application.api.modules.events.ModuleEvent;
 import com.zyneonstudios.nexus.application.api.modules.events.ModuleEventType;
 import com.zyneonstudios.nexus.application.api.shared.api.ApplicationAPI;
@@ -12,6 +13,7 @@ public class ModulesAPI implements ApplicationAPI {
 
     private NexusApplication application;
     private static final HashMap<ModuleEventType, ArrayList<ModuleEvent>> events = new HashMap<>();
+    private static final HashMap<String, ApplicationModule> modules = new HashMap<>();
 
     public ModulesAPI() {
 
@@ -30,6 +32,46 @@ public class ModulesAPI implements ApplicationAPI {
     @Override
     public void shutdown() {
         ApplicationAPI.super.shutdown();
+    }
+
+    public static void registerModule(ApplicationModule module) {
+        if(!modules.containsKey(module.getId())) {
+            modules.put(module.getId(), module);
+        }
+    }
+
+    public static ApplicationModule getModule(String id) {
+        return modules.get(id);
+    }
+
+    boolean loaded = false;
+    public void loadModules() {
+        if(!loaded) {
+            loaded = true;
+            for(ApplicationModule module : modules.values()) {
+                module.onLoad();
+            }
+        }
+    }
+
+    boolean enabled = false;
+    public void enableModues() {
+        if(!enabled) {
+            enabled = true;
+            for(ApplicationModule module : modules.values()) {
+                module.onEnable();
+            }
+        }
+    }
+
+    boolean disabled = false;
+    public void disableModules() {
+        if(!disabled) {
+            disabled = true;
+            for(ApplicationModule module : modules.values()) {
+                module.onDisable();
+            }
+        }
     }
 
     public static void registerEvent(ModuleEvent event) {

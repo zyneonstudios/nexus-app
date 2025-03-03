@@ -8,7 +8,6 @@ import com.zyneonstudios.nexus.application.api.SharedAPI;
 import com.zyneonstudios.nexus.application.api.shared.tray.ApplicationTray;
 import com.zyneonstudios.nexus.application.download.DownloadManager;
 import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
-import com.zyneonstudios.nexus.application.frame.web.CustomApplicationFrame;
 import com.zyneonstudios.nexus.desktop.frame.web.NexusWebSetup;
 import com.zyneonstudios.nexus.utilities.NexusUtilities;
 import com.zyneonstudios.nexus.utilities.file.FileActions;
@@ -47,6 +46,7 @@ public class NexusApplication {
         libraryAPI.load(this);
         modulesAPI = new ModulesAPI();
         modulesAPI.load(this);
+        modulesAPI.loadModules();
 
         logger.log("[APP] Updated application ui: "+update());
         boolean disableCustomFrame = false;
@@ -100,6 +100,7 @@ public class NexusApplication {
         discoverAPI.enable();
         libraryAPI.enable();
         modulesAPI.enable();
+        modulesAPI.enableModues();
     }
 
     public static DownloadManager getDownloadManager() {
@@ -181,6 +182,7 @@ public class NexusApplication {
     }
 
     public void restart(boolean soft) {
+        modulesAPI.disableModules();
         CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
         if(soft) {
             if (codeSource != null) {
@@ -243,6 +245,7 @@ public class NexusApplication {
     }
 
     public static void stop(boolean app) {
+        modulesAPI.disableModules();
         modulesAPI.shutdown();
         libraryAPI.shutdown();
         discoverAPI.shutdown();

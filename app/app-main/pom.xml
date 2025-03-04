@@ -21,12 +21,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna</artifactId>
-            <version>5.16.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>com.zyneonstudios.nexus</groupId>
             <artifactId>base-desktop</artifactId>
             <version>2025.1.5</version>
@@ -61,7 +55,7 @@
         <dependency>
             <groupId>live.nerotv.nexus</groupId>
             <artifactId>app-minecraft-module</artifactId>
-            <version>3.0.0-alpha.8</version>
+            <version>3.0.0-alpha.9</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

@@ -109,7 +109,7 @@ a.button:hover {
 }
 
 .highlighted {
-    background: #8732EC80 !important;
+    background: var(--accent3) !important;
     color: white !important;
     box-shadow: 0 0 0.7rem var(--accent) !important;
     cursor: unset !important;

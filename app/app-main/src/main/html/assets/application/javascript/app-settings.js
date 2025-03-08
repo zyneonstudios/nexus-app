@@ -182,6 +182,16 @@ function setContent(newContent,newHighlight,url) {
 
 function initSettings() {
     const urlParams = new URLSearchParams(window.location.search);
+
+    document.getElementById("appearance-settings-colors-accent").addEventListener('input', function() {
+        const color = document.getElementById("appearance-settings-colors-accent").value;
+        document.querySelector(':root').style.setProperty('--accent', color);
+        document.querySelector(':root').style.setProperty('--accent2', adjustColorBrightness(color,50));
+        document.querySelector(':root').style.setProperty('--accent3', color+"90");
+    });
+
+    connector('sync.zoomLevel.0.0');
+
     let id = "settings-general";
     if(urlParams.get('t')) {
         id = urlParams.get("t");

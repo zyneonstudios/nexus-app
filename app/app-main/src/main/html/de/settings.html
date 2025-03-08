@@ -187,6 +187,14 @@
                                         </span>
                                     </h3>
                                     <h3>
+                                        Akzentfarbe
+                                        <span class="color">
+                                            <label>
+                                                <input id="appearance-settings-colors-accent" type="color" onchange="setAccentColor(this.value);">
+                                            </label>
+                                        </span>
+                                    </h3>
+                                    <h3>
                                         Sprache
                                         <span class="select">
                                             <label>
@@ -197,14 +205,14 @@
                                             </label>
                                         </span>
                                     </h3>
-                                    <h3>
+                                    <!--h3>
                                         Oberflächenskalierung
                                         <span class="slider">
                                             <label>
                                                 <input step="0.25" type="range" min="-2.5" max="2.5" value="0" onchange="connector('sync.zoomLevel.'+this.value);">
                                             </label>
                                         </span>
-                                    </h3>
+                                    </h3-->
                                     <h3 id="linux-settings-custom-frame">
                                         Gestaltetes Fenster aktivieren
                                         <span class="checkbox">
@@ -392,6 +400,7 @@
     </body>
     <script>
         initSettings();
+        document.getElementById("appearance-settings-colors-accent").value = accentColor;
         let start = "discover.html";
         if(localStorage.getItem('settings.startPage')!=null) {
             start = localStorage.getItem('settings.startPage');

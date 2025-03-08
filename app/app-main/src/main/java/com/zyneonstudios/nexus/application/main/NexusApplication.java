@@ -87,7 +87,7 @@ public class NexusApplication {
         });
         setup.enableCache(true); setup.enableCookies(true); setup.setup();
 
-        if(ApplicationStorage.getOS().startsWith("win")||ApplicationStorage.getOS().startsWith("mac")||disableCustomFrame) {
+        if(ApplicationStorage.getOS().toLowerCase().startsWith("win")||ApplicationStorage.getOS().toLowerCase().startsWith("mac")||disableCustomFrame) {
             frame = new ApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient(),true);
         } else {
             frame = new CustomApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient());

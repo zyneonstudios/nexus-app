@@ -24,8 +24,9 @@
     --foreground3: #272727;
 
     --highlight: #ffffff;
-    --accent: #8732ec;
-    --accent2: #a458ff;
+    --accent: #00000000;
+    --accent2: #00000000;
+    --accent3: #00000000;
 
     --active: #46e340;
     --inactive: #ff5858;

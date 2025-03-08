@@ -60,6 +60,9 @@ public class FrameConnector {
             } else if(request.startsWith("library.")) {
                 String event = request.replace("library.","");
                 if(event.equals("load")) {
+                    for(LibraryEvent events : LibraryAPI.getEvents(LibraryEventType.LIBRARIES_LOAD_EVENT)) {
+                        events.execute();
+                    }
                     for(LibraryEvent events : LibraryAPI.getEvents(LibraryEventType.LIBRARY_PRELOAD_EVENT)) {
                         if(LibraryAPI.getActiveLibrary()!=null) {
                             LibraryPreLoadEvent event_ = (LibraryPreLoadEvent)events;
@@ -148,7 +151,7 @@ public class FrameConnector {
     private void load(String request) {
         switch (request) {
             case "drive" ->
-                    open("url.https://drive.zyneonstudios.net");
+                    open("url.https://cloud.nrfy.net");
             case "discover" ->
                     frame.getBrowser().loadURL(ApplicationStorage.urlBase + ApplicationStorage.language + "/discover.html");
             case "downloads" ->

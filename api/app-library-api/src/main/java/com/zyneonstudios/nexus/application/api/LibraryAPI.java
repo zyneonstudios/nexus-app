@@ -1,5 +1,6 @@
 package com.zyneonstudios.nexus.application.api;
 
+import com.zyneonstudios.nexus.application.api.library.LibrariesListener;
 import com.zyneonstudios.nexus.application.api.library.Library;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryEvent;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryEventType;
@@ -29,7 +30,7 @@ public class LibraryAPI implements ApplicationAPI {
 
     @Override
     public void enable() {
-
+        registerEvent(new LibrariesListener(application));
     }
 
     @Override

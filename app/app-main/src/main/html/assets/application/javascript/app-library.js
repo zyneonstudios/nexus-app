@@ -36,7 +36,7 @@ function optionExists(selectId, value) {
     return false;
 }
 
-function addModuleToList(title,moduleId,image) {
+function addLibrary(title,moduleId,image) {
     const template = document.getElementById('add-module-option');
     const entry = template.cloneNode(true);
     entry.value = moduleId;

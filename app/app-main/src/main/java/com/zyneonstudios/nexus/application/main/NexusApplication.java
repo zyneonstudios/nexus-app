@@ -48,7 +48,7 @@ public class NexusApplication {
         libraryAPI.load(this);
         modulesAPI = new ModulesAPI();
         modulesAPI.load(this);
-        ModulesAPI.registerModule(new MinecraftModule());
+        modulesAPI.registerModule(new MinecraftModule());
         modulesAPI.loadModules();
 
         logger.log("[APP] Updated application ui: "+update());

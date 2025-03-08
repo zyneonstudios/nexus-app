@@ -64,4 +64,6 @@ public interface Library {
     default String getLibraryId() {
         return id;
     }
+
+    String getName();
 }

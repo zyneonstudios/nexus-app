@@ -5,6 +5,7 @@ import com.zyneonstudios.nexus.application.api.DiscoverAPI;
 import com.zyneonstudios.nexus.application.api.LibraryAPI;
 import com.zyneonstudios.nexus.application.api.ModulesAPI;
 import com.zyneonstudios.nexus.application.api.SharedAPI;
+import com.zyneonstudios.nexus.application.api.library.Library;
 import com.zyneonstudios.nexus.application.api.shared.tray.ApplicationTray;
 import com.zyneonstudios.nexus.application.download.DownloadManager;
 import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
@@ -49,7 +50,6 @@ public class NexusApplication {
         modulesAPI = new ModulesAPI();
         modulesAPI.load(this);
         modulesAPI.registerModule(new MinecraftModule());
-        modulesAPI.loadModules();
 
         logger.log("[APP] Updated application ui: "+update());
         boolean disableCustomFrame = false;
@@ -94,21 +94,11 @@ public class NexusApplication {
         }
         frame.pack(); frame.setSize(new Dimension(1200,720));
 
-
-        if(frame==null) {
-            System.exit(-1);;
-        }
         frame.setLocationRelativeTo(null);
 
         this.runner = new ApplicationRunner(this);
         this.runner.start();
         downloadManager = new DownloadManager(this);
-
-        sharedAPI.enable();
-        discoverAPI.enable();
-        libraryAPI.enable();
-        modulesAPI.enable();
-        modulesAPI.enableModues();
     }
 
     public static DownloadManager getDownloadManager() {
@@ -182,11 +172,19 @@ public class NexusApplication {
     public void launch() {
         frame.setVisible(true);
         trayMenu = new ApplicationTray(this);
+
         if(Main.splash!=null) {
             Main.splash.setVisible(false);
             Main.splash = null;
             System.gc();
         }
+
+        sharedAPI.enable();
+        discoverAPI.enable();
+        libraryAPI.enable();
+        modulesAPI.enable();
+        modulesAPI.loadModules();
+        modulesAPI.enableModues();
     }
 
     public void restart(boolean soft) {

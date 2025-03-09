@@ -384,6 +384,12 @@
     }
 }
 
+.result-image {
+    img {
+        background: var(--background6) !important;
+    }
+}
+
 
 .discover-tab {
     position: absolute;

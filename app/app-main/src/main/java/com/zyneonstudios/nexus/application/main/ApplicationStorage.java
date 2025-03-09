@@ -45,6 +45,8 @@ public record ApplicationStorage(String[] args, NexusApplication app) {
         this.args = args;
         arguments = this.args;
 
+        urlBase = "file://" + new File(getApplicationPath()).getAbsolutePath() + "/temp/ui/";
+
         for (String arg : args) {
             if(arg.startsWith("--test")) {
                 test = true;
@@ -57,9 +59,6 @@ public record ApplicationStorage(String[] args, NexusApplication app) {
                 NexusApplication.getLogger().enableDebug();
             }
         }
-
-        urlBase = "file://" + new File(getApplicationPath()).getAbsolutePath() + "/temp/ui/";
-        //urlBase = "file:///home/nerotvlive/IdeaProjects/nexus-app/app/app-main/src/main/html/";
 
         FileExtractor.extractResourceFile("nexus.json",getApplicationPath()+"temp/nexus.json", Main.class);
         JsonStorage properties = new JsonStorage(new File(getApplicationPath() + "temp/nexus.json"));

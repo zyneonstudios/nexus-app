@@ -1,5 +1,6 @@
 package com.zyneonstudios.nexus.application.frame;
 
+import com.zyneonstudios.nexus.application.Main;
 import com.zyneonstudios.nexus.application.api.DiscoverAPI;
 import com.zyneonstudios.nexus.application.api.LibraryAPI;
 import com.zyneonstudios.nexus.application.api.SharedAPI;

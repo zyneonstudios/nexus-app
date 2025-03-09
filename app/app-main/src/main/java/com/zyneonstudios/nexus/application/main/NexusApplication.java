@@ -6,6 +6,8 @@ import com.zyneonstudios.nexus.application.api.LibraryAPI;
 import com.zyneonstudios.nexus.application.api.ModulesAPI;
 import com.zyneonstudios.nexus.application.api.SharedAPI;
 import com.zyneonstudios.nexus.application.api.library.Library;
+import com.zyneonstudios.nexus.application.api.library.events.LibraryLoadEvent;
+import com.zyneonstudios.nexus.application.api.library.events.LibraryPreLoadEvent;
 import com.zyneonstudios.nexus.application.api.shared.tray.ApplicationTray;
 import com.zyneonstudios.nexus.application.download.DownloadManager;
 import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
@@ -16,9 +18,11 @@ import com.zyneonstudios.nexus.utilities.file.FileActions;
 import com.zyneonstudios.nexus.utilities.file.FileExtractor;
 import com.zyneonstudios.nexus.utilities.logger.NexusLogger;
 import live.nerotv.napp.minecraft.MinecraftModule;
+import live.nerotv.napp.minecraft.java.library.JavaLibrary;
 import me.friwi.jcefmaven.MavenCefAppHandlerAdapter;
 import org.cef.CefApp;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.net.URL;
@@ -39,7 +43,7 @@ public class NexusApplication {
     private static ApplicationTray trayMenu;
 
     public NexusApplication(String[] args) {
-        new ApplicationStorage(args,this);
+        new ApplicationStorage(args, this);
 
         sharedAPI = new SharedAPI();
         sharedAPI.load(this);
@@ -51,48 +55,55 @@ public class NexusApplication {
         modulesAPI.load(this);
         modulesAPI.registerModule(new MinecraftModule());
 
-        logger.log("[APP] Updated application ui: "+update());
+        logger.log("[APP] Updated application ui: " + update());
         boolean disableCustomFrame = false;
-        if(ApplicationStorage.getSettings().get("settings.linux.customFrame")!=null) {
+        if (ApplicationStorage.getSettings().get("settings.linux.customFrame") != null) {
             try {
                 disableCustomFrame = !ApplicationStorage.getSettings().getBool("settings.linux.customFrame");
-            } catch (Exception ignore) {}
+            } catch (Exception ignore) {
+            }
         }
         String startPage = ApplicationStorage.startPage;
-        ApplicationStorage.getSettings().ensure("settings.setupFinished",false);
+        ApplicationStorage.getSettings().ensure("settings.setupFinished", false);
         try {
-            if(!ApplicationStorage.getSettings().getBool("settings.setupFinished")) {
+            if (!ApplicationStorage.getSettings().getBool("settings.setupFinished")) {
                 startPage = "firstrun.html";
             }
-        } catch (Exception ignore) {}
-        if(ApplicationStorage.getSettings().get("cache.restartPage")!=null) {
+        } catch (Exception ignore) {
+        }
+        if (ApplicationStorage.getSettings().get("cache.restartPage") != null) {
             try {
                 startPage = ApplicationStorage.getSettings().get("cache.restartPage").toString();
                 ApplicationStorage.getSettings().delete("cache.restartPage");
-            } catch (Exception ignore) {}
+            } catch (Exception ignore) {
+            }
         }
-        NexusWebSetup setup = new NexusWebSetup(ApplicationStorage.getApplicationPath()+"libraries/cef");
+        NexusWebSetup setup = new NexusWebSetup(ApplicationStorage.getApplicationPath() + "libraries/cef");
         setup.getBuilder().setAppHandler(new MavenCefAppHandlerAdapter() {
-            @Override @Deprecated
+            @Override
+            @Deprecated
             public void stateHasChanged(CefApp.CefAppState state) {
                 if (state == CefApp.CefAppState.TERMINATED) {
                     NexusApplication.stop(true);
                 }
-                if(!ApplicationStorage.getOS().startsWith("Windows")) {
-                    if(state == CefApp.CefAppState.SHUTTING_DOWN) {
+                if (!ApplicationStorage.getOS().startsWith("Windows")) {
+                    if (state == CefApp.CefAppState.SHUTTING_DOWN) {
                         NexusApplication.stop(true);
                     }
                 }
             }
         });
-        setup.enableCache(true); setup.enableCookies(true); setup.setup();
+        setup.enableCache(true);
+        setup.enableCookies(true);
+        setup.setup();
 
-        if(ApplicationStorage.getOS().toLowerCase().startsWith("win")||ApplicationStorage.getOS().toLowerCase().startsWith("mac")||disableCustomFrame) {
-            frame = new ApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient(),true);
+        if (ApplicationStorage.getOS().toLowerCase().startsWith("win") || ApplicationStorage.getOS().toLowerCase().startsWith("mac") || disableCustomFrame) {
+            frame = new ApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient(), true);
         } else {
             frame = new CustomApplicationFrame(this, ApplicationStorage.urlBase + ApplicationStorage.language + "/" + startPage, setup.getWebClient());
         }
-        frame.pack(); frame.setSize(new Dimension(1200,720));
+        frame.pack();
+        frame.setSize(new Dimension(1200, 720));
 
         frame.setLocationRelativeTo(null);
 
@@ -137,35 +148,35 @@ public class NexusApplication {
 
         // TRYING TO DELETE OLD TEMP FOLDER
         File temp = new File(ApplicationStorage.getApplicationPath() + "temp");
-        if(temp.exists()) {
-            if(temp.isDirectory()) {
-                logger.dbg("[APP] Deleted temporary files: "+FileActions.deleteFolder(temp));
+        if (temp.exists()) {
+            if (temp.isDirectory()) {
+                logger.dbg("[APP] Deleted temporary files: " + FileActions.deleteFolder(temp));
             } else {
-                logger.dbg("[APP] Deleted temporary files: "+temp.delete());
+                logger.dbg("[APP] Deleted temporary files: " + temp.delete());
             }
         }
 
         // UI UPDATE
         boolean updated;
         try {
-            if(new File(ApplicationStorage.getApplicationPath() + "temp/ui/").exists()) {
+            if (new File(ApplicationStorage.getApplicationPath() + "temp/ui/").exists()) {
                 try {
                     FileActions.deleteFolder(new File(ApplicationStorage.getApplicationPath() + "temp/ui/"));
                 } catch (Exception e) {
-                    logger.err("Couldn't delete old temporary ui files: "+e.getMessage());
+                    logger.err("Couldn't delete old temporary ui files: " + e.getMessage());
                 }
             }
-            logger.dbg("[APP] Created new ui path: "+new File(ApplicationStorage.getApplicationPath() + "temp/ui/").mkdirs());
-            FileExtractor.extractResourceFile("content.zip", ApplicationStorage.getApplicationPath()+"temp/content.zip",Main.class);
-            FileExtractor.unzipFile(ApplicationStorage.getApplicationPath()+"temp/content.zip", ApplicationStorage.getApplicationPath() + "temp/ui");
-            logger.dbg("[APP] Deleted ui archive: "+new File(ApplicationStorage.getApplicationPath()+"temp/content.zip").delete());
+            logger.dbg("[APP] Created new ui path: " + new File(ApplicationStorage.getApplicationPath() + "temp/ui/").mkdirs());
+            FileExtractor.extractResourceFile("content.zip", ApplicationStorage.getApplicationPath() + "temp/content.zip", Main.class);
+            FileExtractor.unzipFile(ApplicationStorage.getApplicationPath() + "temp/content.zip", ApplicationStorage.getApplicationPath() + "temp/ui");
+            logger.dbg("[APP] Deleted ui archive: " + new File(ApplicationStorage.getApplicationPath() + "temp/content.zip").delete());
             updated = true;
         } catch (Exception e) {
-            logger.err("[APP] Couldn't update application user interface: "+e.getMessage());
+            logger.err("[APP] Couldn't update application user interface: " + e.getMessage());
             updated = false;
         }
-        logger.dbg("[APP] Deleted old updatar json: "+new File(ApplicationStorage.getApplicationPath() + "updater.json").delete());
-        logger.dbg("[APP] Deleted older updater json: "+new File(ApplicationStorage.getApplicationPath() + "version.json").delete());
+        logger.dbg("[APP] Deleted old updatar json: " + new File(ApplicationStorage.getApplicationPath() + "updater.json").delete());
+        logger.dbg("[APP] Deleted older updater json: " + new File(ApplicationStorage.getApplicationPath() + "version.json").delete());
         return updated;
     }
 
@@ -173,7 +184,7 @@ public class NexusApplication {
         frame.setVisible(true);
         trayMenu = new ApplicationTray(this);
 
-        if(Main.splash!=null) {
+        if (Main.splash != null) {
             Main.splash.setVisible(false);
             Main.splash = null;
             System.gc();
@@ -190,18 +201,18 @@ public class NexusApplication {
     public void restart(boolean soft) {
         modulesAPI.disableModules();
         CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
-        if(soft) {
+        if (soft) {
             if (codeSource != null) {
                 URL jarUrl = codeSource.getLocation();
                 String jarPath = jarUrl.getPath();
-                if(!ApplicationStorage.getOS().startsWith("Linux")) {
+                if (!ApplicationStorage.getOS().startsWith("Linux")) {
                     if (jarPath.startsWith("/")) {
                         jarPath = jarPath.replaceFirst("/", "");
                     }
                 }
                 StringBuilder args = new StringBuilder();
-                if(ApplicationStorage.getArguments()!=null) {
-                    for(String arg : ApplicationStorage.getArguments()) {
+                if (ApplicationStorage.getArguments() != null) {
+                    for (String arg : ApplicationStorage.getArguments()) {
                         args.append(arg).append(" ");
                     }
                 }
@@ -209,7 +220,7 @@ public class NexusApplication {
                 try {
                     pb.start();
                 } catch (Exception e) {
-                    logger.err("[APP] Couldn't restart application: "+e.getMessage());
+                    logger.err("[APP] Couldn't restart application: " + e.getMessage());
                 }
                 stop(false);
                 System.exit(0);
@@ -218,7 +229,7 @@ public class NexusApplication {
             if (codeSource != null) {
                 URL jarUrl = codeSource.getLocation();
                 String jarPath = jarUrl.getPath();
-                if(!ApplicationStorage.getOS().startsWith("Linux")) {
+                if (!ApplicationStorage.getOS().startsWith("Linux")) {
                     if (jarPath.startsWith("/")) {
                         jarPath = jarPath.replaceFirst("/", "");
                     }
@@ -230,8 +241,8 @@ public class NexusApplication {
                     }
                 }
                 File updater;
-                if(new File(ApplicationStorage.getApplicationPath()+"bootstrapper.jar").exists()) {
-                    updater = new File(ApplicationStorage.getApplicationPath()+"bootstrapper.jar");
+                if (new File(ApplicationStorage.getApplicationPath() + "bootstrapper.jar").exists()) {
+                    updater = new File(ApplicationStorage.getApplicationPath() + "bootstrapper.jar");
                 } else {
                     updater = new File(ApplicationStorage.getApplicationPath().replace("\\", "/").replace("/NEXUS App/", "/Application/app.jar"));
                 }
@@ -257,7 +268,7 @@ public class NexusApplication {
         discoverAPI.shutdown();
         sharedAPI.shutdown();
 
-        if(app) {
+        if (app) {
             FileActions.deleteFolder(new File(ApplicationStorage.getApplicationPath() + "temp/"));
             System.exit(0);
         }

@@ -114,4 +114,9 @@ public class ZyndexLibrary extends Zyndex implements Library {
     public String getLibraryId() {
         return id;
     }
+
+    @Override
+    public String getLibraryName() {
+        return getName();
+    }
 }

@@ -2,6 +2,7 @@ package com.zyneonstudios.nexus.application.main;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.zyneonstudios.nexus.application.api.LibraryAPI;
 import com.zyneonstudios.nexus.application.download.Download;
 import com.zyneonstudios.nexus.application.download.DownloadManager;
 import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
@@ -72,7 +73,7 @@ public class ApplicationRunner {
             }
         });
 
-        if (((ApplicationFrame) app.getFrame()).getBrowser().getURL().contains("/downloads.html")) {
+        if (app.getFrame().getBrowser().getURL().contains("/downloads.html")) {
             app.getDownloadManager().getDownloads().forEach((uuid, download) -> {
                 if (download.getState().equals(DownloadManager.DownloadState.WAITING)) {
                     String title = "setDownload(\"" + download.getName().replace("\"", "''") + "\",";
@@ -88,7 +89,7 @@ public class ApplicationRunner {
                     String progress = "\"" + download.getPercentString() + "\",";
                     String percent = download.getPercent() + ");";
                     String command = title + state + elapsedTime + downloadSpeed + remainingTime + downloadSize + fileSize + path + url + id + progress + percent;
-                    ((ApplicationFrame) app.getFrame()).executeJavaScript(command);
+                    app.getFrame().executeJavaScript(command);
                 } else if (download.getState().equals(DownloadManager.DownloadState.RUNNING)) {
                     String title = "setDownload(\"" + download.getName().replace("\"", "''") + "\",";
                     String state = "\"" + download.getState().toString().replace("\"", "''") + "\",";
@@ -103,7 +104,7 @@ public class ApplicationRunner {
                     String progress = "\"" + (int)download.getPercent() + "%\",";
                     String percent = download.getPercent() + ");";
                     String command = title + state + elapsedTime + downloadSpeed + remainingTime + downloadSize + fileSize + path + url + id + progress + percent;
-                    ((ApplicationFrame) app.getFrame()).executeJavaScript(command);
+                    app.getFrame().executeJavaScript(command);
                 } else if (download.getState().equals(DownloadManager.DownloadState.FINISHED) || download.getState().equals(DownloadManager.DownloadState.FAILED)) {
                     String title = "setDownload(\"" + download.getName().replace("\"", "''") + "\",";
                     String state = "\"" + download.getState().toString().replace("\"", "''") + "\",";
@@ -118,7 +119,7 @@ public class ApplicationRunner {
                     String progress = "\"" + download.getPercentString() + "\",";
                     String percent = download.getPercent() + ");";
                     String command = title + state + elapsedTime + downloadSpeed + remainingTime + downloadSize + fileSize + path + url + id + progress + percent;
-                    ((ApplicationFrame) app.getFrame()).executeJavaScript(command);
+                    app.getFrame().executeJavaScript(command);
                 }
             });
         }

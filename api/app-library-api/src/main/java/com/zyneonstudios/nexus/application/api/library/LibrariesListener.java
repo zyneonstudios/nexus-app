@@ -15,9 +15,10 @@ public class LibrariesListener extends LibrariesLoadEvent {
     @Override
     public boolean onLoad() {
         for(Library library : LibraryAPI.getLibraries().values()) {
-            application.getFrame().executeJavaScript("addLibrary(\""+library.getName()+"\",\""+library.getLibraryId()+"\",null);");
+            application.getFrame().executeJavaScript("addLibrary(\""+library.getLibraryName()+"\",\""+library.getLibraryId()+"\",null);");
             if(LibraryAPI.getActiveLibrary()==null) {
                 LibraryAPI.setActiveLibrary(library);
+                application.getFrame().executeJavaScript("document.getElementById(\"select-game-module\").value = \""+library.getLibraryId()+"\";");
             }
         }
         return true;

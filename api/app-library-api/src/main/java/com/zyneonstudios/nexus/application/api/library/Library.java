@@ -65,5 +65,5 @@ public interface Library {
         return id;
     }
 
-    String getName();
+    String getLibraryName();
 }

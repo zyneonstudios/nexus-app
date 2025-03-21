@@ -2,7 +2,6 @@ package com.zyneonstudios.nexus.application.bootstrapper;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.zyneonstudios.nexus.Main;
 import com.zyneonstudios.nexus.application.bootstrapper.frames.ProgressFrame;
 import com.zyneonstudios.nexus.utilities.NexusUtilities;
 import com.zyneonstudios.nexus.utilities.json.GsonUtility;

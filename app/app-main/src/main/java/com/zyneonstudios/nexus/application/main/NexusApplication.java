@@ -5,9 +5,14 @@ import com.zyneonstudios.nexus.application.api.DiscoverAPI;
 import com.zyneonstudios.nexus.application.api.LibraryAPI;
 import com.zyneonstudios.nexus.application.api.ModulesAPI;
 import com.zyneonstudios.nexus.application.api.SharedAPI;
+import com.zyneonstudios.nexus.application.api.discover.events.DiscoverEvent;
+import com.zyneonstudios.nexus.application.api.discover.events.DiscoverEventType;
 import com.zyneonstudios.nexus.application.api.library.Library;
+import com.zyneonstudios.nexus.application.api.library.LibraryInstance;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryLoadEvent;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryPreLoadEvent;
+import com.zyneonstudios.nexus.application.api.shared.body.elements.BodyButton;
+import com.zyneonstudios.nexus.application.api.shared.events.ElementActionEvent;
 import com.zyneonstudios.nexus.application.api.shared.tray.ApplicationTray;
 import com.zyneonstudios.nexus.application.download.DownloadManager;
 import com.zyneonstudios.nexus.application.frame.web.ApplicationFrame;
@@ -27,6 +32,8 @@ import java.awt.*;
 import java.io.File;
 import java.net.URL;
 import java.security.CodeSource;
+import java.util.Dictionary;
+import java.util.UUID;
 
 public class NexusApplication {
 

@@ -1,7 +1,6 @@
-package com.zyneonstudios.nexus;
+package com.zyneonstudios.nexus.application.bootstrapper;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import com.zyneonstudios.nexus.application.bootstrapper.NexusBootstrapper;
 
 import javax.swing.*;
 import java.io.File;

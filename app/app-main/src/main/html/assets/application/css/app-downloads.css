@@ -9,6 +9,9 @@
     background: var(--background);
     overflow: hidden;
     overflow-y: scroll;
+
+    border-left: solid 1px var(--border);
+    border-top: solid 1px var(--border);
 }
 
 .download-card {

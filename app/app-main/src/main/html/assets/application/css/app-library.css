@@ -5,7 +5,8 @@ body {
 
 .cnt {
     border-top-left-radius: 1.5rem !important;
-
+    border-left: solid 1px var(--border);
+    border-top: solid 1px var(--border);
     background-size: cover;
 }
 

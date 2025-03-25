@@ -62,7 +62,6 @@ public class SharedAPI implements ApplicationAPI {
         if(!url.startsWith("file://")) {
             url = "file://"+url;
         }
-        System.out.println(url);
         frame.getBrowser().loadURL(url);
     }
 

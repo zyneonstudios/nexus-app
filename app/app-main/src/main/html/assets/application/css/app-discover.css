@@ -5,6 +5,8 @@
     background: var(--background);
     border-top-left-radius: 1.5rem;
     overflow: hidden;
+    border-left: solid 1px var(--border);
+    border-top: solid 1px var(--border);
 }
 
 .discover-content #discover-start {

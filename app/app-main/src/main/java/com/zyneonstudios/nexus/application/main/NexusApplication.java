@@ -220,11 +220,11 @@ public class NexusApplication {
                 getFrame().executeJavaScript("addGroup('Instances','a-minecraft-module');");
                 for(LibraryInstance instances:getLibrary().getLibraryInstances()) {
                     logger.deb(instances.getId());
-                    String image = "https://static.thenounproject.com/png/778835-200.png";
                     if(instances.getIconUrl()!=null) {
-                        image = instances.getIconUrl();
+                        getFrame().executeJavaScript("addGroupEntry('a-minecraft-module',\""+instances.getName().replace("\"","''")+"\",\""+instances.getId().replace("\"","''")+"\",\""+instances.getIconUrl()+"\");");
+                    } else {
+                        getFrame().executeJavaScript("addGroupEntry('a-minecraft-module',\"" + instances.getName().replace("\"", "''") + "\",\"" + instances.getId().replace("\"", "''") + "\",);");
                     }
-                    getFrame().executeJavaScript("addGroupEntry('a-minecraft-module',\""+instances.getName().replace("\"","''")+"\",\""+instances.getId().replace("\"","''")+"\",\""+image+"\");");
                 }
                 return false;
             }

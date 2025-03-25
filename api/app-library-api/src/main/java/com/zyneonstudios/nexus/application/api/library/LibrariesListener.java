@@ -18,9 +18,9 @@ public class LibrariesListener extends LibrariesLoadEvent {
             application.getFrame().executeJavaScript("addLibrary(\""+library.getLibraryName()+"\",\""+library.getLibraryId()+"\",null);");
             if(LibraryAPI.getActiveLibrary()==null) {
                 LibraryAPI.setActiveLibrary(library);
-                application.getFrame().executeJavaScript("document.getElementById(\"select-game-module\").value = \""+library.getLibraryId()+"\";");
             }
         }
+        application.getFrame().executeJavaScript("document.getElementById(\"select-game-module\").value = \""+LibraryAPI.getActiveLibrary().getLibraryId()+"\";");
         return true;
     }
 }

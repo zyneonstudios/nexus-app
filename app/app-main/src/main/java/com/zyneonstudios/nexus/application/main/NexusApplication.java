@@ -1,5 +1,6 @@
 package com.zyneonstudios.nexus.application.main;
 
+import com.formdev.flatlaf.json.Json;
 import com.zyneonstudios.nexus.application.Main;
 import com.zyneonstudios.nexus.application.api.DiscoverAPI;
 import com.zyneonstudios.nexus.application.api.LibraryAPI;
@@ -9,6 +10,7 @@ import com.zyneonstudios.nexus.application.api.discover.events.DiscoverEvent;
 import com.zyneonstudios.nexus.application.api.discover.events.DiscoverEventType;
 import com.zyneonstudios.nexus.application.api.library.Library;
 import com.zyneonstudios.nexus.application.api.library.LibraryInstance;
+import com.zyneonstudios.nexus.application.api.library.events.LibrariesLoadEvent;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryLoadEvent;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryPreLoadEvent;
 import com.zyneonstudios.nexus.application.api.shared.body.elements.BodyButton;
@@ -22,7 +24,9 @@ import com.zyneonstudios.nexus.utilities.NexusUtilities;
 import com.zyneonstudios.nexus.utilities.file.FileActions;
 import com.zyneonstudios.nexus.utilities.file.FileExtractor;
 import com.zyneonstudios.nexus.utilities.logger.NexusLogger;
+import com.zyneonstudios.nexus.utilities.storage.JsonStorage;
 import live.nerotv.napp.minecraft.MinecraftModule;
+import live.nerotv.napp.minecraft.java.library.JavaInstance;
 import live.nerotv.napp.minecraft.java.library.JavaLibrary;
 import me.friwi.jcefmaven.MavenCefAppHandlerAdapter;
 import org.cef.CefApp;
@@ -203,6 +207,28 @@ public class NexusApplication {
         modulesAPI.enable();
         modulesAPI.loadModules();
         modulesAPI.enableModues();
+
+        MinecraftModule.getLibrary().addJavaInstance(new JavaInstance(new JsonStorage("A:/Spiele/Minecraft/NEXUS App/instances/official-zyneonplus-beta/nexusInstance.json")),true);
+        MinecraftModule.getLibrary().addJavaInstance(new JavaInstance(new JsonStorage("A:/Spiele/Minecraft/NEXUS App/instances/official-zyneonplus-exploration/nexusInstance.json")),true);
+        MinecraftModule.getLibrary().addJavaInstance(new JavaInstance(new JsonStorage("A:/Spiele/Minecraft/NEXUS App/instances/official-zyneonplus-latest/nexusInstance.json")),true);
+        MinecraftModule.getLibrary().addJavaInstance(new JavaInstance(new JsonStorage("A:/Spiele/Minecraft/NEXUS App/instances/official-zyneonplus-testing/nexusInstance.json")),true);
+        MinecraftModule.getLibrary().addJavaInstance(new JavaInstance(new JsonStorage("A:/Spiele/Minecraft/NEXUS App/instances/official-zyneonplus-vr/nexusInstance.json")),true);
+
+        LibraryAPI.registerEvent(new LibraryLoadEvent(MinecraftModule.getLibrary()) {
+            @Override
+            public boolean onLoad() {
+                getFrame().executeJavaScript("addGroup('Instances','a-minecraft-module');");
+                for(LibraryInstance instances:getLibrary().getLibraryInstances()) {
+                    logger.deb(instances.getId());
+                    String image = "https://static.thenounproject.com/png/778835-200.png";
+                    if(instances.getIconUrl()!=null) {
+                        image = instances.getIconUrl();
+                    }
+                    getFrame().executeJavaScript("addGroupEntry('a-minecraft-module',\""+instances.getName().replace("\"","''")+"\",\""+instances.getId().replace("\"","''")+"\",\""+image+"\");");
+                }
+                return false;
+            }
+        });
     }
 
     public void restart(boolean soft) {

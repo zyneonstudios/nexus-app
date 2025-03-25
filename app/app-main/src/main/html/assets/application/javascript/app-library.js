@@ -38,7 +38,9 @@ function optionExists(selectId, value) {
 
 function addLibrary(title,moduleId,image) {
     const template = document.getElementById('add-module-option');
+    template.style.display = "none";
     const entry = template.cloneNode(true);
+    entry.style.display = "unset";
     entry.value = moduleId;
     entry.innerText = title;
     template.parentNode.insertBefore(entry,template);

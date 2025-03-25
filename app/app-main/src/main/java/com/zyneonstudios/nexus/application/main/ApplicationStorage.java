@@ -46,6 +46,7 @@ public record ApplicationStorage(String[] args, NexusApplication app) {
         arguments = this.args;
 
         urlBase = "file://" + new File(getApplicationPath()).getAbsolutePath() + "/temp/ui/";
+        urlBase = "file:///A:/Workspaces/IntelliJ/zyneon/nexus-app/app/app-main/src/main/html/";
 
         for (String arg : args) {
             if(arg.startsWith("--test")) {

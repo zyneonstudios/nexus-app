@@ -2,13 +2,7 @@ let desktop = false;
 let colors = "automatic";
 let accentColor = "#00000000";
 
-document.addEventListener('contextmenu',function(e){
-    e.preventDefault();
-});
-
-document.addEventListener('dragstart', function(e){
-    e.preventDefault();
-});
+document.addEventListener('contextmenu',function(e){e.preventDefault();});document.addEventListener('dragstart', function(e){e.preventDefault();});
 
 function init() {
     const urlParams = new URLSearchParams(window.location.search);

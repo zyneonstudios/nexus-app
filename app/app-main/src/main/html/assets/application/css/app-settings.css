@@ -12,6 +12,10 @@
     background: var(--background);
 
     border-top-left-radius: 1.5rem;
+}
+
+.cnt {
+    height: calc(100% - 1px) !important;
     border-left: solid 1px var(--border);
     border-top: solid 1px var(--border);
 }

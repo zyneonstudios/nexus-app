@@ -61,6 +61,7 @@ public class FrameConnector {
             } else if(request.startsWith("library.")) {
                 String event = request.replace("library.","");
                 if(event.equals("load")) {
+                    frame.executeJavaScript("closeMenu();");
                     for(LibraryEvent events : LibraryAPI.getEvents(LibraryEventType.LIBRARIES_LOAD_EVENT)) {
                         events.execute();
                     }

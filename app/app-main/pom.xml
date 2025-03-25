@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.zyneonstudios.nexus</groupId>
         <artifactId>app</artifactId>
-        <version>2025.3</version>
+        <version>2025.3.1</version>
     </parent>
 
     <artifactId>app-main</artifactId>

@@ -17,6 +17,7 @@
 
     <artifactId>app</artifactId>
     <packaging>pom</packaging>
+    <version>2025.3.1</version>
 
     <modules>
         <module>app-bootstrapper</module>

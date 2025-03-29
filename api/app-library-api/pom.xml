@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.zyneonstudios.nexus</groupId>
         <artifactId>app-api</artifactId>
-        <version>2025.3.4</version>
+        <version>2025.3.6</version>
     </parent>
 
     <artifactId>app-library-api</artifactId>

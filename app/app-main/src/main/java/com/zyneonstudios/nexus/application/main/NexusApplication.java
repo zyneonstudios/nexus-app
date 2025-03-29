@@ -117,6 +117,7 @@ public class NexusApplication {
         frame.setSize(new Dimension(1200, 720));
 
         frame.setLocationRelativeTo(null);
+        frame.setTitlebar("new-ui-experiment",Color.black,Color.white);
 
         this.runner = new ApplicationRunner(this);
         this.runner.start();
@@ -207,28 +208,6 @@ public class NexusApplication {
         modulesAPI.enable();
         modulesAPI.loadModules();
         modulesAPI.enableModues();
-
-        MinecraftModule.getLibrary().addJavaInstance(new JavaInstance(new JsonStorage("A:/Spiele/Minecraft/NEXUS App/instances/official-zyneonplus-beta/nexusInstance.json")),true);
-        MinecraftModule.getLibrary().addJavaInstance(new JavaInstance(new JsonStorage("A:/Spiele/Minecraft/NEXUS App/instances/official-zyneonplus-exploration/nexusInstance.json")),true);
-        MinecraftModule.getLibrary().addJavaInstance(new JavaInstance(new JsonStorage("A:/Spiele/Minecraft/NEXUS App/instances/official-zyneonplus-latest/nexusInstance.json")),true);
-        MinecraftModule.getLibrary().addJavaInstance(new JavaInstance(new JsonStorage("A:/Spiele/Minecraft/NEXUS App/instances/official-zyneonplus-testing/nexusInstance.json")),true);
-        MinecraftModule.getLibrary().addJavaInstance(new JavaInstance(new JsonStorage("A:/Spiele/Minecraft/NEXUS App/instances/official-zyneonplus-vr/nexusInstance.json")),true);
-
-        LibraryAPI.registerEvent(new LibraryLoadEvent(MinecraftModule.getLibrary()) {
-            @Override
-            public boolean onLoad() {
-                getFrame().executeJavaScript("addGroup('Instances','a-minecraft-module');");
-                for(LibraryInstance instances:getLibrary().getLibraryInstances()) {
-                    logger.deb(instances.getId());
-                    if(instances.getIconUrl()!=null) {
-                        getFrame().executeJavaScript("addGroupEntry('a-minecraft-module',\""+instances.getName().replace("\"","''")+"\",\""+instances.getId().replace("\"","''")+"\",\""+instances.getIconUrl()+"\");");
-                    } else {
-                        getFrame().executeJavaScript("addGroupEntry('a-minecraft-module',\"" + instances.getName().replace("\"", "''") + "\",\"" + instances.getId().replace("\"", "''") + "\",);");
-                    }
-                }
-                return false;
-            }
-        });
     }
 
     public void restart(boolean soft) {

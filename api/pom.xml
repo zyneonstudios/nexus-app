@@ -11,18 +11,18 @@
     </parent>
 
     <properties>
-        <api.version>2.4.0-beta.2</api.version>
+        <api.version>2.4.0-beta.4</api.version>
     </properties>
 
     <artifactId>app-api</artifactId>
     <packaging>pom</packaging>
-    <version>2025.3.4</version>
+    <version>2025.3.6</version>
 
     <dependencies>
         <dependency>
             <groupId>com.zyneonstudios.nexus</groupId>
             <artifactId>app-main</artifactId>
-            <version>2.4.0-alpha.3</version>
+            <version>2.4.0-beta.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

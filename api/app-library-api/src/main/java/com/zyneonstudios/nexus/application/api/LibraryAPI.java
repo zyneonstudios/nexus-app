@@ -5,6 +5,7 @@ import com.zyneonstudios.nexus.application.api.library.Library;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryEvent;
 import com.zyneonstudios.nexus.application.api.library.events.LibraryEventType;
 import com.zyneonstudios.nexus.application.api.shared.api.ApplicationAPI;
+import com.zyneonstudios.nexus.application.main.ApplicationStorage;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
 import com.zyneonstudios.nexus.desktop.NexusDesktop;
 
@@ -49,6 +50,9 @@ public class LibraryAPI implements ApplicationAPI {
     public static boolean addLibrary(String libraryId, Library library) {
         if(!libraries.containsKey(libraryId)) {
             libraries.put(libraryId, library);
+            if(activeLibrary==null) {
+                activeLibrary = library;
+            }
             return true;
         }
         NexusDesktop.getLogger().err("Couldn't add library to library list: ID already registered.");
@@ -80,6 +84,7 @@ public class LibraryAPI implements ApplicationAPI {
     public static boolean setActiveLibrary(Library library) {
         if(libraries.containsKey(library.getLibraryId())) {
             activeLibrary = library;
+            ApplicationStorage.getSettings().set("settings.library.data.activeLibrary",activeLibrary.getLibraryId());
             return true;
         }
         NexusDesktop.getLogger().err("Couldn't set active library to "+library.getLibraryId()+": Library not registered.");
@@ -89,6 +94,7 @@ public class LibraryAPI implements ApplicationAPI {
     public static boolean setActiveLibrary(String libraryId) {
         if(libraries.containsKey(libraryId)) {
             activeLibrary = libraries.get(libraryId);
+            ApplicationStorage.getSettings().set("settings.library.data.activeLibrary",activeLibrary.getLibraryId());
             return true;
         }
         NexusDesktop.getLogger().err("Couldn't set active library to "+libraryId+": Library not registered.");

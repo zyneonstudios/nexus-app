@@ -20,7 +20,18 @@ public class LibrariesListener extends LibrariesLoadEvent {
                 LibraryAPI.setActiveLibrary(library);
             }
         }
-        application.getFrame().executeJavaScript("document.getElementById(\"select-game-module\").value = \""+LibraryAPI.getActiveLibrary().getLibraryId()+"\";");
+        if(LibraryAPI.getActiveLibrary()!=null) {
+            application.getFrame().executeJavaScript("document.getElementById(\"select-game-module\").value = \""+LibraryAPI.getActiveLibrary().getLibraryId()+"\";");
+            Library library = LibraryAPI.getActiveLibrary();
+            application.getFrame().executeJavaScript("addAction('Refresh','bx bx-refresh','location.reload();','refresh-"+library.getLibraryId()+"');","addGroup('Instances','"+library.getLibraryId()+"');");
+            for(LibraryInstance instances:library.getLibraryInstances()) {
+                if(instances.getIconUrl()!=null) {
+                    application.getFrame().executeJavaScript("addGroupEntry('"+library.getLibraryId()+"',\""+instances.getName().replace("\"","''")+"\",\""+instances.getId().replace("\"","''")+"\",\""+instances.getIconUrl()+"\");");
+                } else {
+                    application.getFrame().executeJavaScript("addGroupEntry('"+library.getLibraryId()+"',\"" + instances.getName().replace("\"", "''") + "\",\"" + instances.getId().replace("\"", "''") + "\",);");
+                }
+            }
+        }
         return true;
     }
 }

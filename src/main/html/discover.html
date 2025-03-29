@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>NEXUS App</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="assets/bootstrap/icons/font/bootstrap-icons.min.css">
+        <link href="assets/nexus/css/shared.css" rel="stylesheet">
+        <script src="assets/nexus/js/shared.js"></script>
+    </head>
+    <body data-bs-theme="dark">
+        <div id="main">
+            <div id="menu">
+                <ul>
+                    <li onclick="toggleMenu();">
+                        <i class="bi bi-list"></i>
+                        <span>Toggle menu</span>
+                    </li>
+                    <li class="active">
+                        <i class="bi bi-globe-europe-africa"></i>
+                        <span>Discover</span>
+                    </li>
+                    <li onclick="location.href = 'library.html';">
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Library</span>
+                    </li>
+                    <li onclick="location.href = 'downloads.html'">
+                        <i class="bi bi-download"></i>
+                        <span>Downloads</span>
+                    </li>
+                </ul>
+                <div class="panel card bg-dark-subtle">
+                    <div class="card-header">
+                        <span><strong>NEXUS</strong> App</span>
+                        <div class="buttons">
+                            <i class="bi bi-arrow-clockwise" onclick="location.reload();"></i>
+                            <i class="bi bi-bell" data-bs-toggle="offcanvas" data-bs-target="#notifications" onclick="openNotifications();"></i>
+                            <i class="bi bi-gear-wide" onclick="location.href = 'settings.html';"></i>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="panel-buttons">
+                            <i class="bi bi-discord" onclick="window.open('https://discord.gg/Awwh6JrJBS','_blank');"></i>
+                            <i class="bi bi-globe2" onclick="window.open('https://nexus.zyneonstudios.org','_blank');"></i>
+                            <i class="bi bi-github" onclick="window.open('https://github.com/zyneonstudios/nexus-app','_blank');"></i>
+                            <i class="bi bi-door-open" onclick="location.href = 'index.html';"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="content">
+                <nav class="navbar navbar-expand-lg bg-dark-subtle shadow m-3 border rounded">
+                    <div class="container-fluid">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page">Home</a>
+                                </li>
+                            </ul>
+                            <form class="d-flex" role="search">
+                                <input class="form-control rounded-3" type="search" placeholder="Search" aria-label="Search" disabled>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="notifications" aria-labelledby="notificationsLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="notificationsLabel">Notifications</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                Loading...
+            </div>
+        </div>
+        <script src="assets/popper/dist/umd/popper.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

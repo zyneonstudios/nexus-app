@@ -1,6 +1,6 @@
 package com.zyneonstudios.nexus.application.events;
 
-import com.zyneonstudios.nexus.application.download.Download;
+import com.zyneonstudios.nexus.application.downloads.Download;
 
 import java.util.UUID;
 

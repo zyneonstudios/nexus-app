@@ -135,73 +135,6 @@ body {
                     color: white;
                 }
             }
-
-            .panel {
-                position: absolute;
-                bottom: -6rem;
-                left: 0;
-                width: calc(100% - 1rem);
-                margin: 0 0.5rem;
-                height: 6rem;
-                border-bottom: none;
-                overflow: hidden;
-                border-radius: var(--nex-border-radius) var(--nex-border-radius) 0 0;
-
-                .card-header {
-                    display: flex;
-
-                    .buttons {
-                        position: absolute;
-                        top: 0;
-                        right: 0;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        margin-right: 0.3rem;
-
-                        i {
-                            transition: all 0.25s ease;
-                            position: relative;
-                            font-size: 1.25rem;
-                            margin: 0.3rem;
-                            opacity: 0.5;
-                            color: var(--nex-fg);
-                        }
-
-                        i.active {
-                            opacity: 1;
-                            text-shadow: 0 0 0.4rem var(--nex-fg);
-                        }
-
-                        i:hover {
-                            opacity: 1;
-                            cursor: pointer;
-                            text-shadow: none;
-                        }
-                    }
-                }
-
-                .panel-buttons {
-                    position: absolute;
-                    display: flex;
-                    width: 100%;
-
-                    justify-content: center;
-                    align-items: center;
-
-                    i {
-                        font-size: 1.5rem;
-                        padding: 0.25rem 0.75rem 0.4rem 0.75rem;
-                        margin: 0.25rem 0.5rem;
-                        border-radius: var(--bs-border-radius);
-                    }
-
-                    i:hover {
-                        background: var(--bs-secondary);
-                        cursor: pointer;
-                    }
-                }
-            }
         }
 
         #menu.active {
@@ -217,11 +150,96 @@ body {
                     }
                 }
             }
+        }
 
-            .panel {
-                display: unset;
-                bottom: 0;
+        .menu-panel {
+            transition: all 0.15s ease;
+            position: absolute;
+            bottom: -3.42rem;
+            z-index: 1;
+            left: 0;
+            width: 17rem;
+            margin: 0 0.5rem;
+            height: 6rem;
+            overflow: hidden;
+            border-radius: var(--nex-border-radius);
+
+            .card-header {
+                position: relative;
+                display: flex;
+
+                .panel-toggle {
+                    position: absolute;
+                    height: 100%;
+                    left: 0;
+                    top: 0;
+                    width: 9.5rem;
+                }
+
+                .panel-toggle:hover {
+                    cursor: pointer;
+                }
+
+                .buttons {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-right: 0.3rem;
+
+                    i {
+                        transition: all 0.25s ease;
+                        position: relative;
+                        font-size: 1.25rem;
+                        margin: 0.3rem;
+                        opacity: 0.5;
+                        color: var(--nex-fg);
+                    }
+
+                    i.active {
+                        opacity: 1;
+                        text-shadow: 0 0 0.4rem var(--nex-fg);
+                    }
+
+                    i:hover {
+                        opacity: 1;
+                        cursor: pointer;
+                        text-shadow: none;
+                    }
+                }
             }
+
+            .card-header:hover {
+                background: #00000000;
+            }
+
+            .panel-buttons {
+                position: absolute;
+                display: flex;
+                width: 100%;
+
+                justify-content: center;
+                align-items: center;
+
+                i {
+                    font-size: 1.5rem;
+                    padding: 0.25rem 0.75rem 0.4rem 0.75rem;
+                    margin: 0.25rem 0.5rem;
+                    border-radius: var(--bs-border-radius);
+                }
+
+                i:hover {
+                    background: var(--bs-dark-border-subtle);
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .menu-panel.active, .menu-panel.hover:hover {
+            display: unset;
+            bottom: 0.5rem;
         }
 
         #menu.transition {

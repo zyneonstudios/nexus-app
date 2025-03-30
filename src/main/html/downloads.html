@@ -30,18 +30,20 @@
                         <span>Downloads</span>
                     </li>
                 </ul>
-                <div class="panel card bg-dark-subtle">
-                    <div class="card-header">
-                        <span><strong>NEXUS</strong> App</span>
-                        <div class="buttons">
-                            <i class="bi bi-arrow-clockwise" onclick="location.reload();"></i>
-                            <i class="bi bi-bell" data-bs-toggle="offcanvas" data-bs-target="#notifications" onclick="openNotifications();"></i>
-                            <i class="bi bi-gear-wide" onclick="location.href = 'settings.html';"></i>
-                        </div>
+            </div>
+            <div class="menu-panel shadow card bg-dark-subtle">
+                <div class="card-header">
+                    <span><strong>NEXUS</strong> App</span>
+                    <div class="panel-toggle" onclick="togglePanel();"></div>
+                    <div class="buttons">
+                        <i class="mode bi" onclick="changePanelMode();"></i>
+                        <i class="bi bi-arrow-clockwise" onclick="location.reload();"></i>
+                        <i class="bi bi-bell" data-bs-toggle="offcanvas" data-bs-target="#notifications" onclick="openNotifications();"></i>
+                        <i class="bi bi-gear-wide" onclick="location.href = 'settings.html';"></i>
                     </div>
-                    <div class="card-body p-0">
+                </div>
+                <div class="card-body p-0">
 
-                    </div>
                 </div>
             </div>
             <div id="content">

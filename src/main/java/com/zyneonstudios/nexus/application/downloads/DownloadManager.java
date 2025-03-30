@@ -1,4 +1,4 @@
-package com.zyneonstudios.nexus.application.download;
+package com.zyneonstudios.nexus.application.downloads;
 
 import com.zyneonstudios.nexus.application.main.NexusRunner;
 import com.zyneonstudios.nexus.application.main.NexusApplication;

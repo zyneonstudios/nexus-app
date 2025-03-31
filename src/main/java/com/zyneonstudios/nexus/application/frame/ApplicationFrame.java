@@ -1,6 +1,7 @@
 package com.zyneonstudios.nexus.application.frame;
 
 import com.zyneonstudios.nexus.application.main.NexusApplication;
+import com.zyneonstudios.nexus.desktop.events.AsyncWebFrameConnectorEvent;
 import com.zyneonstudios.nexus.desktop.frame.web.NWebFrame;
 import com.zyneonstudios.nexus.desktop.frame.web.WebFrame;
 import org.cef.CefClient;
@@ -31,6 +32,22 @@ public class ApplicationFrame extends NWebFrame implements ComponentListener, We
                 System.exit(0);
             }
         });
+        AsyncWebFrameConnectorEvent connectorEvent = new AsyncWebFrameConnectorEvent(this,null) {
+            @Override
+            protected void resolveMessage(String s) {
+                NexusApplication.getLogger().err(s);
+                if(s.startsWith("event.theme.changed.")) {
+                    if(s.endsWith("dark")) {
+                        setTitleBackground(Color.black);
+                        setTitleForeground(Color.white);
+                    } else {
+                        setTitleBackground(Color.white);
+                        setTitleForeground(Color.black);
+                    }
+                }
+            }
+        };
+        setAsyncWebFrameConnectorEvent(connectorEvent);
     }
 
     public Dimension getMinSize() {

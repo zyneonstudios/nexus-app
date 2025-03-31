@@ -38,7 +38,7 @@
                         <i class="bi bi-arrow-clockwise" onclick="location.reload();"></i>
                         <i class="bi bi-download" onclick="location.href = 'downloads.html';"></i>
                         <i class="bi bi-gear-wide active" onclick="location.href = 'index.html';"></i>
-                        <i class="bi bi-bell" data-bs-toggle="offcanvas" data-bs-target="#notifications" onclick="openNotifications();"></i>
+                        <i class="bi bi-bell" data-bs-toggle="offcanvas" onclick="openNotifications();"></i>
                     </div>
                 </div>
                 <div class="card-body p-0">
@@ -47,27 +47,35 @@
             </div>
             <div id="content">
                 <div class="nex-flex">
-                    <div class="card bg-dark-subtle shadow submenu">
+                    <div class="card bg-dark-subtle submenu" style="margin: 0.5rem;">
                         <div class="submenu-group">
                             <h6>General settings</h6>
-                            <button type="button" class="btn btn-nex-secondary">
+                            <button type="button" class="btn btn-nex-secondary active">
                                 <i class="bi bi-brush"></i>
                                 <span>Appearance settings</span>
                             </button>
                         </div>
                     </div>
                     <div class="d-flex w-100 flex-column gap-3 overflow-scroll">
-                        <div class="card p-3 bg-dark-subtle shadow"><h4 class="p-0 m-0">${settings.title}</h4></div>
-                        <div class="card bg-dark-subtle shadow">
+                        <div class="card p-3 bg-dark-subtle" style="margin: 0.5rem 0.5rem 0 0.5rem;"><h4 class="p-0 m-0">${settings.title}</h4></div>
+                        <div class="card bg-dark-subtle" style="margin: 0 0.5rem 0 0.5rem;">
                             <div class="card-header">
                                 <strong>General appearance settings</strong>
                             </div>
                             <div class="card-body p-0">
                                 <table class="table m-0">
                                     <tbody>
-                                    <tr class="disabled">
+                                    <tr>
                                         <td class="left" colspan="2">Theme</td>
-                                        <td class="right appearance-theme">loading</td>
+                                        <td class="right">
+                                            <label>
+                                                <select class="form-select appearance-theme" onchange="theme = this.value; updateTheme();">
+                                                    <option value="auto">Automatic</option>
+                                                    <option value="dark">Dark</option>
+                                                    <option value="light">Light</option>
+                                                </select>
+                                            </label>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="left" colspan="2">Animations</td>
@@ -90,23 +98,45 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="left" colspan="2">Accent color</td>
+                                        <td class="left">Accent color</td>
+                                        <td>
+                                            <div class="text-switch">
+                                                Custom
+                                                <div class="form-switch">
+                                                    <label>
+                                                        <input class="form-check-input appearance-customAccentColor switch" type="checkbox" role="switch" onchange="setCustomAccentColor(this.checked);">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td class="right">
-                                            <label>
-                                                <input type="color" class="color appearance-accentColor" value="#000000" oninput="setAccentColor(this.value);">
-                                            </label>
+                                            <div class="colors">
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-nex-purple" onclick="setAccentColor('var(--nex-purple)');"></button>
+                                                    <button type="button" class="btn btn-nex-blue" onclick="setAccentColor('var(--nex-blue)');"></button>
+                                                    <button type="button" class="btn btn-nex-green" onclick="setAccentColor('var(--nex-green)');"></button>
+                                                    <button type="button" class="btn btn-nex-red" onclick="setAccentColor('var(--nex-red)');"></button>
+                                                    <button type="button" class="btn btn-nex-yellow" onclick="setAccentColor('var(--nex-yellow)');"></button>
+                                                </div>
+                                            </div>
+                                            <div class="color-input m-0 p-0">
+                                                <i class="bi bi-arrow-clockwise" onclick="setAccentColor('#8732ec');"></i>
+                                                <label>
+                                                    <input type="color" class="color appearance-accentColor" value="#00000000" oninput="setAccentColor(this.value);">
+                                                </label>
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr class="last">
                                         <td class="left">Border radius</td>
                                         <td>
                                             <label>
-                                                <input class="number-display appearance-borderRadiusDisplay" type="number" min="0" max="2" step="0.01" value="0" oninput="setBorderRadius(parseFloat(this.value));">
+                                                <input class="number-display appearance-borderRadiusDisplay" type="number" min="0" max="2" step="0.01" value="0" oninput="if(this.value<0) {this.value=0;} if(this.value>2) {this.value=2;} setBorderRadius_dev(parseFloat(this.value));" onchange="setBorderRadius(parseFloat(this.value));">
                                             </label>
                                         </td>
                                         <td class="right">
                                             <label>
-                                                <input type="range" class="range appearance-borderRadius" min="0" value="0" max="2" step="0.01" oninput="setBorderRadius(parseFloat(this.value));">
+                                                <input type="range" class="range appearance-borderRadius form-range" min="0" value="0" max="2" step="0.01" oninput="setBorderRadius(parseFloat(this.value));">
                                             </label>
                                         </td>
                                     </tr>
@@ -114,7 +144,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="card bg-dark-subtle shadow">
+                        <div class="card bg-dark-subtle" style="margin: 0 0.5rem 0 0.5rem;">
                             <div class="card-header">
                                 <strong>Dynamic panel appearance settings</strong>
                             </div>

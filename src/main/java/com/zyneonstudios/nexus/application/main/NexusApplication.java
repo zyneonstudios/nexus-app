@@ -64,7 +64,7 @@ public class NexusApplication {
             @Override
             public void onLoadEnd(CefBrowser browser, CefFrame frame, int httpStatusCode) {
                 String url = browser.getURL();
-                frame.executeJavaScript("localStorage.setItem('enabled','true'); document.getElementById('menu').classList.add('transition');",url,0);
+                frame.executeJavaScript("app = true; document.getElementById('menu').classList.add('transition');",url,0);
                 if(url.contains("discover.html")) {
                     frame.executeJavaScript("enableMenu(true);",url,0);
                 } else {
@@ -78,7 +78,7 @@ public class NexusApplication {
         if(!launched) {
             try {
                 applicationFrame = new ApplicationFrame(this, url, webSetup.getWebClient(), true);
-                applicationFrame.setTitlebar("v3.0.0-alpha.4", Color.BLACK, Color.WHITE);
+                applicationFrame.setTitlebar("v3.0.0-alpha.5", Color.BLACK, Color.WHITE);
                 applicationFrame.setSize(1200, 720);
                 applicationFrame.setLocationRelativeTo(null);
                 applicationFrame.setVisible(true);

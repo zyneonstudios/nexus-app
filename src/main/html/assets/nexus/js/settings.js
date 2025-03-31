@@ -1,13 +1,28 @@
 function initAppearanceValues() {
-    document.querySelector(".appearance-theme").innerText = theme;
+    document.querySelector(".appearance-theme").value = theme;
     document.querySelector(".appearance-animations").checked = animations;
     document.querySelector(".appearance-renderEffects").checked = renderEffects;
+    document.querySelector(".appearance-customAccentColor").checked = enableCustomAccentColor;
     document.querySelector(".appearance-accentColor").value = accentColor;
     document.querySelector(".appearance-borderRadiusDisplay").value = borderRadius;
     document.querySelector(".appearance-borderRadius").value = borderRadius;
     document.querySelector(".appearance-panelMenuColors").checked = panelMenuColors;
     document.querySelector(".appearance-panelFloating").checked = panelFloating;
     document.querySelector(".appearance-panelInlined").checked = panelInlined;
+
+    if(enableCustomAccentColor) {
+        document.querySelector(".color-input").style.display = "flex";
+        document.querySelector(".colors").style.display = "none";
+    } else {
+        document.querySelector(".color-input").style.display = "none";
+        document.querySelector(".colors").style.display = "flex";
+    }
+
+    if(accentColor.toLowerCase() !== "#8732ec") {
+        document.querySelector(".color-input").querySelector("i").style.display = "flex";
+    } else {
+        document.querySelector(".color-input").querySelector("i").style.display = "none";
+    }
 }
 
 function setAnimations(bool) {
@@ -36,10 +51,46 @@ function setRenderEffects(bool) {
     }
 }
 
+function setCustomAccentColor(bool) {
+    enableCustomAccentColor = bool;
+    setStorageItem("settings.appearance.customAccentColor", bool);
+    document.querySelector(".appearance-customAccentColor").checked = enableCustomAccentColor;
+    if(bool) {
+        document.querySelector(".color-input").style.display = "flex";
+        document.querySelector(".colors").style.display = "none";
+        if(getStorageItem("settings.appearance.accentColor")) {
+            accentColor = getStorageItem("settings.appearance.accentColor");
+        }
+        setAccentColor(accentColor);
+    } else {
+        document.querySelector(".color-input").style.display = "none";
+        document.querySelector(".colors").style.display = "flex";
+        if(getStorageItem("settings.appearance.color")) {
+            accentColor = getStorageItem("settings.appearance.color");
+        } else {
+            accentColor = root.style.getPropertyValue('--nex-purple');
+        }
+        setAccentColor(accentColor);
+    }
+    document.querySelector(".appearance-accentColor").value = accentColor;
+}
+
 function setAccentColor(color) {
     accentColor = color;
-    setStorageItem("settings.appearance.accentColor", color);
+    if(enableCustomAccentColor) {
+        setStorageItem("settings.appearance.accentColor", color);
+    } else {
+        setStorageItem("settings.appearance.color", color);
+    }
     document.querySelector(".appearance-accentColor").value = accentColor;
+    setAccentColor_dev(accentColor);
+    if(enableCustomAccentColor) {
+        if (accentColor.toLowerCase() !== "#8732ec") {
+            document.querySelector(".color-input").querySelector("i").style.display = "flex";
+        } else {
+            document.querySelector(".color-input").querySelector("i").style.display = "none";
+        }
+    }
 }
 
 function setBorderRadius(number) {

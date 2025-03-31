@@ -1,8 +1,8 @@
-let menuEnabled = false; let panelEnabled = false; let storage = false;
+let menuEnabled = false; let panelEnabled = false; let storage = false; let app = false;
 const root = document.querySelector(':root');
 document.addEventListener('contextmenu',function(e){e.preventDefault();});document.addEventListener('dragstart', function(e){e.preventDefault();});
 
-let theme = "dark";
+let theme = "auto";
 let animations = true;
 let renderEffects = true;
 let accentColor = "#8732EC";
@@ -10,8 +10,9 @@ let borderRadius = 1.0;
 let panelMenuColors = false;
 let panelFloating = true;
 let panelInlined = false;
+let enableCustomAccentColor = false;
 
-if(localStorage.getItem("enabled")) {
+if(localStorage.getItem("enabled")||app) {
     storage = true;
 }
 
@@ -31,8 +32,21 @@ function initAppearanceSettings() {
             document.head.innerHTML += "<style>:root,[data-bs-theme='light'],[data-bs-theme='dark'] * { box-shadow: none !important; text-shadow: none !important; --bs-box-shadow: none !important; }</style>"
         }
     }
-    if(getStorageItem("settings.appearance.accentColor")) {
-        accentColor = getStorageItem("settings.appearance.accentColor");
+    if(getStorageItem("settings.appearance.customAccentColor")) {
+        enableCustomAccentColor = getStorageItem("settings.appearance.customAccentColor") === "true";
+    }
+    if(enableCustomAccentColor) {
+        if(getStorageItem("settings.appearance.accentColor")) {
+            accentColor = getStorageItem("settings.appearance.accentColor");
+        } else {
+            setStorageItem("settings.appearance.accentColor", accentColor);
+        }
+    } else {
+        if(getStorageItem("settings.appearance.color")) {
+            accentColor = getStorageItem("settings.appearance.color");
+        } else {
+            setStorageItem("settings.appearance.color", accentColor);
+        }
     }
     if(getStorageItem("settings.appearance.borderRadius")) {
         borderRadius = parseFloat(getStorageItem("settings.appearance.borderRadius"));
@@ -244,18 +258,23 @@ function toggleMenu() {
 }
 
 function updateTheme() {
-    let style = null;
-    if(getStorageItem('theme')) {
-        style = getStorageItem('theme');
+    let style = theme;
+    if(style === "auto"||style === "automatic") {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            style = "dark";
+        } else {
+            style = "light";
+        }
     }
-    if (true||(window.matchMedia('(prefers-color-scheme: dark)').matches||style==="dark")&&style!=="light") {
-        theme = "dark";
-        root.style.setProperty('--nex-bg', 'black');
-    } else {
-        theme = "light";
+    if(style==="light") {
         root.style.setProperty('--nex-bg', 'white');
+        console.log("[CONNECTOR] event.theme.changed.light")
+    } else {
+        root.style.setProperty('--nex-bg', 'black');
+        console.log("[CONNECTOR] event.theme.changed.dark")
     }
-    document.body.setAttribute('data-bs-theme', theme);
+    document.body.setAttribute('data-bs-theme', style);
+    setStorageItem("settings.appearance.theme",theme);
 }
 
 function setStorageItem(path,content) {
@@ -276,9 +295,12 @@ function getStorageItem(path) {
 }
 
 function openNotifications() {
-    let notifications = document.getElementById("notifications");
-    notifications.querySelector(".offcanvas-body").innerHTML = "";
-    notifications.querySelector(".offcanvas-body").innerHTML += "Loading...";
+    if(app) {
+        let notifications = document.getElementById("notifications");
+        notifications.querySelector(".offcanvas-body").innerHTML = "";
+        notifications.querySelector(".offcanvas-body").innerHTML += "Loading...";
+        new bootstrap.Offcanvas(document.getElementById('notifications')).show("notificationsLabel");
+    }
 }
 
 addEventListener("DOMContentLoaded", () => {

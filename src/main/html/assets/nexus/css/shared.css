@@ -2,10 +2,37 @@
     --nex-bg: black;
     --nex-fg: #ededed;
     --nex-iv: white;
-    --nex-primary: #8732EC;
+
+    --nex-purple: #8732EC;
+    --nex-purple-accent: color-mix(in srgb, var(--nex-purple), white 25%);
+    --nex-purple-dark: color-mix(in srgb, var(--nex-purple), black 25%);
+    --nex-purple-darker: color-mix(in srgb, var(--nex-purple), black 50%);
+
+    --nex-blue: var(--bs-blue);
+    --nex-blue-accent: color-mix(in srgb, var(--nex-blue), white 25%);
+    --nex-blue-dark: color-mix(in srgb, var(--nex-blue), black 25%);
+    --nex-blue-darker: color-mix(in srgb, var(--nex-blue), black 50%);
+
+    --nex-green: var(--bs-green);
+    --nex-green-accent: color-mix(in srgb, var(--nex-green), white 25%);
+    --nex-green-dark: color-mix(in srgb, var(--nex-green), black 25%);
+    --nex-green-darker: color-mix(in srgb, var(--nex-green), black 50%);
+
+    --nex-red: var(--bs-red);
+    --nex-red-accent: color-mix(in srgb, var(--nex-red), white 25%);
+    --nex-red-dark: color-mix(in srgb, var(--nex-red), black 25%);
+    --nex-red-darker: color-mix(in srgb, var(--nex-red), black 50%);
+
+    --nex-yellow: #cdc139;
+    --nex-yellow-accent: color-mix(in srgb, var(--nex-yellow), white 25%);
+    --nex-yellow-dark: color-mix(in srgb, var(--nex-yellow), black 25%);
+    --nex-yellow-darker: color-mix(in srgb, var(--nex-yellow), black 50%);
+
+    --nex-primary: #00000000;
     --nex-primary-accent: color-mix(in srgb, var(--nex-primary), white 25%);
     --nex-primary-dark: color-mix(in srgb, var(--nex-primary), black 25%);
     --nex-primary-darker: color-mix(in srgb, var(--nex-primary), black 50%);
+
     --nex-border-radius: 1rem;
 
     --bs-primary: var(--nex-primary);
@@ -14,12 +41,6 @@
     --bs-primary-border-subtle: var(--nex-primary-accent);
     --bs-primary-bg-subtle: var(--nex-primary-dark);
     --bs-border-radius: var(--nex-border-radius);
-}
-
-[data-bs-theme="light"] {
-    --nex-bg: white;
-    --nex-iv: black;
-    --nex-fg: #0e0e0e;
 }
 
 * {
@@ -36,6 +57,30 @@ button {
     i {
         margin-right: 0.5rem;
     }
+}
+
+.form-switch .form-check-input {
+    border-radius: var(--bs-border-radius-2xl);
+}
+
+.form-switch .form-check-input:checked {
+    background-color: var(--nex-primary);
+    border-color: var(--nex-primary-accent);
+}
+
+.form-range::-webkit-slider-thumb {
+    background: var(--nex-primary);
+    border: solid 1px var(--nex-primary-accent);
+}
+
+.form-range::-moz-range-thumb {
+    background: var(--nex-primary);
+    border: solid 1px var(--nex-primary-accent);
+}
+
+.form-range::-ms-thumb {
+    background: var(--nex-primary);
+    border: solid 1px var(--nex-primary-accent);
 }
 
 .dropdown-menu {
@@ -61,6 +106,66 @@ button {
 .btn-nex-primary:hover {
     background: var(--nex-primary-dark);
     border-color: var(--nex-primary);
+    color: white;
+}
+
+.btn-nex-purple {
+    background: var(--nex-purple);
+    border-color: var(--nex-purple-accent);
+    color: white;
+}
+
+.btn-nex-purple:hover {
+    background: var(--nex-purple-dark);
+    border-color: var(--nex-purple);
+    color: white;
+}
+
+.btn-nex-blue {
+    background: var(--nex-blue);
+    border-color: var(--nex-blue-accent);
+    color: white;
+}
+
+.btn-nex-blue:hover {
+    background: var(--nex-blue-dark);
+    border-color: var(--nex-blue);
+    color: white;
+}
+
+.btn-nex-green {
+    background: var(--nex-green);
+    border-color: var(--nex-green-accent);
+    color: white;
+}
+
+.btn-nex-green:hover {
+    background: var(--nex-green-dark);
+    border-color: var(--nex-green);
+    color: white;
+}
+
+.btn-nex-red {
+    background: var(--nex-red);
+    border-color: var(--nex-red-accent);
+    color: white;
+}
+
+.btn-nex-red:hover {
+    background: var(--nex-red-dark);
+    border-color: var(--nex-red);
+    color: white;
+}
+
+.btn-nex-yellow {
+    background: var(--nex-yellow);
+    border-color: var(--nex-yellow-accent);
+    color: white;
+}
+
+.btn-nex-yellow:hover {
+    background: var(--nex-yellow-dark);
+    border-color: var(--nex-yellow);
     color: white;
 }
 
@@ -102,7 +207,7 @@ body {
                 overflow-y: scroll;
 
                 li {
-                    border: 1px var(--nex-bg) solid;
+                    border: 1px solid transparent;
                     position: relative;
                     border-radius: var(--nex-border-radius);
                     width: 3rem;
@@ -360,9 +465,8 @@ body {
 
             .nex-flex {
                 height: calc(100% - 2rem);
-                margin: 1rem;
+                padding: 0.5rem;
                 display: flex;
-                gap: 1rem;
             }
 
             .submenu {
@@ -374,6 +478,8 @@ body {
                 overflow: hidden;
                 overflow-y: scroll;
                 gap: 0.4rem;
+                height: calc(100% + 1rem);
+                box-shadow: 0 0 0.5rem #00000075;
 
                 button {
                     text-align: left;
@@ -381,6 +487,17 @@ body {
                     overflow: hidden;
                     margin: 0 0.5rem;
                     font-size: 1.05rem;
+                    box-shadow: 0 0 0.5rem #00000075;
+
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                button.active {
+                    background: var(--nex-primary-darker);
+                    box-shadow: 0 0 0.4rem var(--nex-primary);
+                    border: 1px solid var(--nex-primary-accent);
+                    color: white;
                 }
 
                 h6 {
@@ -394,8 +511,6 @@ body {
                     display: flex;
                     flex-direction: column;
                     flex: 0 0 auto;
-                    overflow: hidden;
-                    overflow-y: scroll;
                     gap: 0.4rem;
                 }
 
@@ -409,6 +524,30 @@ body {
                     }
                 }
             }
+        }
+    }
+}
+
+[data-bs-theme="light"] {
+    --nex-bg: white;
+    --nex-iv: black;
+    --nex-fg: #0e0e0e;
+    --bs-body-bg: #d2d2d2;
+    --bs-body-bg-rgb: 210, 210, 210;
+    --bs-dark-bg-subtle: #fff;
+    --bs-border-color: #8c8c8c;
+
+    li:hover {
+        color: var(--nex-bg);
+    }
+
+    li.active {
+        background: var(--nex-primary) !important;
+    }
+
+    .submenu {
+        button.active {
+            background: var(--nex-primary) !important;
         }
     }
 }

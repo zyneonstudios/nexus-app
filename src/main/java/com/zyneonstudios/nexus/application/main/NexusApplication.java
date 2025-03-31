@@ -78,9 +78,8 @@ public class NexusApplication {
         if(!launched) {
             try {
                 applicationFrame = new ApplicationFrame(this, url, webSetup.getWebClient(), true);
-                applicationFrame.setTitlebar("v3.0.0-alpha.2", Color.BLACK, Color.WHITE);
+                applicationFrame.setTitlebar("v3.0.0-alpha.4", Color.BLACK, Color.WHITE);
                 applicationFrame.setSize(1200, 720);
-                applicationFrame.setMinimumSize(applicationFrame.getSize());
                 applicationFrame.setLocationRelativeTo(null);
                 applicationFrame.setVisible(true);
                 launched = true;

@@ -7,9 +7,11 @@
         <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="assets/bootstrap/icons/font/bootstrap-icons.min.css">
         <link href="assets/nexus/css/shared.css" rel="stylesheet">
+        <link href="assets/nexus/css/settings.css" rel="stylesheet">
         <script src="assets/nexus/js/shared.js"></script>
+        <script src="assets/nexus/js/settings.js"></script>
     </head>
-    <body data-bs-theme="dark">
+    <body bgcolor="black" data-bs-theme="dark">
         <div id="main">
             <div id="menu">
                 <ul>
@@ -25,21 +27,18 @@
                         <i class="bi bi-grid-fill"></i>
                         <span>Library</span>
                     </li>
-                    <li onclick="location.href = 'downloads.html';">
-                        <i class="bi bi-download"></i>
-                        <span>Downloads</span>
-                    </li>
                 </ul>
             </div>
             <div class="menu-panel shadow card bg-dark-subtle">
                 <div class="card-header">
+                    <i class="mode bi" onclick="changePanelMode();"></i>
                     <span><strong>NEXUS</strong> App</span>
                     <div class="panel-toggle" onclick="togglePanel();"></div>
                     <div class="buttons">
-                        <i class="mode bi" onclick="changePanelMode();"></i>
                         <i class="bi bi-arrow-clockwise" onclick="location.reload();"></i>
-                        <i class="bi bi-bell" data-bs-toggle="offcanvas" data-bs-target="#notifications" onclick="openNotifications();"></i>
+                        <i class="bi bi-download" onclick="location.href = 'downloads.html';"></i>
                         <i class="bi bi-gear-wide active" onclick="location.href = 'index.html';"></i>
+                        <i class="bi bi-bell" data-bs-toggle="offcanvas" data-bs-target="#notifications" onclick="openNotifications();"></i>
                     </div>
                 </div>
                 <div class="card-body p-0">
@@ -50,29 +49,117 @@
                 <div class="nex-flex">
                     <div class="card bg-dark-subtle shadow submenu">
                         <div class="submenu-group">
-                            <h6>Settings</h6>
-                            <button type="button" class="btn btn-nex-secondary"><i class="bi bi-compass"></i>General settings</button>
-                            <button type="button" class="btn btn-nex-secondary"><i class="bi bi-globe"></i>Global settings</button>
-                            <button type="button" class="btn btn-nex-secondary"><i class="bi bi-list-ul"></i>Index settings</button>
-                            <button type="button" class="btn btn-nex-secondary"><i class="bi bi-puzzle"></i>Module settings</button>
-                            <button type="button" class="btn btn-nex-secondary"><i class="bi bi-info-circle"></i>About NEXUS App</button>
-                        </div>
-                        <div class="submenu-group">
-                            <h6>Actions</h6>
-                            <button type="button" class="btn btn-nex-secondary"><i class="bi bi-grid-1x2-fill"></i>Rerun app setup</button>
-                            <button type="button" class="btn btn-nex-secondary"><i class="bi bi-arrow-clockwise"></i>Reload app</button>
-                            <button type="button" class="btn btn-nex-secondary"><i class="bi bi-recycle"></i>Restart app</button>
-                            <button type="button" class="btn btn-nex-secondary" onclick="location.href = 'index.html'"><i class="bi bi-door-open"></i>Quit app</button>
+                            <h6>General settings</h6>
+                            <button type="button" class="btn btn-nex-secondary">
+                                <i class="bi bi-brush"></i>
+                                <span>Appearance settings</span>
+                            </button>
                         </div>
                     </div>
-                    <div class="d-flex w-100 flex-column gap-3">
-                        <div class="card p-3 bg-dark-subtle shadow"><h4 class="p-0 m-0">General settings</h4></div>
-                        <div class="card p-3 h-100 bg-dark-subtle shadow">Loading...</div>
+                    <div class="d-flex w-100 flex-column gap-3 overflow-scroll">
+                        <div class="card p-3 bg-dark-subtle shadow"><h4 class="p-0 m-0">${settings.title}</h4></div>
+                        <div class="card bg-dark-subtle shadow">
+                            <div class="card-header">
+                                <strong>General appearance settings</strong>
+                            </div>
+                            <div class="card-body p-0">
+                                <table class="table m-0">
+                                    <tbody>
+                                    <tr class="disabled">
+                                        <td class="left" colspan="2">Theme</td>
+                                        <td class="right appearance-theme">loading</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="left" colspan="2">Animations</td>
+                                        <td class="right">
+                                            <div class="form-switch">
+                                                <label>
+                                                    <input class="form-check-input appearance-animations switch" type="checkbox" role="switch" onchange="setAnimations(this.checked);">
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="left" colspan="2">Render effects</td>
+                                        <td class="right">
+                                            <div class="form-switch">
+                                                <label>
+                                                    <input class="form-check-input appearance-renderEffects switch" type="checkbox" role="switch" onchange="setRenderEffects(this.checked);">
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="left" colspan="2">Accent color</td>
+                                        <td class="right">
+                                            <label>
+                                                <input type="color" class="color appearance-accentColor" value="#000000" oninput="setAccentColor(this.value);">
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr class="last">
+                                        <td class="left">Border radius</td>
+                                        <td>
+                                            <label>
+                                                <input class="number-display appearance-borderRadiusDisplay" type="number" min="0" max="2" step="0.01" value="0" oninput="setBorderRadius(parseFloat(this.value));">
+                                            </label>
+                                        </td>
+                                        <td class="right">
+                                            <label>
+                                                <input type="range" class="range appearance-borderRadius" min="0" value="0" max="2" step="0.01" oninput="setBorderRadius(parseFloat(this.value));">
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card bg-dark-subtle shadow">
+                            <div class="card-header">
+                                <strong>Dynamic panel appearance settings</strong>
+                            </div>
+                            <div class="card-body p-0">
+                                <table class="table m-0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="left" colspan="2">Floating</td>
+                                            <td class="right">
+                                                <div class="form-switch">
+                                                    <label>
+                                                        <input class="form-check-input appearance-panelFloating switch" type="checkbox" role="switch" onchange="setPanelFloating(this.checked);">
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="left" colspan="2">Menu colors</td>
+                                            <td class="right">
+                                                <div class="form-switch">
+                                                    <label>
+                                                        <input class="form-check-input appearance-panelMenuColors switch" type="checkbox" role="switch" onchange="setPanelMenuColors(this.checked);">
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="last">
+                                            <td class="left" colspan="2">Inline to menu</td>
+                                            <td class="right">
+                                                <div class="form-switch">
+                                                    <label>
+                                                        <input class="form-check-input appearance-panelInlined switch" type="checkbox" role="switch" onchange="setPanelInlined(this.checked);">
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="notifications" aria-labelledby="notificationsLabel">
+        <div class="offcanvas bg-black offcanvas-start" tabindex="-1" id="notifications" aria-labelledby="notificationsLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="notificationsLabel">Notifications</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>

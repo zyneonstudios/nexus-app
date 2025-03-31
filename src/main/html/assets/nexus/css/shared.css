@@ -7,6 +7,12 @@
     --nex-primary-dark: color-mix(in srgb, var(--nex-primary), black 25%);
     --nex-primary-darker: color-mix(in srgb, var(--nex-primary), black 50%);
     --nex-border-radius: 1rem;
+
+    --bs-primary: var(--nex-primary);
+    --bs-primary-rgb: var(--nex-primary);
+    --bs-primary-text-emphasis: var(--nex-primary-accent);
+    --bs-primary-border-subtle: var(--nex-primary-accent);
+    --bs-primary-bg-subtle: var(--nex-primary-dark);
     --bs-border-radius: var(--nex-border-radius);
 }
 
@@ -153,7 +159,6 @@ body {
         }
 
         .menu-panel {
-            transition: all 0.15s ease;
             position: absolute;
             bottom: -3.42rem;
             z-index: 1;
@@ -162,22 +167,52 @@ body {
             margin: 0 0.5rem;
             height: 6rem;
             overflow: hidden;
-            border-radius: var(--nex-border-radius);
+            border-radius: var(--nex-border-radius) var(--nex-border-radius) 0 0;
 
             .card-header {
                 position: relative;
                 display: flex;
 
+                span {
+                    margin-left: 1.3rem;
+                }
+
                 .panel-toggle {
                     position: absolute;
                     height: 100%;
-                    left: 0;
+                    left: 2rem;
                     top: 0;
-                    width: 9.5rem;
+                    width: 9rem;
                 }
 
                 .panel-toggle:hover {
                     cursor: pointer;
+                }
+
+                i {
+                    transition: all 0.25s ease;
+                    position: relative;
+                    font-size: 1.25rem;
+                    margin: 0.3rem;
+                    opacity: 0.5;
+                    color: var(--nex-fg);
+                }
+
+                i.active {
+                    opacity: 1;
+                    text-shadow: 0 0 0.4rem var(--nex-fg);
+                }
+
+                i:hover {
+                    opacity: 1;
+                    cursor: pointer;
+                    text-shadow: none;
+                }
+
+                i.mode {
+                    position: absolute;
+                    top: 0;
+                    left: 0.3rem;
                 }
 
                 .buttons {
@@ -188,26 +223,6 @@ body {
                     justify-content: center;
                     align-items: center;
                     margin-right: 0.3rem;
-
-                    i {
-                        transition: all 0.25s ease;
-                        position: relative;
-                        font-size: 1.25rem;
-                        margin: 0.3rem;
-                        opacity: 0.5;
-                        color: var(--nex-fg);
-                    }
-
-                    i.active {
-                        opacity: 1;
-                        text-shadow: 0 0 0.4rem var(--nex-fg);
-                    }
-
-                    i:hover {
-                        opacity: 1;
-                        cursor: pointer;
-                        text-shadow: none;
-                    }
                 }
             }
 
@@ -237,9 +252,87 @@ body {
             }
         }
 
-        .menu-panel.active, .menu-panel.hover:hover {
+        .menu-panel.menu-colors {
+            background: var(--nex-bg) !important;
+
+            .card-header {
+                background: var(--nex-bg);
+            }
+            .card-body {
+                background: var(--nex-bg) !important;
+            }
+        }
+
+        .menu-panel.floating {
+            border-radius: var(--nex-border-radius);
+        }
+
+        .menu-panel.transition, .menu-panel.hover {
+            transition: all 0.15s ease;
+        }
+
+        .menu-panel.active, .menu-panel.hover:hover, .menu-panel.floating.active, .menu-panel.floating.hover:hover {
             display: unset;
+            bottom: calc(0rem - 2px);
+        }
+
+        .menu-panel.floating.active, .menu-panel.floating.hover:hover {
             bottom: 0.5rem;
+        }
+
+        .menu-panel.inlined {
+            display: none;
+            position: absolute;
+            overflow: unset;
+            background: none !important;
+            border: none;
+            opacity: 0;
+
+            .card-header {
+                background: none;
+                border: none;
+                position: absolute;
+
+                .buttons {
+                    bottom: -9rem;
+                    left: 13.25rem;
+                }
+
+                span {
+                    position: absolute;
+                    width: fit-content;
+                    white-space: nowrap;
+                    bottom: -4.75rem;
+                    left: -1rem;
+                }
+
+                .panel-toggle {
+                    display: none;
+                }
+
+                .mode {
+                    display: none;
+                }
+            }
+
+            .card-body {
+                background: var(--bs-dark-bg-subtle);
+                border-radius: var(--bs-border-radius);
+                border: 1px solid var(--bs-dark-border-subtle);
+                height: 3.5rem;
+            }
+        }
+
+        .menu-panel.inlined.menu-colors {
+            .card-body {
+                border: 1px solid var(--bs-dark-bg-subtle);
+                height: 3.5rem;
+            }
+        }
+
+        .menu-panel.inlined.active {
+            display: unset;
+            opacity: 1;
         }
 
         #menu.transition {

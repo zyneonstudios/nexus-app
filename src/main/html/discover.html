@@ -25,21 +25,18 @@
                         <i class="bi bi-grid-fill"></i>
                         <span>Library</span>
                     </li>
-                    <li onclick="location.href = 'downloads.html'">
-                        <i class="bi bi-download"></i>
-                        <span>Downloads</span>
-                    </li>
                 </ul>
             </div>
             <div class="menu-panel shadow card bg-dark-subtle">
                 <div class="card-header">
+                    <i class="mode bi" onclick="changePanelMode();"></i>
                     <span><strong>NEXUS</strong> App</span>
                     <div class="panel-toggle" onclick="togglePanel();"></div>
                     <div class="buttons">
-                        <i class="mode bi" onclick="changePanelMode();"></i>
                         <i class="bi bi-arrow-clockwise" onclick="location.reload();"></i>
-                        <i class="bi bi-bell" data-bs-toggle="offcanvas" data-bs-target="#notifications" onclick="openNotifications();"></i>
+                        <i class="bi bi-download" onclick="location.href = 'downloads.html';"></i>
                         <i class="bi bi-gear-wide" onclick="location.href = 'settings.html';"></i>
+                        <i class="bi bi-bell" data-bs-toggle="offcanvas" data-bs-target="#notifications" onclick="openNotifications();"></i>
                     </div>
                 </div>
                 <div class="card-body p-0">
@@ -71,7 +68,7 @@
                 </nav>
             </div>
         </div>
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="notifications" aria-labelledby="notificationsLabel">
+        <div class="offcanvas offcanvas-start bg-black" tabindex="-1" id="notifications" aria-labelledby="notificationsLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="notificationsLabel">Notifications</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>

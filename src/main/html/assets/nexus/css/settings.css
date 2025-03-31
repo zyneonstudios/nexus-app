@@ -1,0 +1,84 @@
+table.table {
+    border-radius: 0 0 var(--bs-border-radius) var(--bs-border-radius);
+    overflow: hidden;
+
+    tbody {
+        tr {
+            td {
+                position: relative;
+                padding: 0.5rem 1rem;
+                text-align: center;
+                background: var(--bs-dark-bg-subtle);
+
+                input.range {
+                    position: absolute;
+                    top: 0; right: 0;
+                    margin: 0.75rem 1rem 0.75rem 0.75rem;
+                }
+
+                input.number-display {
+                    position: absolute;
+                    top: 0; left: 0;
+                    margin: 0.475rem;
+                    width: calc(100% - 1rem);
+                    padding-left: 1rem;
+                    border: none;
+                    background: var(--bs-body-bg);
+                    border-radius: var(--bs-border-radius-lg);
+                }
+
+                input.color {
+                    position: absolute;
+                    border: none;
+                    right: 0;
+                    top: 0;
+                    padding: 0;
+                    margin: 0.45rem 1rem 0.45rem 0;
+                    cursor: pointer;
+                }
+
+                input.switch {
+                    cursor: pointer;
+                }
+            }
+
+            td.left {
+                text-align: left;
+            }
+
+            td.right {
+                text-align: right;
+            }
+        }
+
+        tr:hover {
+            td {
+                background: var(--bs-body-bg);
+
+                input.number-display {
+                    background: var(--bs-dark-bg-subtle);
+                }
+            }
+        }
+
+        tr.disabled {
+            td {
+                background: none;
+                opacity: 0.5;
+                cursor: not-allowed;
+
+                input.number-display {
+                    background: var(--bs-body-bg);
+                }
+            }
+        }
+
+        tr.last {
+            border-bottom: none;
+
+            td {
+                border-bottom: none;
+            }
+        }
+    }
+}

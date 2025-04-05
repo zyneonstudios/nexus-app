@@ -5,10 +5,8 @@ table.table {
     tbody {
 
         *:focus {
-            border: unset !important;
-            outline: 1px solid var(--nex-primary-accent) !important;
+            outline: 1px solid var(--nex-iv) !important;
             outline-offset: 1px;
-            box-shadow: 0 0 0 5px var(--nex-primary-dark);
         }
 
         tr {
@@ -29,6 +27,7 @@ table.table {
                     top: 0;
                     margin: 0.325rem 1rem 0 0;
                     width: calc(100% - 2rem);
+                    min-width: 8rem;
                 }
 
                 .text-switch {
@@ -47,6 +46,7 @@ table.table {
                     position: absolute;
                     top: 0; right: 0;
                     margin: 0.5rem 1rem 0.5rem 4rem;
+                    border-radius: var(--bs-border-radius-lg);
                 }
 
                 input.number-display {
@@ -69,6 +69,7 @@ table.table {
                     margin: calc(0.45rem - 2px) 1rem calc(0.45rem - 2px) 0;
 
                     .btn-group {
+                        border-radius: var(--bs-border-radius-xl);
                         border: 2px solid var(--nex-primary);
                         box-shadow: 0 0 0.4rem var(--nex-primary);
                     }
@@ -148,6 +149,7 @@ table.table {
                         margin: 0.45rem 1rem 0.45rem 0;
                         cursor: pointer;
                         width: 3rem;
+                        overflow: hidden;
                     }
 
                     input[type="color"]::-moz-color-swatch {

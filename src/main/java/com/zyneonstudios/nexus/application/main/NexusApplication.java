@@ -3,7 +3,6 @@ package com.zyneonstudios.nexus.application.main;
 import com.zyneonstudios.nexus.application.Main;
 import com.zyneonstudios.nexus.application.frame.ApplicationFrame;
 import com.zyneonstudios.nexus.desktop.frame.web.NexusWebSetup;
-import com.zyneonstudios.nexus.desktop.frame.web.WebFrame;
 import com.zyneonstudios.nexus.utilities.file.FileActions;
 import com.zyneonstudios.nexus.utilities.file.FileExtractor;
 import com.zyneonstudios.nexus.utilities.logger.NexusLogger;
@@ -18,7 +17,7 @@ public class NexusApplication {
 
     private boolean launched = false;
     private final NexusRunner runner = new NexusRunner(this);
-    private final String workingDir;
+    private static String workingDir;
 
     private final NexusWebSetup webSetup;
     private ApplicationFrame applicationFrame = null;
@@ -32,8 +31,8 @@ public class NexusApplication {
         if(workingDir.mkdirs()) {
             getLogger().deb("Creating working directory (first run)...");
         }
-        this.workingDir = workingDir.getAbsolutePath().replace("\\","/");
-        File temp = new File(this.workingDir+"/temp");
+        NexusApplication.workingDir = workingDir.getAbsolutePath().replace("\\","/");
+        File temp = new File(NexusApplication.workingDir +"/temp");
         if(temp.exists()) {
             if(!temp.delete()) {
                 try {
@@ -44,10 +43,11 @@ public class NexusApplication {
         if(temp.mkdirs()) {
             temp.deleteOnExit();
             if(url==null) {
-                this.url = "file://" + this.workingDir + "/temp/ui/index.html";
-                FileExtractor.extractResourceFile("html.zip", this.workingDir + "/temp/ui.zip", Main.class);
-                File ui = new File(this.workingDir + "/temp/ui.zip");
-                FileExtractor.unzipFile(ui.getAbsolutePath(), this.workingDir + "/temp/ui/");
+                //this.url = "file://" + this.workingDir + "/temp/ui/index.html";
+                this.url = "localhost:"+Main.getPort()+"/index.html?loading=false";
+                FileExtractor.extractResourceFile("html.zip", NexusApplication.workingDir + "/temp/ui.zip", Main.class);
+                File ui = new File(NexusApplication.workingDir + "/temp/ui.zip");
+                FileExtractor.unzipFile(ui.getAbsolutePath(), NexusApplication.workingDir + "/temp/ui/");
                 if (!ui.delete()) {
                     ui.deleteOnExit();
                 }
@@ -64,7 +64,7 @@ public class NexusApplication {
             @Override
             public void onLoadEnd(CefBrowser browser, CefFrame frame, int httpStatusCode) {
                 String url = browser.getURL();
-                frame.executeJavaScript("app = true; document.getElementById('menu').classList.add('transition');",url,0);
+                frame.executeJavaScript("app = true; localStorage.setItem('enabled','true'); document.getElementById('menu').classList.add('transition');",url,0);
                 if(url.contains("discover.html")) {
                     frame.executeJavaScript("enableMenu(true);",url,0);
                 } else {
@@ -77,8 +77,8 @@ public class NexusApplication {
     public boolean launch() {
         if(!launched) {
             try {
-                applicationFrame = new ApplicationFrame(this, url, webSetup.getWebClient(), true);
-                applicationFrame.setTitlebar("v3.0.0-alpha.5", Color.BLACK, Color.WHITE);
+                applicationFrame = new ApplicationFrame(webSetup, url, true);
+                applicationFrame.setTitlebar("v3.0.0-alpha.5", Color.black, Color.white);
                 applicationFrame.setSize(1200, 720);
                 applicationFrame.setLocationRelativeTo(null);
                 applicationFrame.setVisible(true);
@@ -104,7 +104,7 @@ public class NexusApplication {
         return workingDir;
     }
 
-    public WebFrame getApplicationFrame() {
+    public ApplicationFrame getApplicationFrame() {
         return applicationFrame;
     }
 
@@ -112,7 +112,7 @@ public class NexusApplication {
         return webSetup;
     }
 
-    public File getWorkingDir() {
+    public static File getWorkingDir() {
         return new File(workingDir);
     }
 

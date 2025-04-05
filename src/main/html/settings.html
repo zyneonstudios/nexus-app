@@ -1,204 +1,142 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <title>NEXUS App</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="assets/bootstrap/icons/font/bootstrap-icons.min.css">
-        <link href="assets/nexus/css/shared.css" rel="stylesheet">
-        <link href="assets/nexus/css/settings.css" rel="stylesheet">
-        <script src="assets/nexus/js/shared.js"></script>
-        <script src="assets/nexus/js/settings.js"></script>
-    </head>
-    <body bgcolor="black" data-bs-theme="dark">
-        <div id="main">
-            <div id="menu">
-                <ul>
-                    <li onclick="toggleMenu();">
-                        <i class="bi bi-list"></i>
-                        <span>Toggle menu</span>
-                    </li>
-                    <li onclick="location.href = 'discover.html';">
-                        <i class="bi bi-globe-europe-africa"></i>
-                        <span>Discover</span>
-                    </li>
-                    <li onclick="location.href = 'library.html';">
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Library</span>
-                    </li>
-                </ul>
+<link href="assets/nexus/css/settings.css" rel="stylesheet">
+<div class="nex-flex">
+    <div class="card bg-dark-subtle submenu" style="margin: 0.5rem;">
+        <div class="submenu-group">
+            <h6>General settings</h6>
+            <button type="button" class="btn btn-nex-secondary active">
+                <i class="bi bi-brush"></i>
+                <span>Appearance settings</span>
+            </button>
+        </div>
+    </div>
+    <div class="d-flex w-100 flex-column gap-3 overflow-scroll">
+        <div class="card p-3 bg-dark-subtle" style="margin: 0.5rem 0.5rem 0 0.5rem; box-shadow: 0 0 0.4rem #00000075;"><h4 class="p-0 m-0">${settings.title}</h4></div>
+        <div class="card bg-dark-subtle" style="margin: 0 0.5rem 0 0.5rem; box-shadow: 0 0 0.4rem #00000075;">
+            <div class="card-header">
+                <strong>General appearance settings</strong>
             </div>
-            <div class="menu-panel shadow card bg-dark-subtle">
-                <div class="card-header">
-                    <i class="mode bi" onclick="changePanelMode();"></i>
-                    <span><strong>NEXUS</strong> App</span>
-                    <div class="panel-toggle" onclick="togglePanel();"></div>
-                    <div class="buttons">
-                        <i class="bi bi-arrow-clockwise" onclick="location.reload();"></i>
-                        <i class="bi bi-download" onclick="location.href = 'downloads.html';"></i>
-                        <i class="bi bi-gear-wide active" onclick="location.href = 'index.html';"></i>
-                        <i class="bi bi-bell" data-bs-toggle="offcanvas" onclick="openNotifications();"></i>
-                    </div>
-                </div>
-                <div class="card-body p-0">
-                    <p class="p-3" style="white-space: nowrap">3.0.0-alpha.2</p>
-                </div>
-            </div>
-            <div id="content">
-                <div class="nex-flex">
-                    <div class="card bg-dark-subtle submenu" style="margin: 0.5rem;">
-                        <div class="submenu-group">
-                            <h6>General settings</h6>
-                            <button type="button" class="btn btn-nex-secondary active">
-                                <i class="bi bi-brush"></i>
-                                <span>Appearance settings</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="d-flex w-100 flex-column gap-3 overflow-scroll">
-                        <div class="card p-3 bg-dark-subtle" style="margin: 0.5rem 0.5rem 0 0.5rem;"><h4 class="p-0 m-0">${settings.title}</h4></div>
-                        <div class="card bg-dark-subtle" style="margin: 0 0.5rem 0 0.5rem;">
-                            <div class="card-header">
-                                <strong>General appearance settings</strong>
+            <div class="card-body p-0">
+                <table class="table m-0">
+                    <tbody>
+                    <tr>
+                        <td class="left" colspan="2">Theme</td>
+                        <td class="right">
+                            <label>
+                                <select class="form-select appearance-theme" onchange="theme = this.value; updateTheme();">
+                                    <option value="auto">Automatic</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="light">Light</option>
+                                </select>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left" colspan="2">Animations</td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input appearance-animations switch" type="checkbox" role="switch" onchange="setAnimations(this.checked);">
+                                </label>
                             </div>
-                            <div class="card-body p-0">
-                                <table class="table m-0">
-                                    <tbody>
-                                    <tr>
-                                        <td class="left" colspan="2">Theme</td>
-                                        <td class="right">
-                                            <label>
-                                                <select class="form-select appearance-theme" onchange="theme = this.value; updateTheme();">
-                                                    <option value="auto">Automatic</option>
-                                                    <option value="dark">Dark</option>
-                                                    <option value="light">Light</option>
-                                                </select>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="left" colspan="2">Animations</td>
-                                        <td class="right">
-                                            <div class="form-switch">
-                                                <label>
-                                                    <input class="form-check-input appearance-animations switch" type="checkbox" role="switch" onchange="setAnimations(this.checked);">
-                                                </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="left" colspan="2">Render effects</td>
-                                        <td class="right">
-                                            <div class="form-switch">
-                                                <label>
-                                                    <input class="form-check-input appearance-renderEffects switch" type="checkbox" role="switch" onchange="setRenderEffects(this.checked);">
-                                                </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="left">Accent color</td>
-                                        <td>
-                                            <div class="text-switch">
-                                                Custom
-                                                <div class="form-switch">
-                                                    <label>
-                                                        <input class="form-check-input appearance-customAccentColor switch" type="checkbox" role="switch" onchange="setCustomAccentColor(this.checked);">
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="right">
-                                            <div class="colors">
-                                                <div class="btn-group" role="group">
-                                                    <button type="button" class="btn btn-nex-purple" onclick="setAccentColor('var(--nex-purple)');"></button>
-                                                    <button type="button" class="btn btn-nex-blue" onclick="setAccentColor('var(--nex-blue)');"></button>
-                                                    <button type="button" class="btn btn-nex-green" onclick="setAccentColor('var(--nex-green)');"></button>
-                                                    <button type="button" class="btn btn-nex-red" onclick="setAccentColor('var(--nex-red)');"></button>
-                                                    <button type="button" class="btn btn-nex-yellow" onclick="setAccentColor('var(--nex-yellow)');"></button>
-                                                </div>
-                                            </div>
-                                            <div class="color-input m-0 p-0">
-                                                <i class="bi bi-arrow-clockwise" onclick="setAccentColor('#8732ec');"></i>
-                                                <label>
-                                                    <input type="color" class="color appearance-accentColor" value="#00000000" oninput="setAccentColor(this.value);">
-                                                </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="last">
-                                        <td class="left">Border radius</td>
-                                        <td>
-                                            <label>
-                                                <input class="number-display appearance-borderRadiusDisplay" type="number" min="0" max="2" step="0.01" value="0" oninput="if(this.value<0) {this.value=0;} if(this.value>2) {this.value=2;} setBorderRadius_dev(parseFloat(this.value));" onchange="setBorderRadius(parseFloat(this.value));">
-                                            </label>
-                                        </td>
-                                        <td class="right">
-                                            <label>
-                                                <input type="range" class="range appearance-borderRadius form-range" min="0" value="0" max="2" step="0.01" oninput="setBorderRadius(parseFloat(this.value));">
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left" colspan="2">Render effects</td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input appearance-renderEffects switch" type="checkbox" role="switch" onchange="setRenderEffects(this.checked);">
+                                </label>
                             </div>
-                        </div>
-                        <div class="card bg-dark-subtle" style="margin: 0 0.5rem 0 0.5rem;">
-                            <div class="card-header">
-                                <strong>Dynamic panel appearance settings</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">Accent color</td>
+                        <td>
+                            <div class="text-switch">
+                                Custom
+                                <div class="form-switch">
+                                    <label>
+                                        <input class="form-check-input appearance-customAccentColor switch" type="checkbox" role="switch" onchange="setCustomAccentColor(this.checked);">
+                                    </label>
+                                </div>
                             </div>
-                            <div class="card-body p-0">
-                                <table class="table m-0">
-                                    <tbody>
-                                        <tr>
-                                            <td class="left" colspan="2">Floating</td>
-                                            <td class="right">
-                                                <div class="form-switch">
-                                                    <label>
-                                                        <input class="form-check-input appearance-panelFloating switch" type="checkbox" role="switch" onchange="setPanelFloating(this.checked);">
-                                                    </label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="left" colspan="2">Menu colors</td>
-                                            <td class="right">
-                                                <div class="form-switch">
-                                                    <label>
-                                                        <input class="form-check-input appearance-panelMenuColors switch" type="checkbox" role="switch" onchange="setPanelMenuColors(this.checked);">
-                                                    </label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="last">
-                                            <td class="left" colspan="2">Inline to menu</td>
-                                            <td class="right">
-                                                <div class="form-switch">
-                                                    <label>
-                                                        <input class="form-check-input appearance-panelInlined switch" type="checkbox" role="switch" onchange="setPanelInlined(this.checked);">
-                                                    </label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        </td>
+                        <td class="right">
+                            <div class="colors">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-nex-purple" onclick="setAccentColor('var(--nex-purple)');"></button>
+                                    <button type="button" class="btn btn-nex-blue" onclick="setAccentColor('var(--nex-blue)');"></button>
+                                    <button type="button" class="btn btn-nex-green" onclick="setAccentColor('var(--nex-green)');"></button>
+                                    <button type="button" class="btn btn-nex-red" onclick="setAccentColor('var(--nex-red)');"></button>
+                                    <button type="button" class="btn btn-nex-yellow" onclick="setAccentColor('var(--nex-yellow)');"></button>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                            <div class="color-input m-0 p-0">
+                                <i class="bi bi-arrow-clockwise" onclick="setAccentColor('#8732ec');"></i>
+                                <label>
+                                    <input type="color" class="color appearance-accentColor" value="#00000000" oninput="setAccentColor(this.value);">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="last">
+                        <td class="left">Border radius</td>
+                        <td>
+                            <label>
+                                <input class="number-display appearance-borderRadiusDisplay" type="number" min="0" max="2" step="0.01" value="0" oninput="if(this.value<0) {this.value=0;} if(this.value>2) {this.value=2;} setBorderRadius_dev(parseFloat(this.value));" onchange="setBorderRadius(parseFloat(this.value));">
+                            </label>
+                        </td>
+                        <td class="right">
+                            <label>
+                                <input type="range" class="range appearance-borderRadius form-range" min="0" value="0" max="2" step="0.01" oninput="setBorderRadius(parseFloat(this.value));">
+                            </label>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="offcanvas bg-black offcanvas-start" tabindex="-1" id="notifications" aria-labelledby="notificationsLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="notificationsLabel">Notifications</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div class="card bg-dark-subtle" style="margin: 0 0.5rem 0 0.5rem; box-shadow: 0 0 0.4rem #00000075;">
+            <div class="card-header">
+                <strong>Dynamic panel appearance settings</strong>
             </div>
-            <div class="offcanvas-body">
-                Loading...
+            <div class="card-body p-0">
+                <table class="table m-0">
+                    <tbody>
+                    <tr>
+                        <td class="left" colspan="2">Floating</td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input appearance-panelFloating switch" type="checkbox" role="switch" onchange="setPanelFloating(this.checked);">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left" colspan="2">Menu colors</td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input appearance-panelMenuColors switch" type="checkbox" role="switch" onchange="setPanelMenuColors(this.checked);">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="last">
+                        <td class="left" colspan="2">Inline to menu</td>
+                        <td class="right">
+                            <div class="form-switch">
+                                <label>
+                                    <input class="form-check-input appearance-panelInlined switch" type="checkbox" role="switch" onchange="setPanelInlined(this.checked);">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <script src="assets/popper/dist/umd/popper.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-    </body>
-</html>
+    </div>
+</div>

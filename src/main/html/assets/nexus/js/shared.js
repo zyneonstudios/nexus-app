@@ -1,3 +1,6 @@
+const urlParams = new URLSearchParams(document.location.search);
+let glow;
+
 let menuEnabled = false; let panelEnabled = false; let storage = false; let app = false;
 const root = document.querySelector(':root');
 document.addEventListener('contextmenu',function(e){e.preventDefault();});document.addEventListener('dragstart', function(e){e.preventDefault();});
@@ -355,4 +358,35 @@ function applyBorderRadiusToElement(e,r) {
 
 function applyAccentColorToElement(e,c) {
     e.style.setProperty("--nex-primary", c);
+}
+
+function loadPage(page,menu) {
+    const contentDiv = document.getElementById('content');
+    fetch(page)
+        .then(response => response.text())
+        .then(html => {
+            contentDiv.innerHTML = html;
+        })
+        .then(() => {
+            if(page === "settings.html") {
+                initAppearanceValues();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            contentDiv.innerHTML = '<p>Error.</p>';
+        });
+    if(menu) {
+        enableMenu(true);
+    } else {
+        disableMenu(true);
+    }
+}
+
+function highlight(element) {
+    if(glow) {
+        glow.classList.remove("active");
+    }
+    element.classList.add("active");
+    glow = element;
 }

@@ -68,7 +68,7 @@ function setCustomAccentColor(bool) {
         if(getStorageItem("settings.appearance.color")) {
             accentColor = getStorageItem("settings.appearance.color");
         } else {
-            accentColor = root.style.getPropertyValue('--nex-purple');
+            accentColor = root.style.getPropertyValue("--nex-primary");
         }
         setAccentColor(accentColor);
     }
@@ -169,7 +169,3 @@ function setPanelInlined(bool) {
         }
     }
 }
-
-addEventListener("DOMContentLoaded", () => {
-    initAppearanceValues();
-});

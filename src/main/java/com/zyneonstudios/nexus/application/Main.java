@@ -4,12 +4,16 @@ import com.zyneonstudios.nexus.application.frame.ZyneonSplash;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
 import com.zyneonstudios.nexus.desktop.NexusDesktop;
 import com.zyneonstudios.nexus.utilities.logger.NexusLogger;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
+@SpringBootApplication
 public class Main {
 
     private static final NexusLogger logger = new NexusLogger("NEXUS");
     private static String path = "";
     private static String ui = null;
+    private static int port = 8094;
 
     public static void main(String[] args) {
         NexusDesktop.init();
@@ -17,11 +21,23 @@ public class Main {
         ZyneonSplash splash = new ZyneonSplash();
         splash.setVisible(true);
         NexusApplication application = new NexusApplication(path,ui);
+        startWebServer(args);
         if(application.launch()) {
             splash.dispose();
             System.gc();
         } else {
             System.exit(1);
+        }
+    }
+
+    private static void startWebServer(String[] args) {
+        try {
+            new SpringApplicationBuilder(Main.class)
+                    .properties("logging.level.root=WARN", "logging.pattern.console=", "server.port=" + port)
+                    .run(args);
+        } catch (Exception e) {
+            port++;
+            startWebServer(args);
         }
     }
 
@@ -46,5 +62,9 @@ public class Main {
 
     public static NexusLogger getLogger() {
         return logger;
+    }
+
+    public static int getPort() {
+        return port;
     }
 }

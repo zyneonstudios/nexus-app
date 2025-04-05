@@ -1,10 +1,9 @@
 package com.zyneonstudios.nexus.application.frame;
 
-import com.zyneonstudios.nexus.application.main.NexusApplication;
 import com.zyneonstudios.nexus.desktop.events.AsyncWebFrameConnectorEvent;
 import com.zyneonstudios.nexus.desktop.frame.web.NWebFrame;
+import com.zyneonstudios.nexus.desktop.frame.web.NexusWebSetup;
 import com.zyneonstudios.nexus.desktop.frame.web.WebFrame;
-import org.cef.CefClient;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,8 +19,8 @@ public class ApplicationFrame extends NWebFrame implements ComponentListener, We
 
     private final Dimension minSize = new Dimension(640,360);
 
-    public ApplicationFrame(NexusApplication application, String url, CefClient client, boolean decorated) {
-        super(client, url, decorated);
+    public ApplicationFrame(NexusWebSetup setup, String url, boolean decorated) {
+        super(setup.getWebClient(), url, decorated);
         try {
             setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/icon.png"))).getScaledInstance(32, 32, Image.SCALE_SMOOTH));
         } catch (Exception ignore) {}
@@ -35,7 +34,6 @@ public class ApplicationFrame extends NWebFrame implements ComponentListener, We
         AsyncWebFrameConnectorEvent connectorEvent = new AsyncWebFrameConnectorEvent(this,null) {
             @Override
             protected void resolveMessage(String s) {
-                NexusApplication.getLogger().err(s);
                 if(s.startsWith("event.theme.changed.")) {
                     if(s.endsWith("dark")) {
                         setTitleBackground(Color.black);

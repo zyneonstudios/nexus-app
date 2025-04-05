@@ -74,7 +74,7 @@ public class NexusApplication {
             try {
                 String url = "localhost:"+Main.getPort()+"/index.html?app=true";
                 if(onlineUI) {
-                    url = "https://app.nexus.zyneonstudios.net/?app=true";
+                    url = "https://zyneonstudios.github.io/nexus-app/src/main/html?app=true";
                 }
                 applicationFrame = new ApplicationFrame(webSetup, url, true);
                 applicationFrame.setTitlebar("v3.0.0-alpha.7", Color.black, Color.white);

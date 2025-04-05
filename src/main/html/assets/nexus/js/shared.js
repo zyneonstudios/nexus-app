@@ -5,7 +5,7 @@ let menuEnabled = false; let panelEnabled = false; let storage = false; let app 
 const root = document.querySelector(':root');
 document.addEventListener('contextmenu',function(e){e.preventDefault();});document.addEventListener('dragstart', function(e){e.preventDefault();});
 
-let theme = "auto";
+let theme = "dark";
 let animations = true;
 let renderEffects = true;
 let accentColor = "#8732EC";

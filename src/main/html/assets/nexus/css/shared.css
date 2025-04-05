@@ -32,6 +32,7 @@
     --nex-primary-accent: color-mix(in srgb, var(--nex-primary), white 25%);
     --nex-primary-dark: color-mix(in srgb, var(--nex-primary), black 25%);
     --nex-primary-darker: color-mix(in srgb, var(--nex-primary), black 50%);
+    --nex-primary-darker-transparent: rgba(var(--nex-primary-darker),0.5);
 
     --nex-border-radius: 1rem;
 
@@ -179,9 +180,17 @@ button {
     border-color: var(--bs-border-color);
 }
 
-
 body {
     background: var(--nex-bg);
+
+    .glass {
+        background: #ffffff10;
+        backdrop-filter: blur(16px);
+
+        .card-header {
+            background: #ffffff10;
+        }
+    }
 
     #titlebar {
         display: none !important;
@@ -269,15 +278,14 @@ body {
         .menu-panel {
             transition: all 0.15s ease;
             position: absolute;
-            bottom: -3.42rem;
+            bottom: -4rem;
             z-index: 1;
             left: 0;
             width: 17rem;
             margin: 0 0.5rem;
-            height: 6rem;
             overflow: hidden;
             border-radius: var(--nex-border-radius) var(--nex-border-radius) 0 0;
-            background: var(--bs-dark-bg-subtle);
+            height: 6.5rem;
 
             * {
                 transition: background-color 0.15s ease;
@@ -286,6 +294,7 @@ body {
             .card-header {
                 position: relative;
                 display: flex;
+                height: 2.5rem;
 
                 span {
                     margin-left: 1.3rem;
@@ -339,119 +348,93 @@ body {
                 }
             }
 
-            .panel-buttons {
-                position: absolute;
-                display: flex;
+            .card-body {
                 width: 100%;
-
+                height: 4rem;
+                display: flex;
                 justify-content: center;
                 align-items: center;
 
                 i {
+                    width: 2.75rem;
+                    height: 2.75rem;
+                    margin: 0.25rem;
+                    overflow: hidden;
+                    border-radius: var(--bs-border-radius-lg);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                     font-size: 1.5rem;
-                    padding: 0.25rem 0.75rem 0.4rem 0.75rem;
-                    margin: 0.25rem 0.5rem;
-                    border-radius: var(--bs-border-radius);
+                    border: 1px solid transparent;
                 }
 
                 i:hover {
-                    background: var(--bs-dark-border-subtle);
                     cursor: pointer;
+                    background: var(--bs-dark-bg-subtle);
+                    border: 1px solid var(--bs-border-color);
                 }
-            }
-        }
-
-        .menu-panel.glass {
-            background: #ffffff10;
-            backdrop-filter: blur(16px);
-
-            .card-header {
-                background: #ffffff10;
-            }
-        }
-
-        .menu-panel.menu-colors {
-            background: var(--nex-bg);
-
-            .card-header {
-                background: var(--nex-bg);
-            }
-            .card-body {
-                background: var(--nex-bg) !important;
             }
         }
 
         .menu-panel.active, .menu-panel.hover:hover {
             display: unset;
-            bottom: calc(0rem - 2px);
+            bottom: calc(0rem - 1px);
         }
 
         .menu-panel.always-floating, .menu-panel.floating {
             border-radius: var(--nex-border-radius);
             bottom: 0.5rem;
-            height: 2.65rem;
+            height: calc(2.5rem + 1px);
         }
 
         .menu-panel.always-floating.active, .menu-panel.floating.active, .menu-panel.floating.hover:hover {
             border-radius: var(--nex-border-radius);
             bottom: 0.5rem !important;
-            height: 6rem;
+            height: 6.5rem;
         }
 
 
         .menu-panel.inlined {
-            display: none;
-            position: absolute;
-            overflow: unset;
-            background: none !important;
+            box-shadow: none !important;
+            transition: all 0.15s ease;
+            backdrop-filter: none;
+            bottom: -7rem;
+            background: none;
             border: none;
-            opacity: 0;
+            overflow: unset;
 
             .card-header {
-                background: none;
-                border: none;
                 position: absolute;
+                border-radius: 0;
+                background: none;
+                backdrop-filter: none;
+                bottom: -0.5rem;
+                width: 100%;
+                border: none;
 
-                .buttons {
-                    bottom: -9rem;
-                    left: 13.25rem;
+                .mode {
+                    display: none;
                 }
 
                 span {
                     position: absolute;
-                    width: fit-content;
-                    white-space: nowrap;
-                    bottom: -4.75rem;
-                    left: -1rem;
+                    left: -0.75rem;
                 }
 
                 .panel-toggle {
                     display: none;
                 }
-
-                .mode {
-                    display: none;
-                }
             }
 
             .card-body {
-                background: var(--bs-dark-bg-subtle);
+                backdrop-filter: none;
+                position: absolute;
                 border-radius: var(--bs-border-radius);
-                border: 1px solid var(--bs-dark-border-subtle);
-                height: 3.5rem;
-            }
-        }
-
-        .menu-panel.inlined.menu-colors {
-            .card-body {
-                border: 1px solid var(--bs-dark-bg-subtle);
-                height: 3.5rem;
             }
         }
 
         .menu-panel.inlined.active {
-            display: unset;
-            opacity: 1;
+            bottom: 0;
         }
 
         #menu.transition {
@@ -471,7 +454,6 @@ body {
             border-left: 1px solid var(--bs-border-color);
             border-top: 1px solid var(--bs-border-color);
             overflow: hidden;
-            box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5);
 
             .nex-flex {
                 height: calc(100% - 2rem);
@@ -534,6 +516,18 @@ body {
                     }
                 }
             }
+        }
+
+        #content::after {
+            content: "";
+            position: absolute;
+            border-top-left-radius: calc(var(--nex-border-radius) * 1.5);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
         }
     }
 }

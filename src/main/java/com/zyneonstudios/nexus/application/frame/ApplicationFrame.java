@@ -43,6 +43,11 @@ public class ApplicationFrame extends NWebFrame implements ComponentListener, We
                         setTitleBackground(Color.white);
                         setTitleForeground(Color.black);
                     }
+                } else if(s.equals("exit")) {
+                    SwingUtilities.invokeLater(()->{
+                        setup.getWebApp().dispose();
+                        System.exit(0);
+                    });
                 }
             }
         };

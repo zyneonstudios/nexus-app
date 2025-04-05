@@ -6,7 +6,6 @@ function initAppearanceValues() {
     document.querySelector(".appearance-accentColor").value = accentColor;
     document.querySelector(".appearance-borderRadiusDisplay").value = borderRadius;
     document.querySelector(".appearance-borderRadius").value = borderRadius;
-    document.querySelector(".appearance-panelMenuColors").checked = panelMenuColors;
     document.querySelector(".appearance-panelFloating").checked = panelFloating;
     document.querySelector(".appearance-panelInlined").checked = panelInlined;
 
@@ -112,23 +111,6 @@ function setBorderRadius(number) {
     document.querySelector(".appearance-borderRadiusDisplay").value = borderRadius;
     document.querySelector(".appearance-borderRadius").value = borderRadius;
     setBorderRadius_dev(number);
-}
-
-function setPanelMenuColors(bool) {
-    panelMenuColors = bool;
-    setStorageItem("settings.appearance.panelMenuColors", bool);
-    document.querySelector(".appearance-panelMenuColors").checked = panelMenuColors;
-    const panel = document.querySelector(".menu-panel");
-    if(panelMenuColors) {
-        if(!panel.classList.contains("menu-colors")) {
-            panel.classList.add("menu-colors");
-        }
-    } else {
-        if (panel.classList.contains("menu-colors")) {
-            panel.classList.remove("menu-colors");
-        }
-
-    }
 }
 
 function setPanelFloating(bool) {

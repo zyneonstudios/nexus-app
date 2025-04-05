@@ -10,7 +10,6 @@ let animations = true;
 let renderEffects = true;
 let accentColor = "#8732EC";
 let borderRadius = 1.0;
-let panelMenuColors = false;
 let panelFloating = true;
 let panelInlined = false;
 let enableCustomAccentColor = false;
@@ -56,9 +55,6 @@ function initAppearanceSettings() {
     if(getStorageItem("settings.appearance.borderRadius")) {
         borderRadius = parseFloat(getStorageItem("settings.appearance.borderRadius"));
     }
-    if (getStorageItem("settings.appearance.panelMenuColors")) {
-        panelMenuColors = getStorageItem("settings.appearance.panelMenuColors") === "true";
-    }
     if (getStorageItem("settings.appearance.panelFloating")) {
         panelFloating = getStorageItem("settings.appearance.panelFloating") === "true";
     }
@@ -77,12 +73,6 @@ function initPanel() {
         const panel = document.querySelector(".menu-panel");
         const modeIcon = panel.querySelector("i.mode");
         let enable = false;
-
-        if(panelMenuColors) {
-            if(!panel.classList.contains("menu-colors")) {
-                panel.classList.add("menu-colors");
-            }
-        }
 
         if(panelInlined) {
             if(!panel.classList.contains("inlined")) {
@@ -415,6 +405,9 @@ function loadPage(page,menu) {
                         document.querySelector(".floating-switch").remove();
                     }
                 }
+            }
+            if(contentDiv.querySelector('.onload')) {
+                contentDiv.querySelector('.onload').click();
             }
         })
         .catch(error => {

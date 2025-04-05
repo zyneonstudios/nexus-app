@@ -385,6 +385,17 @@ body {
             bottom: 0.5rem;
         }
 
+        .menu-panel.always-floating {
+            border-radius: var(--nex-border-radius);
+            bottom: 0.5rem;
+            height: 2.65rem;
+        }
+
+        .menu-panel.always-floating.active {
+            height: 6rem;
+        }
+
+
         .menu-panel.inlined {
             display: none;
             position: absolute;

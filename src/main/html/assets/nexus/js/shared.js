@@ -324,6 +324,14 @@ addEventListener("DOMContentLoaded", () => {
     } else {
         loadPage("loading.html",false);
     }
+    if(urlParams.has("bottom-border")) {
+        if(urlParams.get("bottom-border") === "true") {
+            document.getElementById("content").style.borderBottomLeftRadius = "calc(var(--nex-border-radius) * 1.5)";
+            document.getElementById("content").style.borderBottom = "1px solid var(--bs-border-color)";
+
+            document.querySelector(".menu-panel").classList.add("always-floating");
+        }
+    }
 });
 
 function setBorderRadius_dev(r) {
@@ -374,6 +382,11 @@ function loadPage(page,menu) {
         .then(() => {
             if(page === "settings.html") {
                 initAppearanceValues();
+                if(urlParams.has("bottom-border")) {
+                    if(urlParams.get("bottom-border") === "true") {
+                        document.querySelector(".floating-switch").remove();
+                    }
+                }
             }
         })
         .catch(error => {

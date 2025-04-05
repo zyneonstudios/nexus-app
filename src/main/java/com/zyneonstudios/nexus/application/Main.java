@@ -48,17 +48,24 @@ public class Main {
 
     private static void resolveArguments(String[] args) {
         for (int i = 0; i < args.length; i++) {
-            String arg = args[i].toLowerCase();
-            switch (arg) {
-                case "-p", "--path" -> {
-                    if (i + 1 < args.length) {
-                        path = args[i + 1];
+            try {
+                String arg = args[i].toLowerCase();
+                switch (arg) {
+                    case "-h", "--help" -> {
+                        logger.log("NEXUS App help:");
+                        logger.log("  -d, --debug: Enables debug console output.");
+                        logger.log("  -h, --help: This help message.");
+                        logger.log("  -o, --online: Enables the connection to the online UI. Caution: This may cause problems with some modules.");
+                        logger.log("  -p, --path: Lets you select the run folder.");
                     }
+                    case "-p", "--path" -> path = args[i + 1];
+                    case "-o", "--online" -> online = true;
+                    case "-d", "--debug" -> logger.enableDebug();
                 }
-                case "-o", "--online" -> {
-                    online = true;
-                }
-                case "-d", "--debug" -> logger.enableDebug();
+            } catch (Exception e) {
+                logger.err(e.getMessage());
+                logger.err("Use -h or --help at startup to view the startup arguments and their syntax.");
+                System.exit(1);
             }
         }
     }

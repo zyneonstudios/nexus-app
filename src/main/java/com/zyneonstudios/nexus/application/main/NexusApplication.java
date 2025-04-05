@@ -20,7 +20,7 @@ public class NexusApplication {
     private static String workingDir;
     private final NexusWebSetup webSetup;
     private ApplicationFrame applicationFrame = null;
-    private boolean onlineUI;
+    private final boolean onlineUI;
 
     public NexusApplication(String path, boolean online) {
         getLogger().log("Initializing application...");
@@ -72,9 +72,9 @@ public class NexusApplication {
     public boolean launch() {
         if(!launched) {
             try {
-                String url = "localhost:"+Main.getPort()+"/index.html?app=true";
+                String url = "localhost:"+Main.getPort()+"/index.html?app=true&page=discover.html";
                 if(onlineUI) {
-                    url = "https://zyneonstudios.github.io/nexus-app/src/main/html?app=true";
+                    url = "https://zyneonstudios.github.io/nexus-app/src/main/html?app=true&page=discover.html";
                 }
                 applicationFrame = new ApplicationFrame(webSetup, url, true);
                 applicationFrame.setTitlebar("v3.0.0-alpha.7", Color.black, Color.white);

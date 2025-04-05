@@ -204,10 +204,6 @@ function enableMenu(save) {
         }
     }
     if(panelMode !== "pinned") {
-        const panel = document.querySelector(".menu-panel");
-        if(!panel.classList.contains("transition")) {
-            panel.classList.add("transition");
-        }
         enablePanel(true);
     }
 }
@@ -233,9 +229,6 @@ function disableMenu(save) {
 function togglePanel() {
     const panel = document.querySelector(".menu-panel");
     if(panel) {
-        if(!panel.classList.contains("transition")) {
-            panel.classList.add("transition");
-        }
         if(panelMode !== "hover") {
             if (panel.classList.contains('active')) {
                 disablePanel(true);
@@ -249,9 +242,6 @@ function togglePanel() {
 function toggleMenu() {
     const menu = document.getElementById("menu");
     if(menu) {
-        if(!menu.classList.contains("transition")) {
-            menu.classList.add("transition");
-        }
         if(menu.classList.contains('active')) {
             disableMenu(true);
         } else {
@@ -320,6 +310,18 @@ addEventListener("DOMContentLoaded", () => {
     updateTheme();
     setBorderRadius_dev(borderRadius);
     setAccentColor_dev(accentColor);
+
+    if(urlParams.has("page")) {
+        let menu = false;
+        if(urlParams.has("menu")) {
+            menu = urlParams.get("menu");
+        }
+        const page = urlParams.get("page");
+        loadPage(page,menu);
+        highlight(document.getElementById(page.toLowerCase().replaceAll(".html","-button")))
+    } else {
+        loadPage("loading.html",false);
+    }
 });
 
 function setBorderRadius_dev(r) {
@@ -374,7 +376,7 @@ function loadPage(page,menu) {
         })
         .catch(error => {
             console.error('Error:', error);
-            contentDiv.innerHTML = '<p>Error.</p>';
+            contentDiv.innerHTML = "<h3 class='p-4 text-danger-emphasis'>"+error+"</h3>";
         });
     if(menu) {
         enableMenu(true);

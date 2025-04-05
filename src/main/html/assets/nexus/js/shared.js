@@ -344,7 +344,7 @@ addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    if(!storage||!app) {
+    if(!storage&&!app) {
         const toastEl = document.querySelector('.toast');
         const toast = new bootstrap.Toast(toastEl, {
             autohide: false

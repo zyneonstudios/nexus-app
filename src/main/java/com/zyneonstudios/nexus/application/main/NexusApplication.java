@@ -18,45 +18,40 @@ public class NexusApplication {
     private boolean launched = false;
     private final NexusRunner runner = new NexusRunner(this);
     private static String workingDir;
-
     private final NexusWebSetup webSetup;
     private ApplicationFrame applicationFrame = null;
+    private boolean onlineUI;
 
-    private String url;
-
-    public NexusApplication(String path, String url) {
+    public NexusApplication(String path, boolean online) {
         getLogger().log("Initializing application...");
-        this.url = url;
+        onlineUI = online;
         File workingDir = new File(path);
-        if(workingDir.mkdirs()) {
+        if (workingDir.mkdirs()) {
             getLogger().deb("Creating working directory (first run)...");
         }
-        NexusApplication.workingDir = workingDir.getAbsolutePath().replace("\\","/");
-        File temp = new File(NexusApplication.workingDir +"/temp");
-        if(temp.exists()) {
-            if(!temp.delete()) {
+        NexusApplication.workingDir = workingDir.getAbsolutePath().replace("\\", "/");
+        File temp = new File(NexusApplication.workingDir + "/temp");
+        if (temp.exists()) {
+            if (!temp.delete()) {
                 try {
                     FileActions.deleteFolder(temp);
-                } catch (Exception ignore) {}
+                } catch (Exception ignore) {
+                }
             }
         }
-        if(temp.mkdirs()) {
+        if (temp.mkdirs()) {
             temp.deleteOnExit();
-            if(url==null) {
-                //this.url = "file://" + this.workingDir + "/temp/ui/index.html";
-                this.url = "localhost:"+Main.getPort()+"/index.html?loading=false";
-                FileExtractor.extractResourceFile("html.zip", NexusApplication.workingDir + "/temp/ui.zip", Main.class);
-                File ui = new File(NexusApplication.workingDir + "/temp/ui.zip");
-                FileExtractor.unzipFile(ui.getAbsolutePath(), NexusApplication.workingDir + "/temp/ui/");
-                if (!ui.delete()) {
-                    ui.deleteOnExit();
-                }
+            FileExtractor.extractResourceFile("html.zip", NexusApplication.workingDir + "/temp/ui.zip", Main.class);
+            File ui = new File(NexusApplication.workingDir + "/temp/ui.zip");
+            FileExtractor.unzipFile(ui.getAbsolutePath(), NexusApplication.workingDir + "/temp/ui/");
+            if (!ui.delete()) {
+                ui.deleteOnExit();
             }
         } else {
             getLogger().err("Couldn't create temp folder: Old temp folder could not be deleted.");
             System.exit(1);
         }
-        webSetup = new NexusWebSetup(workingDir.getAbsolutePath()+"/libs/cef/");
+        webSetup = new NexusWebSetup(workingDir.getAbsolutePath() + "/libs/cef/");
         webSetup.enableCache(true);
         webSetup.enableCookies(true);
         webSetup.setup();
@@ -64,11 +59,11 @@ public class NexusApplication {
             @Override
             public void onLoadEnd(CefBrowser browser, CefFrame frame, int httpStatusCode) {
                 String url = browser.getURL();
-                frame.executeJavaScript("app = true; localStorage.setItem('enabled','true'); document.getElementById('menu').classList.add('transition');",url,0);
-                if(url.contains("discover.html")) {
-                    frame.executeJavaScript("enableMenu(true);",url,0);
+                frame.executeJavaScript("app = true; localStorage.setItem('enabled','true'); document.getElementById('menu').classList.add('transition');", url, 0);
+                if (url.contains("discover.html")) {
+                    frame.executeJavaScript("enableMenu(true);", url, 0);
                 } else {
-                    frame.executeJavaScript("disableMenu(true)",url,0);
+                    frame.executeJavaScript("disableMenu(true)", url, 0);
                 }
             }
         });
@@ -77,6 +72,10 @@ public class NexusApplication {
     public boolean launch() {
         if(!launched) {
             try {
+                String url = "localhost:"+Main.getPort()+"/index.html?app=true";
+                if(onlineUI) {
+                    url = "https://app.nexus.zyneonstudios.net/?app=true";
+                }
                 applicationFrame = new ApplicationFrame(webSetup, url, true);
                 applicationFrame.setTitlebar("v3.0.0-alpha.5", Color.black, Color.white);
                 applicationFrame.setSize(1200, 720);

@@ -42,11 +42,18 @@ function setRenderEffects(bool) {
     renderEffects = bool;
     setStorageItem("settings.appearance.renderEffects", bool);
     document.querySelector(".appearance-renderEffects").checked = renderEffects;
+    const panel = document.querySelector('.menu-panel');
     if(!renderEffects) {
+        if(panel.classList.contains("glass")) {
+            panel.classList.remove("glass");
+        }
         if(!document.head.innerHTML.includes("<style>:root,[data-bs-theme='light'],[data-bs-theme='dark'] * { box-shadow: none !important; text-shadow: none !important; --bs-box-shadow: none !important; }</style>")) {
             document.head.innerHTML += "<style>:root,[data-bs-theme='light'],[data-bs-theme='dark'] * { box-shadow: none !important; text-shadow: none !important; --bs-box-shadow: none !important; }</style>"
         }
     } else {
+        if(!panel.classList.contains("glass")) {
+            panel.classList.add("glass");
+        }
         document.head.innerHTML = document.head.innerHTML.replaceAll("<style>:root,[data-bs-theme='light'],[data-bs-theme='dark'] * { box-shadow: none !important; text-shadow: none !important; --bs-box-shadow: none !important; }</style>","");
     }
 }

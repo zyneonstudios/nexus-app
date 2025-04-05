@@ -264,6 +264,7 @@ body {
         }
 
         .menu-panel {
+            transition: all 0.15s ease;
             position: absolute;
             bottom: -3.42rem;
             z-index: 1;
@@ -273,6 +274,11 @@ body {
             height: 6rem;
             overflow: hidden;
             border-radius: var(--nex-border-radius) var(--nex-border-radius) 0 0;
+            background: var(--bs-dark-bg-subtle);
+
+            * {
+                transition: background-color 0.15s ease;
+            }
 
             .card-header {
                 position: relative;
@@ -295,7 +301,6 @@ body {
                 }
 
                 i {
-                    transition: all 0.25s ease;
                     position: relative;
                     font-size: 1.25rem;
                     margin: 0.3rem;
@@ -331,10 +336,6 @@ body {
                 }
             }
 
-            .card-header:hover {
-                background: #00000000;
-            }
-
             .panel-buttons {
                 position: absolute;
                 display: flex;
@@ -357,8 +358,17 @@ body {
             }
         }
 
+        .menu-panel.glass {
+            background: #ffffff10;
+            backdrop-filter: blur(16px);
+
+            .card-header {
+                background: #ffffff10;
+            }
+        }
+
         .menu-panel.menu-colors {
-            background: var(--nex-bg) !important;
+            background: var(--nex-bg);
 
             .card-header {
                 background: var(--nex-bg);
@@ -368,30 +378,20 @@ body {
             }
         }
 
-        .menu-panel.floating {
-            border-radius: var(--nex-border-radius);
-        }
-
-        .menu-panel.transition, .menu-panel.hover {
-            transition: all 0.15s ease;
-        }
-
-        .menu-panel.active, .menu-panel.hover:hover, .menu-panel.floating.active, .menu-panel.floating.hover:hover {
+        .menu-panel.active, .menu-panel.hover:hover {
             display: unset;
             bottom: calc(0rem - 2px);
         }
 
-        .menu-panel.floating.active, .menu-panel.floating.hover:hover {
-            bottom: 0.5rem;
-        }
-
-        .menu-panel.always-floating {
+        .menu-panel.always-floating, .menu-panel.floating {
             border-radius: var(--nex-border-radius);
             bottom: 0.5rem;
             height: 2.65rem;
         }
 
-        .menu-panel.always-floating.active {
+        .menu-panel.always-floating.active, .menu-panel.floating.active, .menu-panel.floating.hover:hover {
+            border-radius: var(--nex-border-radius);
+            bottom: 0.5rem !important;
             height: 6rem;
         }
 
@@ -458,10 +458,6 @@ body {
                 li {
                     transition: all 0.25s ease;
                 }
-            }
-
-            .panel {
-                transition: all 0.25s ease;
             }
         }
 

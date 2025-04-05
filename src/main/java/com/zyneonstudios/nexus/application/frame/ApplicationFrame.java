@@ -28,6 +28,7 @@ public class ApplicationFrame extends NWebFrame implements ComponentListener, We
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                setup.getWebApp().dispose();
                 System.exit(0);
             }
         });

@@ -12,20 +12,23 @@ public class Main {
 
     private static final NexusLogger logger = new NexusLogger("NEXUS");
     private static String path = "";
-    private static String ui = null;
     private static int port = 8094;
+    private static boolean online = false;
 
     public static void main(String[] args) {
         NexusDesktop.init();
         resolveArguments(args);
         ZyneonSplash splash = new ZyneonSplash();
         splash.setVisible(true);
-        NexusApplication application = new NexusApplication(path,ui);
+        NexusApplication application = new NexusApplication(path,online);
         startWebServer(args);
         if(application.launch()) {
             splash.dispose();
             System.gc();
         } else {
+            try {
+                application.getWebSetup().getWebApp().dispose();
+            } catch (Exception ignore) {}
             System.exit(1);
         }
     }
@@ -50,10 +53,8 @@ public class Main {
                         path = args[i + 1];
                     }
                 }
-                case "--ui" -> {
-                    if (i + 1 < args.length) {
-                        ui = args[i + 1];
-                    }
+                case "-o", "--online" -> {
+                    online = true;
                 }
                 case "-d", "--debug" -> logger.enableDebug();
             }

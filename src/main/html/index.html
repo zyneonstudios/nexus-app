@@ -10,8 +10,9 @@
         <script src="assets/nexus/js/shared.js"></script>
         <script src="assets/nexus/js/settings.js"></script>
     </head>
-    <body data-bs-theme="dark">
-        <div id="main">
+    <body data-bs-theme="dark" class="d-flex flex-column h-100 w-100 position-absolute">
+        <div id="titlebar" style="height: 2rem;"></div>
+        <div id="main" class="d-flex position-relative h-100">
             <div id="menu" class="transition">
                 <ul>
                     <li onclick="toggleMenu();">
@@ -54,7 +55,7 @@
                 </div>
                 <div class="toast-body">
                     Would you mind to enable Cookies, so that the app can work properly? We only use cookies that are necessary for functionality. No data is collected.<br><br>
-                    <button class="btn btn-primary m-1" onclick="localStorage.setItem('enabled','true'); location.reload();">Enable cookies</button>
+                    <button class="btn btn-nex-primary m-1" onclick="localStorage.setItem('enabled','true'); location.reload();">Enable cookies</button>
                     <button class="btn btn-outline-secondary m-1" onclick="window.open('https://nerofy.de/rechtliches','_blank')">Imprint and privacy</button>
                 </div>
             </div>

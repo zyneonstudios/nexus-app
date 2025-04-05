@@ -343,6 +343,15 @@ addEventListener("DOMContentLoaded", () => {
             app = true;
         }
     }
+    let titlebar = true;
+    if(urlParams.has("titlebar")) {
+        if(urlParams.get("titlebar") === "false") {
+            titlebar = false;
+        }
+    }
+    if(!app&&titlebar) {
+        document.getElementById("titlebar").style.display = "unset";
+    }
 
     if(!storage&&!app) {
         const toastEl = document.querySelector('.toast');
@@ -417,6 +426,7 @@ function loadPage(page,menu) {
     } else {
         disableMenu(true);
     }
+    window.history.pushState({}, document.title, window.location.pathname+"?page="+page);
 }
 
 function highlight(element) {

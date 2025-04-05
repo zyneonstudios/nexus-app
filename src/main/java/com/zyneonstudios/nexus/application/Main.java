@@ -12,16 +12,17 @@ public class Main {
 
     private static final NexusLogger logger = new NexusLogger("NEXUS");
     private static String path = "";
+    private static String ui = null;
     private static int port = 8094;
-    private static boolean online = false;
+    private static boolean online;
 
     public static void main(String[] args) {
         NexusDesktop.init();
         resolveArguments(args);
         ZyneonSplash splash = new ZyneonSplash();
         splash.setVisible(true);
-        NexusApplication application = new NexusApplication(path,online);
-        if(!online) {
+        NexusApplication application = new NexusApplication(path,ui);
+        if(!application.isOnlineUI()) {
             startWebServer(args);
         }
         if(application.launch()) {
@@ -57,10 +58,12 @@ public class Main {
                         logger.log("  -h, --help: This help message.");
                         logger.log("  -o, --online: Enables the connection to the online UI. Caution: This may cause problems with some modules.");
                         logger.log("  -p <path>, --path <path>: Lets you select the run folder.");
+                        logger.log("  -u <path>, --ui <path>: Lets you select the folder where the user interface should be unpacked.");
                         System.exit(0);
                     }
+                    case "-u", "--ui" -> ui = args[i + 1];
                     case "-p", "--path" -> path = args[i + 1];
-                    case "-o", "--online" -> online = true;
+                    case "-o", "--online" -> ui = "online";
                     case "-d", "--debug" -> logger.enableDebug();
                 }
             } catch (Exception e) {

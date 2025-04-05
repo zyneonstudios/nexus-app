@@ -21,15 +21,24 @@ public class NexusApplication {
     private final NexusWebSetup webSetup;
     private ApplicationFrame applicationFrame = null;
     private final boolean onlineUI;
+    private static String uiPath = null;
 
-    public NexusApplication(String path, boolean online) {
+    public NexusApplication(String path, String uiPath) {
         getLogger().log("Initializing application...");
-        onlineUI = online;
         File workingDir = new File(path);
         if (workingDir.mkdirs()) {
             getLogger().deb("Creating working directory (first run)...");
         }
         NexusApplication.workingDir = workingDir.getAbsolutePath().replace("\\", "/");
+        if(uiPath!=null) {
+            onlineUI = uiPath.equals("online");
+            if(!onlineUI) {
+                NexusApplication.uiPath = uiPath;
+            }
+        } else {
+            onlineUI = false;
+            NexusApplication.uiPath = NexusApplication.getWorkingDir().getAbsolutePath()+"/temp/ui";
+        }
         File temp = new File(NexusApplication.workingDir + "/temp");
         if (temp.exists()) {
             if (!temp.delete()) {
@@ -117,5 +126,13 @@ public class NexusApplication {
 
     public boolean isLaunched() {
         return launched;
+    }
+
+    public static String getUiPath() {
+        return uiPath;
+    }
+
+    public boolean isOnlineUI() {
+        return onlineUI;
     }
 }

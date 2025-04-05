@@ -23,7 +23,7 @@ public class RootController {
         }
         if(url.startsWith("http://localhost")||url.startsWith("http://127.0.0.1")||url.startsWith("http://0:0:0:0:0:0:0:1")) {
             try {
-                String frontendPath = NexusApplication.getWorkingDir().getAbsolutePath()+"/temp/ui";
+                String frontendPath = NexusApplication.getUiPath();
                 File file = new File(frontendPath + path);
                 InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
                 MediaType mediaType = MediaType.APPLICATION_JSON;

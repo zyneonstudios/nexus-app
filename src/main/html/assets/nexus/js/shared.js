@@ -16,7 +16,9 @@ let panelInlined = false;
 let enableCustomAccentColor = false;
 
 if(localStorage.getItem("enabled")||app) {
-    storage = true;
+    if(localStorage.getItem("enabled").toLowerCase() === "true") {
+        storage = true;
+    }
 }
 
 function initAppearanceSettings() {
@@ -382,6 +384,14 @@ function loadPage(page,menu) {
         enableMenu(true);
     } else {
         disableMenu(true);
+    }
+
+    if(!storage) {
+        const toastEl = document.querySelector('.toast');
+        const toast = new bootstrap.Toast(toastEl, {
+            autohide: false
+        });
+        toast.show();
     }
 }
 

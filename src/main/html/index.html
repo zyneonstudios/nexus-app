@@ -47,6 +47,17 @@
             <div id="content" class="position-relative">
 
             </div>
+            <div class="toast position-absolute" style="bottom: 1rem; right: 1rem;" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Hey there!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Schließen"></button>
+                </div>
+                <div class="toast-body">
+                    Would you mind to enable Cookies, so that the app can work properly? We only use cookies that are necessary for functionality. No data is collected.<br><br>
+                    <button class="btn btn-primary m-1" onclick="localStorage.setItem('enabled','true'); location.reload();">Enable cookies</button>
+                    <button class="btn btn-outline-secondary m-1" onclick="window.open('https://nerofy.de/rechtliches','_blank')">Imprint and privacy</button>
+                </div>
+            </div>
         </div>
         <script src="assets/popper/dist/umd/popper.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>

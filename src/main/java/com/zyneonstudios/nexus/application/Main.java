@@ -56,7 +56,7 @@ public class Main {
                         logger.log("  -d, --debug: Enables debug console output.");
                         logger.log("  -h, --help: This help message.");
                         logger.log("  -o, --online: Enables the connection to the online UI. Caution: This may cause problems with some modules.");
-                        logger.log("  -p, --path: Lets you select the run folder.");
+                        logger.log("  -p <path>, --path <path>: Lets you select the run folder.");
                         System.exit(0);
                     }
                     case "-p", "--path" -> path = args[i + 1];

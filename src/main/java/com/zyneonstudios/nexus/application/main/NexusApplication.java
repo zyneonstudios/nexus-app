@@ -77,7 +77,7 @@ public class NexusApplication {
                     url = "https://app.nexus.zyneonstudios.net/?app=true";
                 }
                 applicationFrame = new ApplicationFrame(webSetup, url, true);
-                applicationFrame.setTitlebar("v3.0.0-alpha.5", Color.black, Color.white);
+                applicationFrame.setTitlebar("v3.0.0-alpha.6", Color.black, Color.white);
                 applicationFrame.setSize(1200, 720);
                 applicationFrame.setLocationRelativeTo(null);
                 applicationFrame.setVisible(true);

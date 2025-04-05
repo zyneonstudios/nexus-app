@@ -184,7 +184,7 @@ body {
     background: var(--nex-bg);
 
     #titlebar {
-        display: none;
+        display: none !important;
     }
 
     #main {

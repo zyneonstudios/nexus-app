@@ -21,7 +21,9 @@ public class Main {
         ZyneonSplash splash = new ZyneonSplash();
         splash.setVisible(true);
         NexusApplication application = new NexusApplication(path,online);
-        startWebServer(args);
+        if(!online) {
+            startWebServer(args);
+        }
         if(application.launch()) {
             splash.dispose();
             System.gc();

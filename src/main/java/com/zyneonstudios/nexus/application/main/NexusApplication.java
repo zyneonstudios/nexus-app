@@ -3,7 +3,7 @@ package com.zyneonstudios.nexus.application.main;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.zyneonstudios.nexus.application.Main;
-import com.zyneonstudios.nexus.application.frame.ApplicationFrame;
+import com.zyneonstudios.nexus.application.frame.AppFrame;
 import com.zyneonstudios.nexus.application.listeners.PageLoadListener;
 import com.zyneonstudios.nexus.application.modules.ModuleLoader;
 import com.zyneonstudios.nexus.desktop.frame.web.NexusWebSetup;
@@ -40,7 +40,7 @@ public class NexusApplication {
     private final NexusRunner runner = new NexusRunner();
     private NexusWebSetup webSetup;
     private ModuleLoader moduleLoader;
-    private ApplicationFrame applicationFrame = null;
+    private AppFrame applicationFrame = null;
 
     // Configuration and State
     private final JsonStorage settings;
@@ -172,7 +172,7 @@ public class NexusApplication {
         if (!launched) {
             try {
                 String url = onlineUI ? "https://zyneonstudios.github.io/nexus-app/src/main/html?app=true&page=discover.html" : "localhost:" + Main.getPort() + "/index.html?app=true&page=discover.html";
-                applicationFrame = new ApplicationFrame(webSetup, url, true);
+                applicationFrame = new AppFrame(webSetup, url, true);
                 applicationFrame.setTitlebar(version, Color.black, Color.white);
                 applicationFrame.setSize(1200, 720);
                 applicationFrame.setLocationRelativeTo(null);
@@ -273,7 +273,7 @@ public class NexusApplication {
      *
      * @return The ApplicationFrame instance.
      */
-    public ApplicationFrame getApplicationFrame() {
+    public AppFrame getApplicationFrame() {
         return applicationFrame;
     }
 

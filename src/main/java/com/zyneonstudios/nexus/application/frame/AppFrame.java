@@ -22,7 +22,7 @@ import java.util.Objects;
  * communication with the web content.
  */
 @SuppressWarnings("unused")
-public class ApplicationFrame extends NWebFrame implements ComponentListener, WebFrame {
+public class AppFrame extends NWebFrame implements ComponentListener, WebFrame {
 
     // The minimum size of the application window.
     private final Dimension minSize = new Dimension(640, 360);
@@ -34,7 +34,7 @@ public class ApplicationFrame extends NWebFrame implements ComponentListener, We
      * @param url       The initial URL to load in the web browser.
      * @param decorated Whether the window should have a title bar and borders.
      */
-    public ApplicationFrame(NexusWebSetup setup, String url, boolean decorated) {
+    public AppFrame(NexusWebSetup setup, String url, boolean decorated) {
         super(setup.getWebClient(), url, decorated);
         try {
             // Set the application icon.

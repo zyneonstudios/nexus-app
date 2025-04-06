@@ -316,7 +316,9 @@ addEventListener("DOMContentLoaded", () => {
         }
         const page = urlParams.get("page");
         loadPage(page,menu);
-        highlight(document.getElementById(page.toLowerCase().replaceAll(".html","-button")))
+        try {
+            highlight(document.getElementById(page.toLowerCase().replaceAll(".html", "-button")));
+        } catch (ignore) {}
     } else {
         loadPage("loading.html",false);
     }
@@ -349,6 +351,13 @@ addEventListener("DOMContentLoaded", () => {
             autohide: false
         });
         toast.show();
+    }
+
+    if(getStorageItem("devtools")) {
+        if(getStorageItem("devtools")==="enabled") {
+            const buttons = document.querySelector(".menu-panel").querySelector(".card-header").querySelector(".buttons");
+            buttons.innerHTML = "<i class='bi bi-arrow-clockwise' onClick='location.reload();'></i>" + buttons.innerHTML;
+        }
     }
 });
 

@@ -1,5 +1,7 @@
 package com.zyneonstudios.nexus.application.frame;
 
+import com.zyneonstudios.nexus.application.Main;
+import com.zyneonstudios.nexus.application.events.PageLoadedEvent;
 import com.zyneonstudios.nexus.desktop.events.AsyncWebFrameConnectorEvent;
 import com.zyneonstudios.nexus.desktop.frame.web.NWebFrame;
 import com.zyneonstudios.nexus.desktop.frame.web.NexusWebSetup;
@@ -28,26 +30,27 @@ public class ApplicationFrame extends NWebFrame implements ComponentListener, We
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                setup.getWebApp().dispose();
-                System.exit(0);
+                Main.stop(0);
             }
         });
         AsyncWebFrameConnectorEvent connectorEvent = new AsyncWebFrameConnectorEvent(this,null) {
             @Override
             protected void resolveMessage(String s) {
                 if(s.startsWith("event.theme.changed.")) {
-                    if(s.endsWith("dark")) {
+                    if (s.endsWith("dark")) {
                         setTitleBackground(Color.black);
                         setTitleForeground(Color.white);
                     } else {
                         setTitleBackground(Color.white);
                         setTitleForeground(Color.black);
                     }
+                } else if(s.startsWith("event.page.loaded")) {
+                    for(PageLoadedEvent event : Main.getApplication().getEventHandler().getPageLoadedEvents()) {
+                        event.setUrl(getBrowser().getURL());
+                        event.execute();
+                    }
                 } else if(s.equals("exit")) {
-                    SwingUtilities.invokeLater(()->{
-                        setup.getWebApp().dispose();
-                        System.exit(0);
-                    });
+                    Main.stop(0);
                 }
             }
         };

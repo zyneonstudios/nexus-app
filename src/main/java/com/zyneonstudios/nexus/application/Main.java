@@ -7,6 +7,8 @@ import com.zyneonstudios.nexus.utilities.logger.NexusLogger;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
+import javax.swing.*;
+
 @SpringBootApplication
 public class Main {
 
@@ -15,13 +17,14 @@ public class Main {
     private static String ui = null;
     private static int port = 8094;
     private static boolean online;
+    private static NexusApplication application;
 
     public static void main(String[] args) {
         NexusDesktop.init();
         resolveArguments(args);
         ZyneonSplash splash = new ZyneonSplash();
         splash.setVisible(true);
-        NexusApplication application = new NexusApplication(path,ui);
+        application = new NexusApplication(path,ui);
         if(!application.isOnlineUI()) {
             startWebServer(args);
         }
@@ -29,10 +32,7 @@ public class Main {
             splash.dispose();
             System.gc();
         } else {
-            try {
-                application.getWebSetup().getWebApp().dispose();
-            } catch (Exception ignore) {}
-            System.exit(1);
+            stop(1);
         }
     }
 
@@ -80,5 +80,21 @@ public class Main {
 
     public static int getPort() {
         return port;
+    }
+
+    public static void stop(int exitCode) {
+        SwingUtilities.invokeLater(()->{
+            try {
+                application.getWebSetup().getWebApp().dispose();
+            } catch (Exception ignore) {}
+            try {
+                application.getModuleLoader().deactivateModules();
+            } catch (Exception ignore) {}
+            System.exit(exitCode);
+        });
+    }
+
+    public static NexusApplication getApplication() {
+        return application;
     }
 }

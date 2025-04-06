@@ -8,13 +8,8 @@ import java.util.concurrent.TimeUnit;
 public class NexusRunner {
 
     private final UUID runnerID = UUID.randomUUID();
-    private final NexusApplication app;
     private boolean started = false;
     private ScheduledExecutorService executor;
-
-    public NexusRunner(NexusApplication app) {
-        this.app = app;
-    }
 
     public UUID getRunnerID() {
         return runnerID;

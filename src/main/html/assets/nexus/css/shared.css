@@ -313,6 +313,7 @@ body {
                 }
 
                 i {
+                    transition: all 0.15s ease;
                     position: relative;
                     font-size: 1.25rem;
                     margin: 0.3rem;
@@ -356,6 +357,7 @@ body {
                 align-items: center;
 
                 i {
+                    transition: all 0.15s ease;
                     width: 2.75rem;
                     height: 2.75rem;
                     margin: 0.25rem;
@@ -370,7 +372,7 @@ body {
 
                 i:hover {
                     cursor: pointer;
-                    background: var(--bs-dark-bg-subtle);
+                    background: linear-gradient(45deg, var(--bs-dark), var(--bs-dark-bg-subtle));
                     border: 1px solid var(--bs-border-color);
                 }
             }

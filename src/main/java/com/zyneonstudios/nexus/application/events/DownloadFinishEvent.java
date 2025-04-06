@@ -1,10 +1,11 @@
 package com.zyneonstudios.nexus.application.events;
 
 import com.zyneonstudios.nexus.application.downloads.Download;
+import com.zyneonstudios.nexus.utilities.events.Event;
 
 import java.util.UUID;
 
-public abstract class DownloadFinishEvent {
+public abstract class DownloadFinishEvent implements Event {
 
     private final UUID uuid = UUID.randomUUID();
     private final Download download;
@@ -17,7 +18,7 @@ public abstract class DownloadFinishEvent {
         return download;
     }
 
-    public UUID getUUID() {
+    public final UUID getUUID() {
         return uuid;
     }
 

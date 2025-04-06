@@ -1,7 +1,7 @@
 package com.zyneonstudios.nexus.application.frame;
 
-import com.zyneonstudios.nexus.application.Main;
 import com.zyneonstudios.nexus.application.events.PageLoadedEvent;
+import com.zyneonstudios.nexus.application.main.NexusApplication;
 import com.zyneonstudios.nexus.desktop.events.AsyncWebFrameConnectorEvent;
 import com.zyneonstudios.nexus.desktop.frame.web.NWebFrame;
 import com.zyneonstudios.nexus.desktop.frame.web.NexusWebSetup;
@@ -30,7 +30,7 @@ public class ApplicationFrame extends NWebFrame implements ComponentListener, We
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                Main.stop(0);
+                NexusApplication.stop(0);
             }
         });
         AsyncWebFrameConnectorEvent connectorEvent = new AsyncWebFrameConnectorEvent(this,null) {
@@ -45,12 +45,12 @@ public class ApplicationFrame extends NWebFrame implements ComponentListener, We
                         setTitleForeground(Color.black);
                     }
                 } else if(s.startsWith("event.page.loaded")) {
-                    for(PageLoadedEvent event : Main.getApplication().getEventHandler().getPageLoadedEvents()) {
+                    for(PageLoadedEvent event : NexusApplication.getInstance().getEventHandler().getPageLoadedEvents()) {
                         event.setUrl(getBrowser().getURL());
                         event.execute();
                     }
                 } else if(s.equals("exit")) {
-                    Main.stop(0);
+                    NexusApplication.stop(0);
                 }
             }
         };

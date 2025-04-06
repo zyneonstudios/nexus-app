@@ -12,6 +12,7 @@ import org.cef.browser.CefBrowser;
 import org.cef.browser.CefFrame;
 import org.cef.handler.CefLoadHandlerAdapter;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.Objects;
@@ -29,8 +30,10 @@ public class NexusApplication {
     private final String version = "v3.0.0-alpha.9";
     private final JsonStorage settings;
     private ModuleLoader moduleLoader;
+    private static NexusApplication instance = null;
 
     public NexusApplication(String path, String uiPath) {
+        instance = this;
         getLogger().log("Initializing application...");
         File workingDir = new File(path);
         if (workingDir.mkdirs()) {
@@ -67,7 +70,7 @@ public class NexusApplication {
             }
         } else {
             getLogger().err("Couldn't create temp folder: Old temp folder could not be deleted.");
-            Main.stop(1);
+            stop(1);
         }
         webSetup = new NexusWebSetup(workingDir.getAbsolutePath() + "/libs/cef/");
         webSetup.enableCache(true);
@@ -186,5 +189,21 @@ public class NexusApplication {
 
     public NexusEventHandler getEventHandler() {
         return eventHandler;
+    }
+
+    public static void stop(int exitCode) {
+        SwingUtilities.invokeLater(()->{
+            try {
+                getInstance().getWebSetup().getWebApp().dispose();
+            } catch (Exception ignore) {}
+            try {
+                getInstance().getModuleLoader().deactivateModules();
+            } catch (Exception ignore) {}
+            System.exit(exitCode);
+        });
+    }
+
+    public static NexusApplication getInstance() {
+        return instance;
     }
 }

@@ -19,10 +19,8 @@ public class ModuleLoader {
 
 
     private HashMap<String, NexusModule> modules = new HashMap<>();
-    private final NexusApplication application;
 
     public ModuleLoader(NexusApplication application) {
-        this.application = application;
         if (application.getSettings().has("settings.modules.uninstall")) {
             ArrayList<String> uninstallModules = (ArrayList<String>) application.getSettings().get("settings.modules.uninstall");
             for (String module : uninstallModules) {
@@ -36,57 +34,50 @@ public class ModuleLoader {
         return modules.values();
     }
 
-    public HashMap<String, NexusModule> getModules() {
+    public HashMap<String, NexusModule> getNexusModulesById() {
         return modules;
     }
 
-    public Set<String> getModuleIds() {
+    public Set<String> getNexusModuleIds() {
         return modules.keySet();
     }
 
-    public HashMap<String, String> moduleJars = new HashMap<>();
+    private final HashMap<String, String> moduleJars = new HashMap<>();
 
-    @SuppressWarnings("all")
     public NexusModule readModule(File moduleJar) {
         try {
             String mainPath;
             String id;
-            String name;
-            String version;
-            String authors;
             try (JarFile jarFile = new JarFile(moduleJar.getAbsolutePath())) {
-                InputStream is = jarFile.getInputStream(jarFile.getJarEntry("nexus.json"));
+                InputStream is = jarFile.getInputStream(jarFile.getJarEntry("nexus-module.json"));
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                 JsonArray array = new Gson().fromJson(reader, JsonObject.class).getAsJsonArray("modules");
                 mainPath = array.get(0).getAsJsonObject().get("main").getAsString();
                 id = array.get(0).getAsJsonObject().get("id").getAsString();
-                if (moduleJars.keySet().contains(id)) {
+                if (moduleJars.containsKey(id)) {
                     return null;
                 }
-                name = array.get(0).getAsJsonObject().get("name").getAsString();
-                version = array.get(0).getAsJsonObject().get("version").getAsString();
-                authors = array.get(0).getAsJsonObject().get("authors").getAsJsonArray().toString();
             } catch (Exception e) {
                 NexusApplication.getLogger().err("Couldn't read module " + moduleJar.getPath() + ": " + e.getMessage());
-                e.printStackTrace();
                 return null;
             }
             URLClassLoader classLoader = new URLClassLoader(new URL[]{moduleJar.toURI().toURL()});
             Class<?> module = classLoader.loadClass(mainPath);
             Constructor<?> constructor = module.getConstructor();
             NexusModule module_ = (NexusModule) constructor.newInstance();
-            moduleJars.put(id, moduleJar.getAbsolutePath().replace("\\", "/"));
-            return module_;
+            if(id.equals(module_.getModuleId())) {
+                moduleJars.put(id, moduleJar.getAbsolutePath().replace("\\", "/"));
+                return module_;
+            }
         } catch (Exception e) {
             NexusApplication.getLogger().err("Couldn't read module " + moduleJar.getPath() + ": " + e.getMessage());
-            e.printStackTrace();
-            return null;
         }
+        return null;
     }
 
     public void loadModule(NexusModule module) {
         if (!modules.containsKey(module.getModuleId())) {
-            NexusApplication.getLogger().log("[MODULES] Loading module " + module.getModuleId() + " v" + module.getModuleVersion() + " by " + Arrays.toString(module.getModuleAuthors()) + "...");
+            NexusApplication.getLogger().log("Loading module " + module.getModuleId() + " v" + module.getModuleVersion() + " by " + module.getModuleOwner() + "...");
             modules.put(module.getModuleId(), module);
             module.onLoad();
         }
@@ -108,7 +99,6 @@ public class ModuleLoader {
         modules.remove(module.getModuleId());
     }
 
-    @SuppressWarnings("unused")
     public void unloadModules() {
         for (NexusModule module : modules.values()) {
             unloadModule(module);

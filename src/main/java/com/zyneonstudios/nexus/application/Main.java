@@ -7,8 +7,6 @@ import com.zyneonstudios.nexus.utilities.logger.NexusLogger;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
-import javax.swing.*;
-
 @SpringBootApplication
 public class Main {
 
@@ -32,7 +30,7 @@ public class Main {
             splash.dispose();
             System.gc();
         } else {
-            stop(1);
+            NexusApplication.stop(1);
         }
     }
 
@@ -80,21 +78,5 @@ public class Main {
 
     public static int getPort() {
         return port;
-    }
-
-    public static void stop(int exitCode) {
-        SwingUtilities.invokeLater(()->{
-            try {
-                application.getWebSetup().getWebApp().dispose();
-            } catch (Exception ignore) {}
-            try {
-                application.getModuleLoader().deactivateModules();
-            } catch (Exception ignore) {}
-            System.exit(exitCode);
-        });
-    }
-
-    public static NexusApplication getApplication() {
-        return application;
     }
 }

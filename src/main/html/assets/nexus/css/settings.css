@@ -1,3 +1,11 @@
+.settings-card {
+    display: none;
+}
+
+.settings-card.active {
+    display: flex;
+}
+
 table.table {
     border-radius: 0 0 var(--bs-border-radius) var(--bs-border-radius);
     overflow: hidden;

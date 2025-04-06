@@ -1,14 +1,9 @@
 package com.zyneonstudios.nexus.application.modules;
 
-import com.zyneonstudios.nexus.application.Main;
-import com.zyneonstudios.nexus.application.main.NexusApplication;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
 public abstract class NexusModule {
-
-    private final NexusApplication application = Main.getApplication();
 
     public abstract String getModuleId();
     public abstract String getModuleName();
@@ -27,9 +22,5 @@ public abstract class NexusModule {
             Collections.addAll(authors, getModuleContributors());
         }
         return authors.toArray(new String[0]);
-    }
-
-    protected NexusApplication getApplication() {
-        return application;
     }
 }

@@ -1,3 +1,5 @@
+document.querySelector(".menu-panel").querySelector(".card-body").innerHTML = "<span class='text nexus-version'>"+version+"</span><i onclick='console.log(`[CONNECTOR] exit`)' class='bi bi-door-open'></i>";
+
 /**
  * Initializes the appearance settings values based on stored preferences.
  */
@@ -45,7 +47,7 @@ function initAppearanceValues() {
     } else {
         resetAccentColorButton.style.display = "none";
     }
-}
+} initAppearanceValues();
 
 /**
  * Toggles animations on/off and updates the stored preference.
@@ -229,3 +231,8 @@ function setPanelInlined(bool) {
         }
     }
 }
+
+try {
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+} catch (ignore) {}

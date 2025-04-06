@@ -1,0 +1,1 @@
+document.querySelector(".menu-panel").querySelector(".card-body").innerHTML = "";

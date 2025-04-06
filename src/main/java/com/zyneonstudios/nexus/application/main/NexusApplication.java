@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.zyneonstudios.nexus.application.Main;
 import com.zyneonstudios.nexus.application.frame.ApplicationFrame;
+import com.zyneonstudios.nexus.application.listeners.PageLoadListener;
 import com.zyneonstudios.nexus.application.modules.ModuleLoader;
 import com.zyneonstudios.nexus.desktop.frame.web.NexusWebSetup;
 import com.zyneonstudios.nexus.utilities.file.FileActions;
@@ -16,13 +17,14 @@ import com.zyneonstudios.nexus.utilities.strings.StringGenerator;
 import org.cef.browser.CefBrowser;
 import org.cef.browser.CefFrame;
 import org.cef.handler.CefLoadHandlerAdapter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.Objects;
 
 /**
- * The {@code NexusApplication} class is the main entry point and core component of the Nexus application.
+ * The {@code NexusApplication} class is the main object and core component of the Nexus application.
  * It manages the application's lifecycle, including initialization, module loading, UI setup, and shutdown.
  * It also provides access to various application components and resources.
  */
@@ -135,14 +137,12 @@ public class NexusApplication {
         webSetup.getWebClient().addLoadHandler(new CefLoadHandlerAdapter() {
             @Override
             public void onLoadEnd(CefBrowser browser, CefFrame frame, int httpStatusCode) {
-                String url = browser.getURL();
-                if (getLogger().isDebugging()) {
-                    frame.executeJavaScript("localStorage.setItem('devtools','enabled');", url, 0);
-                }
-                frame.executeJavaScript("app = true; localStorage.setItem('enabled','true'); document.getElementById('menu').classList.add('transition');", url, 0);
-                frame.executeJavaScript(url.contains("discover.html") ? "enableMenu(true);" : "disableMenu(true)", url, 0);
+                frame.executeJavaScript("version = \""+version+"\";", browser.getURL() ,0);
             }
         });
+
+        // Setup page load listener
+        eventHandler.addPageLoadedEvent(new PageLoadListener());
     }
 
     /**

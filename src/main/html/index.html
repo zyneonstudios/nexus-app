@@ -16,9 +16,10 @@
         <link href="assets/nexus/css/shared.css" rel="stylesheet">
         <!-- Shared JavaScript for the NEXUS app -->
         <script src="assets/nexus/js/shared.js"></script>
-        <!-- Settings JavaScript for the NEXUS app -->
-        <script src="assets/nexus/js/settings.js"></script>
     </head>
+    <!-- For sub-page specific scripts and more -->
+    <div class="d-none" id="page-specific"></div>
+
     <!-- Body of the application -->
     <body data-bs-theme="dark" class="d-flex flex-column h-100 w-100 position-absolute">
         <!-- Title bar (likely for custom window controls) -->
@@ -27,6 +28,8 @@
         <div id="main" class="d-flex position-relative h-100">
             <!-- Main menu -->
             <div id="menu" class="transition">
+                <!-- NEXUS App menu logo -->
+                <img alt="NEXUS App logo" src="assets/nexus/img/logo.png">
                 <ul>
                     <!-- Toggle menu button -->
                     <li onclick="toggleMenu();">
@@ -67,14 +70,7 @@
                 </div>
                 <!-- Menu panel body -->
                 <div class="card-body p-0">
-                    <!-- Discord link -->
-                    <i onclick='window.open(`https://discord.gg/Awwh6JrJBS`,`_blank`);' class='bi bi-discord'></i>
-                    <!-- GitHub link -->
-                    <i onclick="window.open('https://github.com/zyneonstudios/nexus-app','_blank');" class="bi bi-github"></i>
-                    <!-- Website link -->
-                    <i onclick="window.open('https://nexus.zyneonstudios.org/app','_blank');" class="bi bi-globe"></i>
-                    <!-- Exit button (likely for a desktop app) -->
-                    <i onclick="console.log('[CONNECTOR] exit')" class="bi bi-door-open"></i>
+
                 </div>
             </div>
             <!-- Main content area where pages are loaded -->

@@ -5,6 +5,12 @@
 // --- Global Variables ---
 
 /**
+ * The current application version/type (web, desktop, v3.x.x).
+ * @type {string}
+ */
+let version = "Web app";
+
+/**
  * URL parameters from the current document's location.
  * @type {URLSearchParams}
  */
@@ -133,13 +139,17 @@ function initAppearanceSettings() {
     theme = getStorageItem("settings.appearance.theme") || theme;
 
     // Load animations setting from storage or use default
-    animations = getStorageItem("settings.appearance.animations") === "true" || animations;
+    if(getStorageItem("settings.appearance.animations")) {
+        animations = getStorageItem("settings.appearance.animations") === "true";
+    }
     if (!animations) {
         document.head.innerHTML += "<style>* { transition: all 0s !important; }</style>";
     }
 
     // Load render effects setting from storage or use default
-    renderEffects = getStorageItem("settings.appearance.renderEffects") === "true" || renderEffects;
+    if(getStorageItem("settings.appearance.renderEffects")) {
+        renderEffects = getStorageItem("settings.appearance.renderEffects") === "true";
+    }
     if (!renderEffects) {
         document.head.innerHTML += "<style>:root,[data-bs-theme='light'],[data-bs-theme='dark'] * { box-shadow: none !important; text-shadow: none !important; --bs-box-shadow: none !important; }</style>";
     }
@@ -157,10 +167,14 @@ function initAppearanceSettings() {
     }
 
     // Load border radius from storage or use default
-    borderRadius = parseFloat(getStorageItem("settings.appearance.borderRadius")) || borderRadius;
+    if(getStorageItem("settings.appearance.borderRadius")) {
+        borderRadius = parseFloat(getStorageItem("settings.appearance.borderRadius"));
+    }
 
     // Load panel floating setting from storage or use default
-    panelFloating = getStorageItem("settings.appearance.panelFloating") === "true" || panelFloating;
+    if(getStorageItem("settings.appearance.panelFloating")) {
+        panelFloating = getStorageItem("settings.appearance.panelFloating") === "true"
+    }
 
     // Load panel inlined setting from storage or use default
     panelInlined = getStorageItem("settings.appearance.panelInlined") === "true" || panelInlined;
@@ -478,7 +492,7 @@ addEventListener("DOMContentLoaded", () => {
     }
 
     // Add devtools button if enabled in storage
-    if (getStorageItem("devtools") === "enabled") {
+    if (getStorageItem("devtools") === "true") {
         const buttons = document.querySelector(".menu-panel .card-header .buttons");
         buttons.innerHTML = "<i class='bi bi-arrow-clockwise' onClick='location.reload();'></i>" + buttons.innerHTML;
     }
@@ -553,14 +567,17 @@ function applyAccentColorToElement(e, c) {
  */
 function loadPage(page, menu) {
     const contentDiv = document.getElementById('content');
+    document.querySelector("#page-specific").innerHTML = "";
     fetch(page)
         .then(response => response.text())
         .then(html => {
             contentDiv.innerHTML = html;
         })
         .then(() => {
+            try {
+                document.querySelector(".menu-panel").querySelector(".card-body").innerHTML = "<i onclick='window.open(`https://discord.gg/Awwh6JrJBS`,`_blank`);' class='bi bi-discord'></i><i onclick='window.open(`https://github.com/zyneonstudios/nexus-app`,`_blank`);' class='bi bi-github'></i><i onclick='window.open(`https://nexus.zyneonstudios.org/app`,`_blank`);' class='bi bi-globe'></i><i onclick='console.log(`[CONNECTOR] exit`)' class='bi bi-door-open'></i>";
+            } catch (ignore) {}
             if (page === "settings.html") {
-                initAppearanceValues(); // Initialize appearance settings on the settings page
                 if (urlParams.has("bottom-border") && urlParams.get("bottom-border") === "true") {
                     const floatingSwitch = document.querySelector(".floating-switch");
                     if (floatingSwitch) {
@@ -584,6 +601,27 @@ function loadPage(page, menu) {
         disableMenu(true);
     }
     window.history.pushState({}, document.title, window.location.pathname + "?page=" + page);
+    console.log("[CONNECTOR] event.page.loaded");
+}
+
+/**
+ * Loads a new javascript file and initializes it asynchronously.
+ * @param {string} url - The URL of the new javascript file.
+ * @param {function} callback - A function to be called after the script has been loaded successfully
+ */
+function loadScript(url, callback) {
+    const script = document.createElement('script');
+    script.src = url;
+    script.type = 'text/javascript';
+    script.onload = function() {
+        if (callback) {
+            callback();
+        }
+    };
+    script.onerror = function() {
+        console.error(`Couldn't load script ${url}.`);
+    };
+    document.querySelector("#page-specific").appendChild(script);
 }
 
 // --- Menu Highlighting ---
@@ -598,4 +636,21 @@ function highlight(element) {
     }
     element.classList.add("active");
     glow = element;
+}
+
+/**
+ * Enabled or disabled the testing/dev tools
+ * @param {boolean} enable - Whether to enable or disable the testing/dev tools
+ */
+function enableDevTools(enable) {
+    if(localStorage.getItem("enabled")) {
+        let tools = false;
+        if(getStorageItem("devtools")) {
+            tools = getStorageItem("devtools") === "true";
+        }
+        setStorageItem("devtools",enable+"");
+        if(tools!==enable) {
+            location.reload();
+        }
+    }
 }

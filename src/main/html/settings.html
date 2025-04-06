@@ -42,7 +42,7 @@
                         <tbody>
                         <!-- Theme Selection Row -->
                         <tr class="disabled">
-                            <td class="left" colspan="2">Theme</td>
+                            <td class="left" colspan="2">Theme <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose the color scheme in which the NEXUS App should be displayed."></i></td>
                             <td class="right">
                                 <label>
                                     <select class="form-select appearance-theme disabled" disabled onchange="theme = this.value; updateTheme();">
@@ -55,7 +55,7 @@
                         </tr>
                         <!-- Animations Toggle Row -->
                         <tr>
-                            <td class="left" colspan="2">Animations</td>
+                            <td class="left" colspan="2">Animations <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose whether the displayed and supported elements of the NEXUS App should have animations or not."></i></td>
                             <td class="right">
                                 <div class="form-switch">
                                     <label>
@@ -66,7 +66,7 @@
                         </tr>
                         <!-- Render Effects Toggle Row -->
                         <tr>
-                            <td class="left" colspan="2">Render effects</td>
+                            <td class="left" colspan="2">Render effects <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose whether you want to render the effects of the NEXUS App interface, such as glow effects, shadows or glass backgrounds."></i></td>
                             <td class="right">
                                 <div class="form-switch">
                                     <label>
@@ -77,10 +77,10 @@
                         </tr>
                         <!-- Accent Color Selection Row -->
                         <tr>
-                            <td class="left">Accent color</td>
+                            <td class="left">Accent color <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose the accent color of the NEXUS App interface."></i></td>
                             <td>
                                 <div class="text-switch">
-                                    Custom
+                                    <span>Custom <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose your own color via the color picker, RGB, HSL and/or HEX code."></i> </span>
                                     <div class="form-switch">
                                         <label>
                                             <input class="form-check-input appearance-customAccentColor switch" type="checkbox" role="switch" onchange="setCustomAccentColor(this.checked);">
@@ -110,7 +110,7 @@
                         </tr>
                         <!-- Border Radius Control Row -->
                         <tr class="last">
-                            <td class="left">Border radius</td>
+                            <td class="left">Border radius <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you set the radius of the rounded edges. This determines how rounded the corners of the NEXUS App interface should be, with a value between 0 and 2 (1 by default)."></i></td>
                             <td>
                                 <label>
                                     <!-- Number Input for Border Radius -->
@@ -139,7 +139,7 @@
                         <tbody>
                         <!-- Floating Panel Toggle Row -->
                         <tr class="floating-switch">
-                            <td class="left" colspan="2">Floating</td>
+                            <td class="left" colspan="2">Floating <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you choose whether the dynamic NEXUS App panel should float or connect to the bottom edge. By default, it's floating."></i></td>
                             <td class="right">
                                 <div class="form-switch">
                                     <label>
@@ -150,7 +150,7 @@
                         </tr>
                         <!-- Inline Panel Toggle Row -->
                         <tr class="last">
-                            <td class="left" colspan="2">Inline to menu</td>
+                            <td class="left" colspan="2">Inline to menu  <i class="bi bi-info-circle" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Lets you integrate the dynamic NEXUS App panel into the menu so that it is only visible when the menu is expanded."></i></td>
                             <td class="right">
                                 <div class="form-switch">
                                     <label>
@@ -166,3 +166,4 @@
         </div>
     </div>
 </div>
+<button onclick="loadScript('assets/nexus/js/settings.js', null);" class="onload d-none">On page load</button>

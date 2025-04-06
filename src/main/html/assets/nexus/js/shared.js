@@ -1,405 +1,557 @@
+/**
+ * @fileoverview This file contains shared JavaScript functions and variables used throughout the NEXUS app.
+ */
+
+// --- Global Variables ---
+
+/**
+ * URL parameters from the current document's location.
+ * @type {URLSearchParams}
+ */
 const urlParams = new URLSearchParams(document.location.search);
-let glow;
 
-let menuEnabled = false; let panelEnabled = false; let storage = false; let app = false;
+/**
+ * Currently highlighted menu item.
+ * @type {HTMLElement|null}
+ */
+let glow = null;
+
+/**
+ * Indicates if the main menu is enabled.
+ * @type {boolean}
+ */
+let menuEnabled = false;
+
+/**
+ * Indicates if the side panel is enabled.
+ * @type {boolean}
+ */
+let panelEnabled = false;
+
+/**
+ * Indicates if local storage is enabled and available.
+ * @type {boolean}
+ */
+let storage = false;
+
+/**
+ * Indicates if the app is running in a standalone application mode.
+ * @type {boolean}
+ */
+let app = false;
+
+/**
+ * The root element of the document.
+ * @type {HTMLElement}
+ */
 const root = document.querySelector(':root');
-document.addEventListener('contextmenu',function(e){e.preventDefault();});document.addEventListener('dragstart', function(e){e.preventDefault();});
 
+// --- Default Appearance Settings ---
+
+/**
+ * The current theme (dark, light, auto).
+ * @type {string}
+ */
 let theme = "dark";
+
+/**
+ * Indicates if animations are enabled.
+ * @type {boolean}
+ */
 let animations = true;
+
+/**
+ * Indicates if render effects (glass, shadows) are enabled.
+ * @type {boolean}
+ */
 let renderEffects = true;
+
+/**
+ * The current accent color (hex or CSS variable).
+ * @type {string}
+ */
 let accentColor = "#8732EC";
+
+/**
+ * The current border radius value.
+ * @type {number}
+ */
 let borderRadius = 1.0;
+
+/**
+ * Indicates if the panel is floating.
+ * @type {boolean}
+ */
 let panelFloating = true;
+
+/**
+ * Indicates if the panel is inlined.
+ * @type {boolean}
+ */
 let panelInlined = false;
+
+/**
+ * Indicates if a custom accent color is enabled.
+ * @type {boolean}
+ */
 let enableCustomAccentColor = false;
 
-if(localStorage.getItem("enabled")||app) {
-    if(localStorage.getItem("enabled").toLowerCase() === "true") {
+// --- Event Listeners ---
+
+/**
+ * Prevents the default context menu from appearing.
+ */
+document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+});
+
+/**
+ * Prevents the default drag-and-drop behavior.
+ */
+document.addEventListener('dragstart', function (e) {
+    e.preventDefault();
+});
+
+// --- Local Storage Check ---
+
+/**
+ * Checks if local storage is enabled and sets the 'storage' variable accordingly.
+ */
+if (localStorage.getItem("enabled") || app) {
+    if (localStorage.getItem("enabled").toLowerCase() === "true") {
         storage = true;
     }
 }
 
+// --- Appearance Settings Initialization ---
+
+/**
+ * Initializes the appearance settings based on stored preferences or default values.
+ */
 function initAppearanceSettings() {
-    if(getStorageItem("settings.appearance.theme")) {
-        theme = getStorageItem("settings.appearance.theme");
+    // Load theme from storage or use default
+    theme = getStorageItem("settings.appearance.theme") || theme;
+
+    // Load animations setting from storage or use default
+    animations = getStorageItem("settings.appearance.animations") === "true" || animations;
+    if (!animations) {
+        document.head.innerHTML += "<style>* { transition: all 0s !important; }</style>";
     }
-    if(getStorageItem("settings.appearance.animations")) {
-        animations = getStorageItem("settings.appearance.animations") === "true";
-        if(!animations) {
-            document.head.innerHTML += "<style>* { transition: all 0s !important; }</style>"
-        }
+
+    // Load render effects setting from storage or use default
+    renderEffects = getStorageItem("settings.appearance.renderEffects") === "true" || renderEffects;
+    if (!renderEffects) {
+        document.head.innerHTML += "<style>:root,[data-bs-theme='light'],[data-bs-theme='dark'] * { box-shadow: none !important; text-shadow: none !important; --bs-box-shadow: none !important; }</style>";
     }
-    if(getStorageItem("settings.appearance.renderEffects")) {
-        renderEffects = getStorageItem("settings.appearance.renderEffects") === "true";
-        if(!renderEffects) {
-            document.head.innerHTML += "<style>:root,[data-bs-theme='light'],[data-bs-theme='dark'] * { box-shadow: none !important; text-shadow: none !important; --bs-box-shadow: none !important; }</style>"
-        }
-    }
-    if(getStorageItem("settings.appearance.customAccentColor")) {
-        enableCustomAccentColor = getStorageItem("settings.appearance.customAccentColor") === "true";
-    }
-    if(enableCustomAccentColor) {
-        if(getStorageItem("settings.appearance.accentColor")) {
-            accentColor = getStorageItem("settings.appearance.accentColor");
-        } else {
-            setStorageItem("settings.appearance.accentColor", accentColor);
-        }
+
+    // Load custom accent color setting from storage or use default
+    enableCustomAccentColor = getStorageItem("settings.appearance.customAccentColor") === "true" || enableCustomAccentColor;
+
+    // Load accent color from storage or use default
+    if (enableCustomAccentColor) {
+        accentColor = getStorageItem("settings.appearance.accentColor") || accentColor;
+        setStorageItem("settings.appearance.accentColor", accentColor); // Ensure it's stored if it was the default
     } else {
-        if(getStorageItem("settings.appearance.color")) {
-            accentColor = getStorageItem("settings.appearance.color");
-        } else {
-            setStorageItem("settings.appearance.color", accentColor);
-        }
+        accentColor = getStorageItem("settings.appearance.color") || accentColor;
+        setStorageItem("settings.appearance.color", accentColor); // Ensure it's stored if it was the default
     }
-    if(getStorageItem("settings.appearance.borderRadius")) {
-        borderRadius = parseFloat(getStorageItem("settings.appearance.borderRadius"));
-    }
-    if (getStorageItem("settings.appearance.panelFloating")) {
-        panelFloating = getStorageItem("settings.appearance.panelFloating") === "true";
-    }
-    if (getStorageItem("settings.appearance.panelInlined")) {
-        panelInlined = getStorageItem("settings.appearance.panelInlined") === "true";
-    }
-} initAppearanceSettings();
 
-if(getStorageItem("settings.menu.enabled")) {
-    menuEnabled = getStorageItem("settings.menu.enabled") === "true";
+    // Load border radius from storage or use default
+    borderRadius = parseFloat(getStorageItem("settings.appearance.borderRadius")) || borderRadius;
+
+    // Load panel floating setting from storage or use default
+    panelFloating = getStorageItem("settings.appearance.panelFloating") === "true" || panelFloating;
+
+    // Load panel inlined setting from storage or use default
+    panelInlined = getStorageItem("settings.appearance.panelInlined") === "true" || panelInlined;
 }
+initAppearanceSettings();
 
+// --- Menu and Panel Settings ---
+
+/**
+ * Loads the menu enabled state from storage or uses default.
+ */
+menuEnabled = getStorageItem("settings.menu.enabled") === "true" || menuEnabled;
+
+/**
+ * The current panel mode (click, pinned, hover).
+ * @type {string}
+ */
 let panelMode = "click";
+
+/**
+ * Initializes the panel based on stored preferences or default values.
+ */
 function initPanel() {
-    if(document.querySelector(".menu-panel")) {
-        const panel = document.querySelector(".menu-panel");
-        const modeIcon = panel.querySelector("i.mode");
-        let enable = false;
+    const panel = document.querySelector(".menu-panel");
+    if (!panel) return; // Exit if panel doesn't exist
 
-        if(panelInlined) {
-            if(!panel.classList.contains("inlined")) {
-                panel.classList.add("inlined");
-            }
-            if(!panel.classList.contains("floating")) {
-                panel.classList.add("floating");
-            }
-            return;
-        }
+    const modeIcon = panel.querySelector("i.mode");
+    let enable = false;
 
-        if(panelFloating) {
-            if(!panel.classList.contains("floating")) {
-                panel.classList.add("floating");
-            }
-        }
+    // Handle inlined panel
+    if (panelInlined) {
+        panel.classList.add("inlined", "floating");
+        return;
+    }
 
-        if(getStorageItem("settings.panel.enabled")) {
-            panelEnabled = getStorageItem("settings.panel.enabled") === "true";
-            enable = getStorageItem("settings.panel.enabled") === "true";
-        }
+    // Handle floating panel
+    if (panelFloating) {
+        panel.classList.add("floating");
+    }
 
-        if (getStorageItem("settings.panel.mode")) {
-            panelMode = getStorageItem("settings.panel.mode");
-            if (!(panelMode === "click" || panelMode === "pinned" || panelMode === "hover")) {
-                setStorageItem("settings.panel.mode", "click");
-                panelMode = "click";
-            }
-        }
+    // Load panel enabled state from storage or use default
+    panelEnabled = getStorageItem("settings.panel.enabled") === "true" || panelEnabled;
+    enable = panelEnabled;
 
-        if (panelMode === "click") {
-            modeIcon.className = "mode bi bi-pin-angle";
-        } else if (panelMode === "pinned") {
-            modeIcon.className = "mode bi bi-pin-angle-fill";
-            if(enable) {
-                enablePanel(true);
-            } else {
-                disablePanel(true);
-            }
-        } else if (panelMode === "hover") {
-            if(!panel.classList.contains("hover")) {
-                panel.classList.add("hover");
-            }
-            modeIcon.className = "mode bi bi-cursor-fill";
-        }
+    // Load panel mode from storage or use default
+    panelMode = getStorageItem("settings.panel.mode") || panelMode;
+    if (!(panelMode === "click" || panelMode === "pinned" || panelMode === "hover")) {
+        setStorageItem("settings.panel.mode", "click");
+        panelMode = "click";
+    }
+
+    // Set panel mode icon and behavior
+    if (panelMode === "click") {
+        modeIcon.className = "mode bi bi-pin-angle";
+    } else if (panelMode === "pinned") {
+        modeIcon.className = "mode bi bi-pin-angle-fill";
+        enablePanel(true); // Ensure panel is enabled
+    } else if (panelMode === "hover") {
+        panel.classList.add("hover");
+        modeIcon.className = "mode bi bi-cursor-fill";
     }
 }
 
+/**
+ * Changes the panel mode (click, pinned, hover).
+ */
 function changePanelMode() {
-    if(document.querySelector(".menu-panel")) {
-        const panel = document.querySelector(".menu-panel");
-        const modeIcon = panel.querySelector("i.mode");
-        if (panelMode === "click") {
-            if(panel.classList.contains("hover")) {
-                panel.classList.remove("hover");
-            }
-            modeIcon.className = "mode bi bi-pin-angle-fill";
-            panelMode = "pinned";
-        } else if (panelMode === "pinned") {
-            if(!panel.classList.contains("hover")) {
-                panel.classList.add("hover");
-            }
-            if(panel.classList.contains("active")) {
-                panel.classList.remove("active");
-            }
-            modeIcon.className = "mode bi bi-cursor-fill";
-            panelMode = "hover";
-        } else if (panelMode === "hover") {
-            if(panel.classList.contains("hover")) {
-                panel.classList.remove("hover");
-            }
-            modeIcon.className = "mode bi bi-pin-angle";
-            panelMode = "click";
-            enablePanel(true);
-        }
-        setStorageItem("settings.panel.mode", panelMode);
+    const panel = document.querySelector(".menu-panel");
+    if (!panel) return; // Exit if panel doesn't exist
+
+    const modeIcon = panel.querySelector("i.mode");
+
+    if (panelMode === "click") {
+        panel.classList.remove("hover");
+        modeIcon.className = "mode bi bi-pin-angle-fill";
+        panelMode = "pinned";
+    } else if (panelMode === "pinned") {
+        panel.classList.add("hover");
+        panel.classList.remove("active");
+        modeIcon.className = "mode bi bi-cursor-fill";
+        panelMode = "hover";
+    } else if (panelMode === "hover") {
+        panel.classList.remove("hover");
+        modeIcon.className = "mode bi bi-pin-angle";
+        panelMode = "click";
+        enablePanel(true);
     }
+    setStorageItem("settings.panel.mode", panelMode);
 }
 
+/**
+ * Enables the side panel.
+ * @param {boolean} save - Whether to save the state to local storage.
+ */
 function enablePanel(save) {
     const panel = document.querySelector(".menu-panel");
-    if(panel) {
-        if(!panel.classList.contains('active')) {
-            panel.classList.add('active');
-            if(save) {
-                if(save === true) {
-                    setStorageItem("settings.panel.enabled", "true");
-                    panelEnabled = true;
-                }
-            }
+    if (!panel) return; // Exit if panel doesn't exist
+
+    if (!panel.classList.contains('active')) {
+        panel.classList.add('active');
+        if (save === true) {
+            setStorageItem("settings.panel.enabled", "true");
+            panelEnabled = true;
         }
     }
 }
 
+/**
+ * Disables the side panel.
+ * @param {boolean} save - Whether to save the state to local storage.
+ */
 function disablePanel(save) {
     const panel = document.querySelector(".menu-panel");
-    if(panel) {
-        if(panel.classList.contains('active')) {
-            panel.classList.remove('active');
-            if(save) {
-                if(save === true) {
-                    setStorageItem("settings.panel.enabled", "false");
-                    panelEnabled = false;
-                }
-            }
+    if (!panel) return; // Exit if panel doesn't exist
+
+    if (panel.classList.contains('active')) {
+        panel.classList.remove('active');
+        if (save === true) {
+            setStorageItem("settings.panel.enabled", "false");
+            panelEnabled = false;
         }
     }
 }
 
+/**
+ * Enables the main menu.
+ * @param {boolean} save - Whether to save the state to local storage.
+ */
 function enableMenu(save) {
     const menu = document.getElementById("menu");
-    if(menu) {
-        if(!menu.classList.contains('active')) {
-            menu.classList.add('active');
-            menuEnabled = true;
-            if(save) {
-                if(save === true) {
-                    setStorageItem("settings.menu.enabled", "true");
-                }
-            }
+    if (!menu) return; // Exit if menu doesn't exist
+
+    if (!menu.classList.contains('active')) {
+        menu.classList.add('active');
+        menuEnabled = true;
+        if (save === true) {
+            setStorageItem("settings.menu.enabled", "true");
         }
     }
-    if(panelMode !== "pinned") {
+    if (panelMode !== "pinned") {
         enablePanel(true);
     }
 }
 
+/**
+ * Disables the main menu.
+ * @param {boolean} save - Whether to save the state to local storage.
+ */
 function disableMenu(save) {
     const menu = document.getElementById("menu");
-    if(menu) {
-        if(menu.classList.contains('active')) {
-            menu.classList.remove('active');
-            menuEnabled = false;
-            if(save) {
-                if(save === true) {
-                    setStorageItem("settings.menu.enabled", "false");
-                }
-            }
+    if (!menu) return; // Exit if menu doesn't exist
+
+    if (menu.classList.contains('active')) {
+        menu.classList.remove('active');
+        menuEnabled = false;
+        if (save === true) {
+            setStorageItem("settings.menu.enabled", "false");
         }
     }
-    if(panelMode !== "pinned") {
+    if (panelMode !== "pinned") {
         disablePanel(true);
     }
 }
 
+/**
+ * Toggles the side panel's visibility.
+ */
 function togglePanel() {
     const panel = document.querySelector(".menu-panel");
-    if(panel) {
-        if(panelMode !== "hover") {
-            if (panel.classList.contains('active')) {
-                disablePanel(true);
-            } else {
-                enablePanel(true);
-            }
+    if (!panel) return; // Exit if panel doesn't exist
+
+    if (panelMode !== "hover") {
+        if (panel.classList.contains('active')) {
+            disablePanel(true);
+        } else {
+            enablePanel(true);
         }
     }
 }
 
+/**
+ * Toggles the main menu's visibility.
+ */
 function toggleMenu() {
     const menu = document.getElementById("menu");
-    if(menu) {
-        if(menu.classList.contains('active')) {
-            disableMenu(true);
-        } else {
-            enableMenu(true);
-        }
+    if (!menu) return; // Exit if menu doesn't exist
+
+    if (menu.classList.contains('active')) {
+        disableMenu(true);
+    } else {
+        enableMenu(true);
     }
 }
 
+// --- Theme Management ---
+
+/**
+ * Updates the application's theme based on the 'theme' variable.
+ */
 function updateTheme() {
     let style = theme;
-    if(style === "auto"||style === "automatic") {
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            style = "dark";
-        } else {
-            style = "light";
-        }
+    if (style === "auto" || style === "automatic") {
+        style = window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light";
     }
-    if(style==="light") {
-        root.style.setProperty('--nex-bg', 'white');
-        console.log("[CONNECTOR] event.theme.changed.light")
-    } else {
-        root.style.setProperty('--nex-bg', 'black');
-        console.log("[CONNECTOR] event.theme.changed.dark")
-    }
+
+    root.style.setProperty('--nex-bg', style === "light" ? 'white' : 'black');
+    console.log(`[CONNECTOR] event.theme.changed.${style}`);
     document.body.setAttribute('data-bs-theme', style);
-    setStorageItem("settings.appearance.theme",theme);
+    setStorageItem("settings.appearance.theme", theme);
 }
 
-function setStorageItem(path,content) {
-    if(storage) {
-        localStorage.setItem(path,content);
+// --- Local Storage Helpers ---
+
+/**
+ * Sets an item in local storage if storage is enabled.
+ * @param {string} path - The key for the storage item.
+ * @param {string} content - The value to store.
+ * @returns {boolean} - True if the item was stored, false otherwise.
+ */
+function setStorageItem(path, content) {
+    if (storage) {
+        localStorage.setItem(path, content);
         return true;
     }
     return false;
 }
 
+/**
+ * Gets an item from local storage if storage is enabled.
+ * @param {string} path - The key for the storage item.
+ * @returns {string|undefined} - The stored value or undefined if not found.
+ */
 function getStorageItem(path) {
-    if(storage) {
-        if(localStorage.getItem(path)) {
-            return localStorage.getItem(path);
-        }
+    if (storage) {
+        return localStorage.getItem(path);
     }
     return undefined;
 }
 
+// --- Notifications ---
+
+/**
+ * Opens the notifications panel (if in app mode).
+ */
 function openNotifications() {
-    if(app) {
-        let notifications = document.getElementById("notifications");
-        notifications.querySelector(".offcanvas-body").innerHTML = "";
-        notifications.querySelector(".offcanvas-body").innerHTML += "Loading...";
-        new bootstrap.Offcanvas(document.getElementById('notifications')).show("notificationsLabel");
+    if (app) {
+        const notifications = document.getElementById("notifications");
+        notifications.querySelector(".offcanvas-body").innerHTML = "Loading...";
+        new bootstrap.Offcanvas(notifications).show("notificationsLabel");
     }
 }
 
+// --- DOMContentLoaded Event ---
+
+/**
+ * Initializes the application after the DOM is fully loaded.
+ */
 addEventListener("DOMContentLoaded", () => {
     initPanel();
-    if(menuEnabled||panelInlined) {
+    if (menuEnabled || panelInlined) {
         enableMenu(false);
     }
 
-    if(renderEffects) {
-        if(document.querySelector(".menu-panel")) {
-            document.querySelector('.menu-panel').classList.add("glass");
+    if (renderEffects) {
+        const panel = document.querySelector(".menu-panel");
+        if (panel) {
+            panel.classList.add("glass");
         }
     }
 
     window.matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change',() => {
+        .addEventListener('change', () => {
             updateTheme();
-        })
+        });
 
     updateTheme();
     setBorderRadius_dev(borderRadius);
     setAccentColor_dev(accentColor);
 
-    if(urlParams.has("page")) {
-        let menu = false;
-        if(urlParams.has("menu")) {
-            menu = urlParams.get("menu");
-        }
+    // Load a page if specified in the URL
+    if (urlParams.has("page")) {
         const page = urlParams.get("page");
-        loadPage(page,menu);
+        const menu = urlParams.has("menu") ? urlParams.get("menu") === "true" : false;
+        loadPage(page, menu);
         try {
-            highlight(document.getElementById(page.toLowerCase().replaceAll(".html", "-button")));
-        } catch (ignore) {}
+            highlight(document.getElementById(page.toLowerCase().replace(".html", "-button")));
+        } catch (ignore) { }
     } else {
-        loadPage("loading.html",false);
+        loadPage("loading.html", false);
     }
-    if(urlParams.has("bottom-border")) {
-        if(urlParams.get("bottom-border") === "true") {
-            document.getElementById("content").style.borderBottomLeftRadius = "calc(var(--nex-border-radius) * 1.5)";
-            document.getElementById("content").style.borderBottom = "1px solid var(--bs-border-color)";
 
-            document.querySelector(".menu-panel").classList.add("always-floating");
-        }
+    // Apply bottom border if specified in the URL
+    if (urlParams.has("bottom-border") && urlParams.get("bottom-border") === "true") {
+        const content = document.getElementById("content");
+        content.style.borderBottomLeftRadius = "calc(var(--nex-border-radius) * 1.5)";
+        content.style.borderBottom = "1px solid var(--bs-border-color)";
+        document.querySelector(".menu-panel").classList.add("always-floating");
     }
-    if(urlParams.has("app")) {
-        if(urlParams.get("app") === "true") {
-            app = true;
-        }
+
+    // Set app mode if specified in the URL
+    if (urlParams.has("app") && urlParams.get("app") === "true") {
+        app = true;
     }
-    let titlebar = true;
-    if(urlParams.has("titlebar")) {
-        if(urlParams.get("titlebar") === "false") {
-            titlebar = false;
-        }
-    }
-    if(!app&&titlebar) {
+
+    // Hide titlebar if specified in the URL
+    const titlebar = !(urlParams.has("titlebar") && urlParams.get("titlebar") === "false");
+    if (!app && titlebar) {
         document.getElementById("titlebar").style.display = "unset";
     }
 
-    if(!storage&&!app) {
+    // Show cookie consent toast if storage is not enabled
+    if (!storage && !app) {
         const toastEl = document.querySelector('.toast');
-        const toast = new bootstrap.Toast(toastEl, {
-            autohide: false
-        });
-        toast.show();
+        new bootstrap.Toast(toastEl, { autohide: false }).show();
     }
 
-    if(getStorageItem("devtools")) {
-        if(getStorageItem("devtools")==="enabled") {
-            const buttons = document.querySelector(".menu-panel").querySelector(".card-header").querySelector(".buttons");
-            buttons.innerHTML = "<i class='bi bi-arrow-clockwise' onClick='location.reload();'></i>" + buttons.innerHTML;
-        }
+    // Add devtools button if enabled in storage
+    if (getStorageItem("devtools") === "enabled") {
+        const buttons = document.querySelector(".menu-panel .card-header .buttons");
+        buttons.innerHTML = "<i class='bi bi-arrow-clockwise' onClick='location.reload();'></i>" + buttons.innerHTML;
     }
 });
 
+// --- Appearance Settings Helpers ---
+
+/**
+ * Applies the border radius to the given element and its children.
+ * @param {HTMLElement} e - The element to apply the border radius to.
+ * @param {number} r - The border radius value.
+ */
 function setBorderRadius_dev(r) {
     document.querySelectorAll('[data-bs-theme="dark"]').forEach((e) => {
-        applyBorderRadiusToElement(e,r);
+        applyBorderRadiusToElement(e, r);
     });
     document.querySelectorAll('[data-bs-theme="light"]').forEach((e) => {
-        applyBorderRadiusToElement(e,r);
+        applyBorderRadiusToElement(e, r);
     });
-    applyBorderRadiusToElement(root,r);
+    applyBorderRadiusToElement(root, r);
 }
 
+/**
+ * Applies the accent color to the given element and its children.
+ * @param {HTMLElement} e - The element to apply the accent color to.
+ * @param {string} c - The accent color value.
+ */
 function setAccentColor_dev(c) {
     document.querySelectorAll('[data-bs-theme="dark"]').forEach((e) => {
-        applyAccentColorToElement(e,c);
+        applyAccentColorToElement(e, c);
     });
     document.querySelectorAll('[data-bs-theme="light"]').forEach((e) => {
-        applyAccentColorToElement(e,c);
+        applyAccentColorToElement(e, c);
     });
-    applyAccentColorToElement(root,c);
+    applyAccentColorToElement(root, c);
 }
 
-function applyBorderRadiusToElement(e,r) {
-    if(e) {
-        if (typeof r === 'number') {
-            e.style.setProperty("--bs-border-radius-sm", (r * 0.25) + "rem");
-            e.style.setProperty("--bs-border-radius-lg", (r * 0.5) + "rem");
-            e.style.setProperty("--nex-border-radius", r + "rem");
-            e.style.setProperty("--bs-border-radius", r + "rem");
-            e.style.setProperty("--bs-border-radius-xl", (r * 1.5) + "rem");
-            e.style.setProperty("--bs-border-radius-xxl", (r * 1.75) + "rem");
-            e.style.setProperty("--bs-border-radius-2xl", (r * 2) + "rem");
-        }
+/**
+ * Applies the border radius to a single element.
+ * @param {HTMLElement} e - The element to apply the border radius to.
+ * @param {number} r - The border radius value.
+ */
+function applyBorderRadiusToElement(e, r) {
+    if (e && typeof r === 'number') {
+        e.style.setProperty("--bs-border-radius-sm", (r * 0.25) + "rem");
+        e.style.setProperty("--bs-border-radius-lg", (r * 0.5) + "rem");
+        e.style.setProperty("--nex-border-radius", r + "rem");
+        e.style.setProperty("--bs-border-radius", r + "rem");
+        e.style.setProperty("--bs-border-radius-xl", (r * 1.5) + "rem");
+        e.style.setProperty("--bs-border-radius-xxl", (r * 1.75) + "rem");
+        e.style.setProperty("--bs-border-radius-2xl", (r * 2) + "rem");
     }
 }
 
-function applyAccentColorToElement(e,c) {
-    e.style.setProperty("--nex-primary", c);
+/**
+ * Applies the accent color to a single element.
+ * @param {HTMLElement} e - The element to apply the accent color to.
+ * @param {string} c - The accent color value.
+ */
+function applyAccentColorToElement(e, c) {
+    if (e) {
+        e.style.setProperty("--nex-primary", c);
+    }
 }
 
-function loadPage(page,menu) {
+// --- Page Loading ---
+
+/**
+ * Loads a page into the content area.
+ * @param {string} page - The name of the page to load (e.g., "settings.html").
+ * @param {boolean} menu - Whether to enable the menu after loading the page.
+ */
+function loadPage(page, menu) {
     const contentDiv = document.getElementById('content');
     fetch(page)
         .then(response => response.text())
@@ -407,32 +559,41 @@ function loadPage(page,menu) {
             contentDiv.innerHTML = html;
         })
         .then(() => {
-            if(page === "settings.html") {
-                initAppearanceValues();
-                if(urlParams.has("bottom-border")) {
-                    if(urlParams.get("bottom-border") === "true") {
-                        document.querySelector(".floating-switch").remove();
+            if (page === "settings.html") {
+                initAppearanceValues(); // Initialize appearance settings on the settings page
+                if (urlParams.has("bottom-border") && urlParams.get("bottom-border") === "true") {
+                    const floatingSwitch = document.querySelector(".floating-switch");
+                    if (floatingSwitch) {
+                        floatingSwitch.remove();
                     }
                 }
             }
-            if(contentDiv.querySelector('.onload')) {
-                contentDiv.querySelector('.onload').click();
+            const onloadElement = contentDiv.querySelector('.onload');
+            if (onloadElement) {
+                onloadElement.click(); // Trigger onload event if present
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            contentDiv.innerHTML = "<h3 class='p-4 text-danger-emphasis'>"+error+"</h3>";
+            contentDiv.innerHTML = "<h3 class='p-4 text-danger-emphasis'>" + error + "</h3>";
         });
-    if(menu) {
+
+    if (menu) {
         enableMenu(true);
     } else {
         disableMenu(true);
     }
-    window.history.pushState({}, document.title, window.location.pathname+"?page="+page);
+    window.history.pushState({}, document.title, window.location.pathname + "?page=" + page);
 }
 
+// --- Menu Highlighting ---
+
+/**
+ * Highlights the currently active menu item.
+ * @param {HTMLElement} element - The menu item to highlight.
+ */
 function highlight(element) {
-    if(glow) {
+    if (glow) {
         glow.classList.remove("active");
     }
     element.classList.add("active");

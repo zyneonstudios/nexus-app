@@ -1,24 +1,38 @@
 <link href="assets/nexus/css/settings.css" rel="stylesheet">
+
 <div class="nex-flex">
+    <!-- Sidebar/Submenu for Settings Categories -->
     <div class="card bg-dark-subtle submenu" style="margin: 0.5rem;">
         <div class="submenu-group">
             <h6>General settings</h6>
+            <!-- Button for General Settings -->
             <button id="general-settings-button" type="button" class="btn btn-nex-secondary">
                 <i class="bi bi-compass"></i>
                 <span>General settings</span>
             </button>
+            <!-- Button for Appearance Settings -->
             <button id="appearance-settings-button" type="button" class="btn btn-nex-secondary">
                 <i class="bi bi-brush"></i>
                 <span>Appearance settings</span>
             </button>
         </div>
     </div>
+
+    <!-- Main Content Area for Settings -->
     <div class="d-flex w-100 flex-column gap-3 overflow-scroll">
-        <div class="card p-3 bg-dark-subtle" style="margin: 0.5rem 0.5rem 0 0.5rem; box-shadow: 0 0 0.4rem #00000075;"><h4 class="p-0 m-0">${settings.title}</h4></div>
-        <div id="general-settings" class="settings-card flex-column gap-3">
-            oyanem
+        <!-- Settings Title Card -->
+        <div class="card p-3 bg-dark-subtle" style="margin: 0.5rem 0.5rem 0 0.5rem; box-shadow: 0 0 0.4rem #00000075;">
+            <h4 class="p-0 m-0">${settings.title}</h4>
         </div>
-        <div id="appearance-settings" class="settings-card flex-column gap-3">
+
+        <!-- General Settings Section (Currently Empty) -->
+        <div id="general-settings" class="settings-card flex-column gap-3">
+            <!-- Content for general settings will be added here -->
+        </div>
+
+        <!-- Appearance Settings Section -->
+        <div id="appearance-settings" class="settings-card flex-column gap-3 active">
+            <!-- General Appearance Settings Card -->
             <div class="card bg-dark-subtle" style="margin: 0 0.5rem 0 0.5rem; box-shadow: 0 0 0.4rem #00000075;">
                 <div class="card-header">
                     <strong>General appearance settings</strong>
@@ -26,6 +40,7 @@
                 <div class="card-body p-0">
                     <table class="table m-0">
                         <tbody>
+                        <!-- Theme Selection Row -->
                         <tr class="disabled">
                             <td class="left" colspan="2">Theme</td>
                             <td class="right">
@@ -38,6 +53,7 @@
                                 </label>
                             </td>
                         </tr>
+                        <!-- Animations Toggle Row -->
                         <tr>
                             <td class="left" colspan="2">Animations</td>
                             <td class="right">
@@ -48,6 +64,7 @@
                                 </div>
                             </td>
                         </tr>
+                        <!-- Render Effects Toggle Row -->
                         <tr>
                             <td class="left" colspan="2">Render effects</td>
                             <td class="right">
@@ -58,6 +75,7 @@
                                 </div>
                             </td>
                         </tr>
+                        <!-- Accent Color Selection Row -->
                         <tr>
                             <td class="left">Accent color</td>
                             <td>
@@ -72,6 +90,7 @@
                             </td>
                             <td class="right">
                                 <div class="colors">
+                                    <!-- Predefined Accent Color Buttons -->
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn btn-nex-purple" onclick="setAccentColor('var(--nex-purple)');"></button>
                                         <button type="button" class="btn btn-nex-blue" onclick="setAccentColor('var(--nex-blue)');"></button>
@@ -80,6 +99,7 @@
                                         <button type="button" class="btn btn-nex-yellow" onclick="setAccentColor('var(--nex-yellow)');"></button>
                                     </div>
                                 </div>
+                                <!-- Custom Accent Color Input -->
                                 <div class="color-input m-0 p-0">
                                     <i class="bi bi-arrow-clockwise" onclick="setAccentColor('#8732ec');"></i>
                                     <label>
@@ -88,15 +108,18 @@
                                 </div>
                             </td>
                         </tr>
+                        <!-- Border Radius Control Row -->
                         <tr class="last">
                             <td class="left">Border radius</td>
                             <td>
                                 <label>
+                                    <!-- Number Input for Border Radius -->
                                     <input class="number-display appearance-borderRadiusDisplay" type="number" min="0" max="2" step="0.01" value="0" oninput="if(this.value<0) {this.value=0;} if(this.value>2) {this.value=2;} setBorderRadius_dev(parseFloat(this.value));" onchange="setBorderRadius(parseFloat(this.value));">
                                 </label>
                             </td>
                             <td class="right">
                                 <label>
+                                    <!-- Range Slider for Border Radius -->
                                     <input type="range" class="range appearance-borderRadius form-range" min="0" value="0" max="2" step="0.01" oninput="setBorderRadius(parseFloat(this.value));">
                                 </label>
                             </td>
@@ -105,6 +128,8 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Dynamic Panel Appearance Settings Card -->
             <div class="card bg-dark-subtle" style="margin: 0 0.5rem 0 0.5rem; box-shadow: 0 0 0.4rem #00000075;">
                 <div class="card-header">
                     <strong>Dynamic panel appearance settings</strong>
@@ -112,6 +137,7 @@
                 <div class="card-body p-0">
                     <table class="table m-0">
                         <tbody>
+                        <!-- Floating Panel Toggle Row -->
                         <tr class="floating-switch">
                             <td class="left" colspan="2">Floating</td>
                             <td class="right">
@@ -122,6 +148,7 @@
                                 </div>
                             </td>
                         </tr>
+                        <!-- Inline Panel Toggle Row -->
                         <tr class="last">
                             <td class="left" colspan="2">Inline to menu</td>
                             <td class="right">

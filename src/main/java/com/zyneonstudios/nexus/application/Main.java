@@ -7,50 +7,87 @@ import com.zyneonstudios.nexus.utilities.logger.NexusLogger;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
+/**
+ * The {@code Main} class is the primary entry point for the Nexus application.
+ * It initializes the application, parses command-line arguments, starts the web server (if necessary),
+ * and launches the main application frame. It also handles the application's lifecycle and provides
+ * access to the application's logger and port.
+ */
 @SpringBootApplication
 public class Main {
 
+    // Application Logger
     private static final NexusLogger logger = new NexusLogger("NEXUS");
+
+    // Application Configuration
     private static String path = "";
     private static String ui = null;
     private static int port = 8094;
-    private static boolean online;
-    private static NexusApplication application;
 
+    /**
+     * The main method, the entry point of the Nexus application.
+     *
+     * @param args Command-line arguments passed to the application.
+     */
     public static void main(String[] args) {
+        // Initialize the Nexus desktop environment.
         NexusDesktop.init();
+
+        // Resolve command-line arguments.
         resolveArguments(args);
+
+        // Display the splash screen.
         ZyneonSplash splash = new ZyneonSplash();
         splash.setVisible(true);
-        application = new NexusApplication(path,ui);
-        if(!application.isOnlineUI()) {
+
+        // Create the main application instance.
+        NexusApplication application = new NexusApplication(path, ui);
+
+        // Start the web server if the application is not using the online UI.
+        if (!application.isOnlineUI()) {
             startWebServer(args);
         }
-        if(application.launch()) {
+
+        // Launch the application and dispose of the splash screen if successful.
+        if (application.launch()) {
             splash.dispose();
             System.gc();
         } else {
+            // Stop the application if launching fails.
             NexusApplication.stop(1);
         }
     }
 
+    /**
+     * Starts the embedded web server for the application.
+     *
+     * @param args Command-line arguments passed to the application.
+     */
     private static void startWebServer(String[] args) {
         try {
+            // Configure and start the Spring Boot web server.
             new SpringApplicationBuilder(Main.class)
                     .properties("logging.level.root=WARN", "logging.pattern.console=", "server.port=" + port)
                     .run(args);
         } catch (Exception e) {
+            // Increment the port and retry if the initial port is in use.
             port++;
             startWebServer(args);
         }
     }
 
+    /**
+     * Resolves and processes command-line arguments.
+     *
+     * @param args Command-line arguments passed to the application.
+     */
     private static void resolveArguments(String[] args) {
         for (int i = 0; i < args.length; i++) {
             try {
                 String arg = args[i].toLowerCase();
                 switch (arg) {
                     case "-h", "--help" -> {
+                        // Display help message and exit.
                         logger.log("NEXUS App help:");
                         logger.log("  -d, --debug: Enables debug console output.");
                         logger.log("  -h, --help: This help message.");
@@ -65,6 +102,7 @@ public class Main {
                     case "-d", "--debug" -> logger.enableDebug();
                 }
             } catch (Exception e) {
+                // Handle argument parsing errors.
                 logger.err(e.getMessage());
                 logger.err("Use -h or --help at startup to view the startup arguments and their syntax.");
                 System.exit(1);
@@ -72,10 +110,20 @@ public class Main {
         }
     }
 
+    /**
+     * Gets the application's logger.
+     *
+     * @return The NexusLogger instance.
+     */
     public static NexusLogger getLogger() {
         return logger;
     }
 
+    /**
+     * Gets the port used by the web server.
+     *
+     * @return The web server port.
+     */
     public static int getPort() {
         return port;
     }

@@ -6,11 +6,12 @@
 
     <groupId>com.zyneonstudios.nexus</groupId>
     <artifactId>nexus-app</artifactId>
-    <version>3.0.0-alpha.9</version>
+    <version>3.0.0-alpha.10</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <nexus.name>Phoenix</nexus.name>
         <nexus.type>unstable</nexus.type>
     </properties>
 

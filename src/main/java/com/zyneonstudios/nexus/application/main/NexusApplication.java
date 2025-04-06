@@ -26,7 +26,7 @@ public class NexusApplication {
     private ApplicationFrame applicationFrame = null;
     private final boolean onlineUI;
     private static String uiPath = null;
-    private final String version = "v3.0.0-alpha.8";
+    private final String version = "v3.0.0-alpha.9";
     private final JsonStorage settings;
     private ModuleLoader moduleLoader;
 

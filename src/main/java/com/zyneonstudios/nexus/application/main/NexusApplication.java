@@ -28,7 +28,7 @@ public class NexusApplication {
     private static String uiPath = null;
     private final String version = "v3.0.0-alpha.8";
     private final JsonStorage settings;
-    private final ModuleLoader moduleLoader;
+    private ModuleLoader moduleLoader;
 
     public NexusApplication(String path, String uiPath) {
         getLogger().log("Initializing application...");
@@ -88,8 +88,6 @@ public class NexusApplication {
                 }
             }
         });
-        moduleLoader = new ModuleLoader();
-        loadModules();
     }
 
     private void loadModules() {
@@ -132,6 +130,8 @@ public class NexusApplication {
             }
         }
         runner.start();
+        moduleLoader = new ModuleLoader(this);
+        loadModules();
         moduleLoader.activateModules();
         return launched;
     }

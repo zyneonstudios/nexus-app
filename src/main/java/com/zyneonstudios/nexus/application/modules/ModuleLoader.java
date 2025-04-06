@@ -3,7 +3,6 @@ package com.zyneonstudios.nexus.application.modules;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.zyneonstudios.nexus.application.Main;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
 
 import java.io.BufferedReader;
@@ -20,9 +19,10 @@ public class ModuleLoader {
 
 
     private HashMap<String, NexusModule> modules = new HashMap<>();
-    private final NexusApplication application = Main.getApplication();
+    private final NexusApplication application;
 
-    public ModuleLoader() {
+    public ModuleLoader(NexusApplication application) {
+        this.application = application;
         if (application.getSettings().has("settings.modules.uninstall")) {
             ArrayList<String> uninstallModules = (ArrayList<String>) application.getSettings().get("settings.modules.uninstall");
             for (String module : uninstallModules) {
@@ -67,16 +67,19 @@ public class ModuleLoader {
                 version = array.get(0).getAsJsonObject().get("version").getAsString();
                 authors = array.get(0).getAsJsonObject().get("authors").getAsJsonArray().toString();
             } catch (Exception e) {
-                NexusApplication.getLogger().err("[MODULES] Couldn't read module " + moduleJar.getPath() + ": " + e.getMessage());
+                NexusApplication.getLogger().err("Couldn't read module " + moduleJar.getPath() + ": " + e.getMessage());
+                e.printStackTrace();
                 return null;
             }
             URLClassLoader classLoader = new URLClassLoader(new URL[]{moduleJar.toURI().toURL()});
             Class<?> module = classLoader.loadClass(mainPath);
-            Constructor<?> constructor = module.getConstructor(NexusApplication.class, String.class, String.class, String.class, String.class);
+            Constructor<?> constructor = module.getConstructor();
+            NexusModule module_ = (NexusModule) constructor.newInstance();
             moduleJars.put(id, moduleJar.getAbsolutePath().replace("\\", "/"));
-            return (NexusModule) constructor.newInstance(application, id, name, version, authors);
+            return module_;
         } catch (Exception e) {
-            NexusApplication.getLogger().err("[MODULES] Couldn't read module " + moduleJar.getPath() + ": " + e.getMessage());
+            NexusApplication.getLogger().err("Couldn't read module " + moduleJar.getPath() + ": " + e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }

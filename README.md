@@ -5,7 +5,7 @@
 
 <details>
     <summary>Warning</summary>
-    For your security, please download the NEXUS app directly from our official websites https://nexus.zyneonstudios.net and https://github.com/zyneonstudios/nexus-app. Downloading from other sources may expose you to risks such as malware. We cannot guarantee the safety of downloads from third-party links.
+    For your security, please download the NEXUS app directly from our official websites https://nexus.zyneonstudios.org and https://github.com/zyneonstudios/nexus-app. Downloading from other sources may expose you to risks such as malware. We cannot guarantee the safety of downloads from third-party links.
 </details>
 
 ## Description

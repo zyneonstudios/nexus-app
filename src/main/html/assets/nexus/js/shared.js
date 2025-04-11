@@ -76,7 +76,7 @@ let renderEffects = true;
  * The current accent color (hex or CSS variable).
  * @type {string}
  */
-let accentColor = "#8732EC";
+let accentColor = "var(--nex-blue)";
 
 /**
  * The current border radius value.

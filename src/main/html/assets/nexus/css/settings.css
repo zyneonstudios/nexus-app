@@ -6,6 +6,10 @@
     display: flex;
 }
 
+.submenu {
+    width: 100%;
+}
+
 table.table {
     border-radius: 0 0 var(--bs-border-radius) var(--bs-border-radius);
     overflow: hidden;
@@ -25,7 +29,7 @@ table.table {
                 background: var(--bs-dark-bg-subtle);
 
                 * {
-                    transition: all 0.15s ease;
+                    transition: all var(--nex-animation-speed) ease;
                 }
 
                 i {

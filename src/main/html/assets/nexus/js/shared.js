@@ -76,7 +76,7 @@ let renderEffects = true;
  * The current accent color (hex or CSS variable).
  * @type {string}
  */
-let accentColor = "var(--nex-blue)";
+let accentColor = "var(--nex-purple)";
 
 /**
  * The current border radius value.
@@ -652,5 +652,43 @@ function enableDevTools(enable) {
         if(tools!==enable) {
             location.reload();
         }
+    }
+}
+
+function enableSubMenuGroup(id) {
+    bootstrap.Collapse.getOrCreateInstance(document.getElementById(id)).show();
+    const button = document.getElementById(id+"-button");
+    if(button) {
+        if(!button.classList.contains("active")) {
+            button.classList.add("active");
+        }
+    }
+    if(button.querySelector("i")) {
+        if(button.querySelector("i").className.includes("bi bi-caret-down")) {
+            button.querySelector("i").className = "bi bi-caret-down-fill active";
+        }
+    }
+}
+
+function disableSubMenuGroup(id) {
+    bootstrap.Collapse.getOrCreateInstance(document.getElementById(id)).hide();
+    const button = document.getElementById(id+"-button");
+    if(button) {
+        if(button.classList.contains("active")) {
+            button.classList.remove("active");
+        }
+    }
+    if(button.querySelector("i")) {
+        if(button.querySelector("i").className.includes("bi bi-caret-down")) {
+            button.querySelector("i").className = "bi bi-caret-down";
+        }
+    }
+}
+
+function toggleSubMenuGroup(id) {
+    if (document.getElementById(id)?.classList.contains('show')) {
+        disableSubMenuGroup(id);
+    } else {
+        enableSubMenuGroup(id);
     }
 }

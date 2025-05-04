@@ -3,9 +3,12 @@ package com.zyneonstudios.nexus.application.frame;
 import com.zyneonstudios.nexus.application.events.PageLoadedEvent;
 import com.zyneonstudios.nexus.application.main.NexusApplication;
 import com.zyneonstudios.nexus.desktop.events.AsyncWebFrameConnectorEvent;
+import com.zyneonstudios.nexus.desktop.frame.nexus.NexusWebFrame;
 import com.zyneonstudios.nexus.desktop.frame.web.NWebFrame;
 import com.zyneonstudios.nexus.desktop.frame.web.NexusWebSetup;
 import com.zyneonstudios.nexus.desktop.frame.web.WebFrame;
+import com.zyneonstudios.nexus.utilities.system.OperatingSystem;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +25,7 @@ import java.util.Objects;
  * communication with the web content.
  */
 @SuppressWarnings("unused")
-public class AppFrame extends NWebFrame implements ComponentListener, WebFrame {
+public class AppFrame extends NexusWebFrame implements ComponentListener, WebFrame {
 
     // The minimum size of the application window.
     private final Dimension minSize = new Dimension(640, 360);
@@ -35,7 +38,8 @@ public class AppFrame extends NWebFrame implements ComponentListener, WebFrame {
      * @param decorated Whether the window should have a title bar and borders.
      */
     public AppFrame(NexusWebSetup setup, String url, boolean decorated) {
-        super(setup.getWebClient(), url, decorated);
+        super(setup.getWebClient(), url, true, OperatingSystem.getType().equals(OperatingSystem.Type.Windows));
+        //setUndecorated(false);
         try {
             // Set the application icon.
             setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/icon.png"))).getScaledInstance(32, 32, Image.SCALE_SMOOTH));
@@ -109,7 +113,7 @@ public class AppFrame extends NWebFrame implements ComponentListener, WebFrame {
      * @param background The background color of the title bar.
      * @param foreground The foreground color of the title bar text.
      */
-    @Override
+    //@Override
     public void setTitleColors(Color background, Color foreground) {
         setBackground(background);
     }

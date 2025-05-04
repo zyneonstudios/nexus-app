@@ -521,12 +521,12 @@ body {
                 position: relative;
                 display: flex;
                 flex: 0 0 auto;
-                padding: 0.5rem;
+                padding: 0;
+                margin: 0.5rem;
                 max-width: 16rem;
                 overflow: hidden;
                 overflow-y: scroll;
                 gap: 0.4rem;
-                height: calc(100% + 1rem);
                 box-shadow: 0 0 0.5rem #00000075;
 
                 button, select {
@@ -640,6 +640,22 @@ body {
                     li {
                         background: var(--bs-dark-bg-subtle);
                     }
+                }
+            }
+
+            .submenu.glass {
+                background: var(--nex-brighter) !important;
+
+                .card-header {
+                    background: var(--nex-brighter) !important;
+                }
+
+                button, select {
+                    background: none;
+                }
+
+                button:hover, select:hover {
+                    background: var(--nex-darker);
                 }
             }
         }

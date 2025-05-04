@@ -1,4 +1,6 @@
 #library {
+    background: url("https://b.nerotv.live/zyneon/nexus/img/instances/zyneonplus/1.21/2025.3-background.webp") fixed;
+    background-size: cover;
     position: relative;
     width: 100%;
     height: 100%;

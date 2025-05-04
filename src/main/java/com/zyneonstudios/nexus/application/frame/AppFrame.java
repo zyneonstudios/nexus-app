@@ -38,8 +38,7 @@ public class AppFrame extends NexusWebFrame implements ComponentListener, WebFra
      * @param decorated Whether the window should have a title bar and borders.
      */
     public AppFrame(NexusWebSetup setup, String url, boolean decorated) {
-        super(setup.getWebClient(), url, true, OperatingSystem.getType().equals(OperatingSystem.Type.Windows));
-        //setUndecorated(false);
+        super(setup.getWebClient(), url, decorated, OperatingSystem.getType().equals(OperatingSystem.Type.Windows));
         try {
             // Set the application icon.
             setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/icon.png"))).getScaledInstance(32, 32, Image.SCALE_SMOOTH));

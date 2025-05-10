@@ -1,5 +1,3 @@
-document.querySelector(".menu-panel").querySelector(".card-body").innerHTML = "";
-
 function addInstance(id,name,icon,group) {
     if(!document.getElementById(id)) {
         let list = document.getElementById("instance-list");
@@ -57,4 +55,19 @@ function addInstanceGroup(id,name,colorName) {
             template.parentElement.insertBefore(group, template);
         }
     }
+}
+
+function loadFolderButtonHoverEvent() {
+    const button = document.getElementById("library-menu").querySelector(".buttons").querySelector(".folder");
+    const icon = button.querySelector("i");
+    button.addEventListener("mouseover", () => {
+        icon.className = "bi bi-folder2-open";
+    });
+    button.addEventListener("mouseout", () => {
+        icon.className = "bi bi-folder2";
+    });
+}
+
+function initLibraryPanel() {
+    document.querySelector(".menu-panel").querySelector(".card-body").innerHTML = "Library v3.0.0-alpha.594";
 }

@@ -206,6 +206,7 @@ button {
 }
 
 body {
+    transition: all var(--nex-animation-speed) ease;
     background: var(--nex-bg);
 
     #titlebar {

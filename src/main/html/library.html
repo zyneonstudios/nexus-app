@@ -14,7 +14,7 @@
                 <i class="bi bi-plus-lg"></i>
                 <span>Add instance</span>
             </button>
-            <button id="reload-button" onclick="loadPage('library.html');" type="button" class="btn btn-nex-secondary">
+            <button id="reload-button" onclick="location.reload();" type="button" class="btn btn-nex-secondary">
                 <i class="bi bi-arrow-clockwise m-0 p-0"></i>
             </button>
         </div>
@@ -40,8 +40,14 @@
             </div>
         </div>
     </div>
-    <div class="position-relative w-100 h-100">
-
+    <div class="position-relative w-100 h-100 p-2">
+        <div id="library-menu" class="card glass w-100 d-flex flex-row">
+            <h4 class="m-0 w-100" style="padding: 0.5rem 0.5rem 0.75rem 0.75rem">Library</h4>
+            <div class="buttons w-100 d-flex flex-row align-self-center justify-content-end">
+                <a class="folder"><i class="bi bi-folder2"></i></a>
+                <a class="settings"><i class="bi bi-gear"></i></a>
+            </div>
+        </div>
     </div>
 </div>
 <div class="modal fade" id="addInstance" tabindex="-1" aria-labelledby="addInstanceLabel" aria-hidden="true">
@@ -59,4 +65,4 @@
         </div>
     </div>
 </div>
-<button onclick="loadScript('assets/nexus/js/library.js', onload);" class="onload d-none">On page load</button>
+<button onclick="loadScript('assets/nexus/js/library.js', onload); setTimeout(()=>{ initLibraryPanel(); loadFolderButtonHoverEvent(); }, 100)" class="onload d-none">On page load</button>

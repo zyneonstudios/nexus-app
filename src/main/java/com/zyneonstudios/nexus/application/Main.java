@@ -45,7 +45,11 @@ public class Main {
 
         // Start the web server if the application is not using the online UI.
         if (!application.isOnlineUI()) {
-            startWebServer(args);
+            try {
+                startWebServer(args);
+            } catch (Exception e) {
+                System.exit(-1);
+            }
         }
 
         // Launch the application and dispose of the splash screen if successful.
@@ -64,6 +68,9 @@ public class Main {
      * @param args Command-line arguments passed to the application.
      */
     private static void startWebServer(String[] args) {
+        if(port > 65535) {
+            throw new RuntimeException("Port range exceeded, cannot launch application web server. Try to restart your computer or stopping port using applications and try again.");
+        }
         try {
             // Configure and start the Spring Boot web server.
             new SpringApplicationBuilder(Main.class)

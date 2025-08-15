@@ -1,8 +1,11 @@
 <link href="assets/nexus/css/settings.css" rel="stylesheet">
 
-<div class="nex-flex w-100 h-100">
+<div id="settings" class="nex-flex w-100 h-100">
     <!-- Sidebar/Submenu for Settings Categories -->
-    <div class="card bg-dark-subtle submenu">
+    <div class="card bg-dark-subtle submenu glass">
+        <div class="card-header">
+            <strong>Settings</strong>
+        </div>
         <div class="submenu-group">
             <h6>General settings</h6>
             <!-- Button for General Settings -->
@@ -21,8 +24,10 @@
     <!-- Main Content Area for Settings -->
     <div class="d-flex w-100 flex-column gap-3 overflow-scroll">
         <!-- Settings Title Card -->
-        <div class="card p-3 bg-dark-subtle" style="margin: 0.5rem 0.5rem 0 0.5rem; box-shadow: 0 0 0.4rem #00000075;">
-            <h4 class="p-0 m-0">${settings.title}</h4>
+        <div class="title-menu card glass d-flex flex-row m-2">
+            <h4 class="m-0 w-100" style="padding: 0.5rem 0.5rem 0.75rem 0.75rem">Settings</h4>
+            <div class="buttons w-100 d-flex flex-row align-self-center justify-content-end">
+            </div>
         </div>
 
         <!-- General Settings Section (Currently Empty) -->

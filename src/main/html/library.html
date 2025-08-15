@@ -40,12 +40,46 @@
             </div>
         </div>
     </div>
-    <div class="position-relative w-100 h-100 p-2">
-        <div id="library-menu" class="card glass w-100 d-flex flex-row">
-            <h4 class="m-0 w-100" style="padding: 0.5rem 0.5rem 0.75rem 0.75rem">Library</h4>
+    <div class="position-relative w-100 m-2 card glass shadow overflow-hidden p-0">
+        <div class="title-menu card-header shadow p-1 w-100 d-flex flex-row border-bottom-0">
+            <h4 class="m-0 w-100" style="padding: 0.5rem 0.5rem 0.75rem 0.75rem; ;">Library</h4>
             <div class="buttons w-100 d-flex flex-row align-self-center justify-content-end">
-                <a class="folder"><i class="bi bi-folder2"></i></a>
-                <a class="settings"><i class="bi bi-gear"></i></a>
+                <a class="folder shadow"><i class="bi bi-folder2"></i></a>
+                <a class="settings shadow"><i class="bi bi-gear"></i></a>
+            </div>
+        </div>
+
+        <div class="nex-side-view p-3" style="">
+            <div>
+
+            </div>
+            <div class="glass">
+                <div class="card glass w-100">
+                    <div class="card-header" style="">
+                        <strong>About</strong>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            <strong>${instance.name}</strong> v${instance.version}<br><br>
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+                        </p>
+                    </div>
+                </div>
+                <div class="card glass w-100">
+                    <div class="card-header" style="">
+                        <strong>Tags</strong>
+                    </div>
+                    <div class="card-body">
+                        <h5>
+                            <span class="badge bg-black">Minecraft: 1.21.8</span>
+                            <span class="badge text-bg-light">Fabric: 0.17.3</span>
+                        </h5>
+                    </div>
+                </div>
+                <button id="launch-button" type="button" class="btn btn-nex-primary w-100">
+                    <i class="bi bi-rocket-takeoff"></i>
+                    LAUNCH
+                </button>
             </div>
         </div>
     </div>

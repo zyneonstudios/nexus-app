@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AppFrame extends NexusWebFrame implements ComponentListener, WebFrame {
 
     // The minimum size of the application window.
-    private final Dimension minSize = new Dimension(640, 360);
+    private final Dimension minSize = new Dimension(1024, 640);
     private final String windowId = StringGenerator.generateAlphanumericString(12);
 
     /**
@@ -135,7 +135,7 @@ public class AppFrame extends NexusWebFrame implements ComponentListener, WebFra
                 clone.setVisible(true);
 
                 clone.setTitlebar(windowId+"-clone "+clones, Color.decode("#333399"), Color.white);
-                clone.setSize(1200, 720);
+                clone.setSize(getSize());
                 clone.setLocationRelativeTo(null);
                 clone.setVisible(true);
                 clone.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -149,6 +149,7 @@ public class AppFrame extends NexusWebFrame implements ComponentListener, WebFra
 
             devBar.add(browser);
             devBar.add(actions);
+            setMinimumSize(minSize);
         }
         setJMenuBar(devBar);
 

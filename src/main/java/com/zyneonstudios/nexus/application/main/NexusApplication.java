@@ -171,12 +171,14 @@ public class NexusApplication {
     public boolean launch() {
         if (!launched) {
             try {
+                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
                 String url = onlineUI ? "https://zyneonstudios.github.io/nexus-app/src/main/html?app=true&page=discover.html" : "localhost:" + Main.getPort() + "/index.html?app=true&page=discover.html";
                 applicationFrame = new AppFrame(webSetup, url, true);
                 applicationFrame.setTitlebar(version, Color.black, Color.white);
-                applicationFrame.setSize(1200, 720);
+                applicationFrame.setSize((int)(screenSize.getWidth()/1.5), (int)(screenSize.getHeight()/1.5));
                 applicationFrame.setLocationRelativeTo(null);
                 applicationFrame.setVisible(true);
+                System.out.println(applicationFrame.getSize());
                 launched = true;
             } catch (Exception e) {
                 getLogger().err("Couldn't launch application: " + e.getMessage());

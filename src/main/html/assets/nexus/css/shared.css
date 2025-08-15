@@ -526,14 +526,14 @@ body {
                 }
 
                 div {
-                    flex: 1;
+                    flex: 2;
                     padding: 0.5rem;
                     overflow: auto;
                 }
 
                 div.glass {
                     width: fit-content;
-                    max-width: 18rem;
+                    max-width: 20rem;
                     background: #ffffff01;
                     border-left: 1px solid var(--bs-border-color-translucent);
 

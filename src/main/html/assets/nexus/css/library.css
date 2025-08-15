@@ -26,7 +26,7 @@
         width: calc(100% - 1.2rem) !important;
         padding: 1rem 0;
         box-shadow: 0 0 0.5rem black;
-        border: 3px solid var(--bs-border-color-translucent);
+        border: 2px solid var(--bs-border-color-translucent);
         letter-spacing: 0.5rem;
     }
 }

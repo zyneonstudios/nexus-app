@@ -13,6 +13,10 @@
 
 .settings-card.active {
     display: flex;
+
+    .card {
+        box-shadow: none !important;
+    }
 }
 
 .submenu {

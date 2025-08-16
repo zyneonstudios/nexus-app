@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.zyneonstudios.nexus</groupId>
+    <groupId>net.nrfy.nexus</groupId>
     <artifactId>nexus-app</artifactId>
-    <version>3.0.0-alpha.11</version>
+    <version>2025.8-beta.1</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -30,24 +30,14 @@
             <version>2025.5.4</version>
         </dependency>
         <dependency>
-            <groupId>com.zyneonstudios.nexus</groupId>
-            <artifactId>zyndex-java</artifactId>
-            <version>2025.5.3</version>
-        </dependency>
-        <dependency>
-            <groupId>fr.flowarg</groupId>
-            <artifactId>flowupdater</artifactId>
-            <version>1.9.2</version>
-        </dependency>
-        <dependency>
-            <groupId>fr.flowarg</groupId>
-            <artifactId>openlauncherlib</artifactId>
-            <version>3.2.11</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>3.4.4</version>
+        </dependency>
+        <dependency>
+            <groupId>net.nrfy.nexus</groupId>
+            <artifactId>a-minecraft-launcher-libs</artifactId>
+            <version>2025.8-beta.1</version>
         </dependency>
     </dependencies>
 

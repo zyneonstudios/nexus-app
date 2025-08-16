@@ -178,7 +178,6 @@ public class NexusApplication {
                 applicationFrame.setSize((int)(screenSize.getWidth()/1.5), (int)(screenSize.getHeight()/1.5));
                 applicationFrame.setLocationRelativeTo(null);
                 applicationFrame.setVisible(true);
-                System.out.println(applicationFrame.getSize());
                 launched = true;
             } catch (Exception e) {
                 getLogger().err("Couldn't launch application: " + e.getMessage());

@@ -552,7 +552,7 @@ body {
                         margin-bottom: 0.75rem;
 
                         .card-header {
-                            background: var(--nex-brighter-100);
+                            background: var(--nex-brighter) !important;
                             color: var(--nex-fg);
                             min-height: fit-content;
                         }

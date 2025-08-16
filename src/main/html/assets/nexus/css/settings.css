@@ -1,5 +1,4 @@
 #content {
-    background: url("https://www.wolkenspeicher.cloud/index.php/s/5KHwRFRHF7bGQeg/download") fixed !important;
     background-size: cover !important;
 }
 
@@ -9,6 +8,7 @@
 
 .settings-card {
     display: none;
+    margin: 0.75rem 0 0 0;
 }
 
 .settings-card.active {
@@ -35,7 +35,8 @@ table.table {
             td {
                 position: relative;
                 padding: 0.5rem 1rem;
-                background: var(--bs-dark-bg-subtle);
+                background: transparent;
+                border-bottom: 1px solid var(--bs-border-color-translucent);
 
                 * {
                     transition: all var(--nex-animation-speed) ease;
@@ -72,12 +73,14 @@ table.table {
 
                 input.range {
                     width: calc(100% - 5rem);
-                    min-width: 5rem;
-                    max-width: 10rem;
+                    min-width: 8rem;
+                    max-width: 12rem;
                     position: absolute;
                     top: 0; right: 0;
                     margin: 0.5rem 1rem 0.5rem 4rem;
                     border-radius: var(--bs-border-radius-lg);
+                    background-color: var(--bs-border-color-translucent);
+                    padding: 0 0.5rem;
                 }
 
                 input.number-display {
@@ -213,7 +216,7 @@ table.table {
 
         tr:hover {
             td {
-                background: var(--bs-body-bg);
+                background: var(--nex-darker-100);
 
                 input.number-display {
                     background: var(--bs-dark-bg-subtle);

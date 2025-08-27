@@ -24,7 +24,7 @@ The NEXUS app is a modular and easily extensible desktop application designed to
 ![Zyneon Application logo and text](https://i.ibb.co/tsKhXtB/23.png)
 by [Zyneon Studios](https://www.zyneonstudios.net). Metadata and update repository: [here](https://github.com/zyneonstudios/nexus-nex)
 ---
-Supported platforms:
+Supported platforms
 ![Zyneon Application logo and text](https://i.ibb.co/FK4LNHm/platforms.png)
 ---
 # Description
